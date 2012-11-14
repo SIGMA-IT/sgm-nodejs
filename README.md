@@ -1,4 +1,4 @@
 sgm-nodejs
 ==========
 
-NodeJS + HAL
+Percolator + JS-HAL + Mongoose/MongoDB
