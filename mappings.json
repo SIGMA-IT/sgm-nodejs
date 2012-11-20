@@ -5,11 +5,6 @@
 				{
 					"id":	"ID_PROVINCIA"
 				,	"desc":	"DESCRIPCION"
-				,	"institutions":
-						{
-							"embebed":"instituciones-univ"
-						,	"embebed_key":"PROVINCIA"
-						}
 				}
 		,	"transforms":
 				{
@@ -36,15 +31,15 @@
 				{
 					"provincia_e":
 						{
-							"key":"PROVINCIA"
+							"key":"provincia"
 						,	"embeded":"provincias"
-						,	"embeded_key":"ID_PROVINCIA"
+						,	"embeded_key":"id"
 						}
 				,	"provincia_l":
 						{
-							"key":"PROVINCIA"
+							"key":"provincia"
 						,	"linked":"provincias"
-						,	"linked_key":"ID_PROVINCIA"
+						,	"linked_key":"id"
 						}
 				}
 		}

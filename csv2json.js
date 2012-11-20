@@ -90,7 +90,7 @@ ensureDir(
 			var	out
 			=	fs.createWriteStream(program.output+'/'+index+'.json')
 			,	transformers
-			=	_(source.mapping.fields)
+			=	_(source.mapping.transforms)
 				.reduce(
 					function(result,field,key)
 					{
@@ -104,7 +104,7 @@ ensureDir(
 						,	src
 						=	index
 						,	src_key
-						=	source.mapping.fields.id
+						=	field.key
 						,	tgt
 						=	is_linked
 								?field.linked
@@ -113,12 +113,12 @@ ensureDir(
 						=	is_linked
 								?field.linked_key
 								:field.embeded_key
-						return	function(source_item,id)
+						return	function(source_item)
 							{
 							return	is_single
 								?is_linked
-									?{link_me_please:tgt+'/'+tgt_key+'('+id+')'}
-									:{embed_me_please:tgt+'/'+tgt_key+'('+id+')'}
+									?{link_me_please:'filter: '+tgt+'/'+tgt_key+' = '+src+'/'+src_key+'('+source_item[src_key]+')'}
+									:{embed_me_please:'filter: '+tgt+'/'+tgt_key+' = '+src+'/'+src_key+'('+source_item[src_key]+')'}
 								:[]
 							}
 						}
@@ -147,7 +147,7 @@ ensureDir(
 										.each(
 											function(t,k)
 											{
-												item[k+'_eval']=t(item,item[k])
+												item[k+'_transformed']=t(item)
 											}
 										)
 									return	item
