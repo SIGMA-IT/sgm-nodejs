@@ -1,0 +1,27 @@
+{
+  "name": "csv2json",
+  "version": "0.0.1",
+  "description": "Convert csv to json",
+  "author": "Gabriel Pittau <gpittau@gmail.com>",
+  "contributors": [
+  ],
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "keywords": [
+    "parser",
+    "generator",
+    "json",
+    "csv"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SIGMA-IT/csv2json.git"
+  },
+  "dependencies": {
+    "csv": "0.2.3",
+    "commander": "latest",
+    "ensureDir": "latest",
+    "underscore": "latest"
+	}
+}

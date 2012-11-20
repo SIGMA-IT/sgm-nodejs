@@ -1,0 +1,40 @@
+ID_ UNIVERSIDAD,TIPO_UNIV,UNIVERSIDAD,COD.POSTAL,DIRECCION,CIUDAD,PROVINCIA
+CAECE,NO CLAVE,Universidad CAECE,1026,Junin 516,Capital Federal,CABA
+ITBA,CLAVE,Instituto Tecnologico de Buenos Aires,C1106ACD,Av. Eduardo Madero 399,Capital Federal,CABA
+UADE,NO CLAVE,Universidad Argentina de la Empresa,C1073AAO,Lima 717,Capital Federal,CABA
+UAI,NO CLAVE,Universidad Abierta Interamericana,C1147AAH,San Juan 951 ,Capital Federal,CABA
+UAUSTRAL,NO CLAVE,Universidad Austral,C1063ABB,Av.  Juan de Garay 125,Capital Federal,CABA
+UBA,CLAVE,Universidad de Buenos Aires,C1425CKB,Av. Figueroa Alcorta 2263,Capital Federal,CABA
+UBELGRANO,NO CLAVE,Universidad de Belgrano,1426,Av. Federico Lacroze 1959 PB,Capital Federal,CABA
+UCA,CLAVE,Universidad Catolica Argentina,1107,Av. Alicia M. de Justo 1400 P. Baja,Capital Federal,CABA
+UCEMA,NO CLAVE,Universidad del CEMA,1054,Avda Córdoba 374,Capital Federal,CABA
+UCES,NO CLAVE,Universidad de Ciencias Empresariales y  Sociales,C1061ABA,Paraguay 1401 Piso 8,Capital Federal,CABA
+UNLAM,NO CLAVE,Universidad Nacional  de la Matanza,B1754JEC,Florencio Varela 1903,San Justo,CABA
+UNSAM,NO CLAVE,Universidad Nacional de San Martin,1650,Caseros 2241,San Martin,CABA
+UPALERMO,NO CLAVE,Universidad de Palermo,1175,Maria Bravo 1050,Capital Federal,CABA
+USALVADOR,NO CLAVE,Universidad Nacional del Salvador,C1058AAV,Viamonte 1856,Capital Federal,CABA
+UTDT,NO CLAVE,Universidad Torcuato Di Tella,,Miñones 2177,Capital Federal,CABA
+UTN,CLAVE,Universidad Tecnologica Nacional,C1041AAJ,Sarmiento 440,Capital Federal,CABA
+UNC,CLAVE,Universidad Nacional de Cordoba,X5016GCA,Av. Vélez Sarfield 1611.- Ciudad Universitaria.,Córdoba,CBA
+UNRC,NO CLAVE,Universidad Nacional de Rio Cuarto,X5804BYA,Ruta Nacional Nº36 km 601,Río Cuarto,CBA
+UNPATAGONIA,NO CLAVE,Universidad Nacional de La Patagonia San Juan Bosco,9005,Ciudad Universitaria Km 4,Comodoro Rivadavia,CHU
+IUAERONAUTICO,NO CLAVE,Instituto Universitario Aeronautico,5022,Av. Fuerza Aerera 6500,Córdoba,CBA
+UNJU,NO CLAVE,Universidad Nacional de Jujuy,4600,Av. Bolivia 1239,San Salvador de Jujuy,JUJ
+UNCUYO,CLAVE,Universidad Nacional de Cuyo,M5502KFA,Facultad de  Ingeniería Edificio de Gobierno Centro Unversitario,Mendoza,MDZ
+UNCOMA,NO CLAVE,Universidad Nacional del Comahue,8300,Buenos Aires 1400,Neuquen,NEU
+UDESA,NO CLAVE,Universidad de San Andres,B1644BID,Vito Dumas 284,Victoria,BUE
+UNICEN,NO CLAVE,Universidad Nacional del Centro de Buenos Aires,B7000GHG,"Gral. Pinto 399, Campus Universitario",Tandil,BUE
+UNLP,CLAVE,Universidad Nacional de La Plata,B1900TAG,Calle 1 y 47,La Plata,BUE
+UNLUJAN,NO CLAVE,Universidad Nacional de Lujan,6700,Ruta 5 Av. Constitucion,Luján,BUE
+UNLZ,NO CLAVE,Universidad de Lomas de Zamora,1832,"Ruta Provincial 4, Kilómetro 2",Lomas de Zamora,BUE
+UNMDP,CLAVE,Universidad Nacional de Mar del Plata,B7602AYJ, Funes 3250 - 2º Piso,Mar del Plata,BUE
+UNMDP,CLAVE,Universidad Nacional de Mar del Plata,B7608FDQ,Avenida Juan B. Justo 4302,Mar del Plata,BUE
+UNSUR,CLAVE,Universidad Nacional del Sur,B8000FTN,Avenida Colon 80,Bahía Blanca,BUE
+IBALSEIRO,NO CLAVE,Instituto Balseiro,R8402AGP,"Av. Bustillo Km 9,500",San Carlos de Bariloche,RNG
+UNSJ,CLAVE,Universidad Nacional de San Juan,5400,Av. Ignacio de la Roza Oeste 590 -  Complejo Universitario Islas Malvinas Rivadavia ,San Juan,JUA
+UNSAL,NO CLAVE,Universidad Nacional de Salta,4400,Av. Bolivia 5150 - Complejo Universitario Gral San Martin,Salta,SAL
+UCAROS,NO CLAVE,Universidad Catolica de Rosario,2000,Mendoza 4197,Rosario,SFE
+UNLIT,NO CLAVE,Universidad Nacional del Litoral,S3000ADQ,Bv. Pelegrini 2750 1° Piso,Santa Fe,SFE
+UNROS,CLAVE,Universidad Nacional de Rosario,S2000BTP,Av. Pellegrini 250 - 1er. Piso, Rosario,SFE
+UNSL,NO CLAVE,Universidad Nacional de San Luis,D5730EKQ,Av. 25 de Mayo n° 384,Villa Mercedes,UIS
+UNT,NO CLAVE,Universidad Nacional de Tucuman,T4002BLR,Av. Independencia 1900,San Miguel De Tucumán,TUC

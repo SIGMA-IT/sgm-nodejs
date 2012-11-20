@@ -1,0 +1,51 @@
+{
+	"provincias":
+		{
+			"fields":
+				{
+					"id":	"ID_PROVINCIA"
+				,	"desc":	"DESCRIPCION"
+				,	"institutions":
+						{
+							"embebed":"instituciones-univ"
+						,	"embebed_key":"PROVINCIA"
+						}
+				}
+		,	"transforms":
+				{
+					"institutions":
+						{
+							"embebed":"instituciones-univ"
+						,	"embebed_key":"PROVINCIA"
+						}
+				}
+		}
+,	"instituciones-univ":
+		{
+			"fields":
+				{
+					"id":	"ID_ UNIVERSIDAD"
+				,	"type":	"TIPO_UNIV"
+				,	"name":	"UNIVERSIDAD"
+				,	"postal_code":	"COD.POSTAL"
+				,	"address":	"DIRECCION"
+				,	"city":	"CIUDAD"
+				,	"provincia":"PROVINCIA"
+				}
+		,	"transforms":
+				{
+					"provincia_e":
+						{
+							"key":"PROVINCIA"
+						,	"embeded":"provincias"
+						,	"embeded_key":"ID_PROVINCIA"
+						}
+				,	"provincia_l":
+						{
+							"key":"PROVINCIA"
+						,	"linked":"provincias"
+						,	"linked_key":"ID_PROVINCIA"
+						}
+				}
+		}
+}
