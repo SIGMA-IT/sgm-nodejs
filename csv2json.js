@@ -115,10 +115,21 @@ ensureDir(
 								:field.embeded_key
 						return	function(source_item)
 							{
+							var	embed_me_please
+							=	function()
+								{
+								return	_(sources[tgt].buffer)
+									.find(
+										function(target_item)
+										{
+										return	source_item[src_key]==target_item[tgt_key]
+										}
+									)
+								}
 							return	is_single
 								?is_linked
 									?{link_me_please:'filter: '+tgt+'/'+tgt_key+' = '+src+'/'+src_key+'('+source_item[src_key]+')'}
-									:{embed_me_please:'filter: '+tgt+'/'+tgt_key+' = '+src+'/'+src_key+'('+source_item[src_key]+')'}
+									:embed_me_please()
 								:[]
 							}
 						}
