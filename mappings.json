@@ -6,14 +6,6 @@
 					"id":	"ID_PROVINCIA"
 				,	"desc":	"DESCRIPCION"
 				}
-		,	"transforms":
-				{
-					"institutions":
-						{
-							"embebed":"instituciones-univ"
-						,	"embebed_key":"PROVINCIA"
-						}
-				}
 		}
 ,	"instituciones-univ":
 		{
@@ -26,21 +18,6 @@
 				,	"address":	"DIRECCION"
 				,	"city":	"CIUDAD"
 				,	"provincia":"PROVINCIA"
-				}
-		,	"transforms":
-				{
-					"provincia_e":
-						{
-							"key":"provincia"
-						,	"embeded":"provincias"
-						,	"embeded_key":"id"
-						}
-				,	"provincia_l":
-						{
-							"key":"provincia"
-						,	"linked":"provincias"
-						,	"linked_key":"id"
-						}
 				}
 		}
 }

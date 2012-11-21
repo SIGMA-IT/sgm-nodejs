@@ -1,0 +1,25 @@
+{
+	"provincias":
+		{
+			"institutions":
+					{
+						"embeded":"instituciones-univ"
+					,	"embeded_key":"provincia"
+					}
+		}
+,	"instituciones-univ":
+		{
+			"provincia":
+				{
+					"key":"provincia"
+				,	"embeded":"provincias"
+				,	"embeded_key":"id"
+				}
+		,	"provincia_link":
+				{
+					"key":"provincia"
+				,	"linked":"provincias"
+				,	"linked_key":"id"
+				}
+		}
+}
