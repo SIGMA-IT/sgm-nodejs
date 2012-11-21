@@ -48,28 +48,28 @@ ensureDir(
 			mappings
 		,	function(mapping,index)
 			{
-			sources[index]
-			=	{
-					csv:
-						csv()
-						.from.path(
-							program.input+'/'+index+'.csv'
-						,	{
-								header:true
-							,	columns:mapping.fields
-							}
-						)
-						.transform(
-							function(record)
-							{
-								if(!buffer[index])
-									buffer[index]=[]
-								else
-									buffer[index].push( record )
-							return	null
-							}
-						)
-				}
+				sources[index]
+				=	{
+						csv:
+							csv()
+							.from.path(
+								program.input+'/'+index+'.csv'
+							,	{
+									header:true
+								,	columns:mapping.fields
+								}
+							)
+							.transform(
+								function(record)
+								{
+									if(!buffer[index])
+										buffer[index]=[]
+									else
+										buffer[index].push( record )
+								return	null
+								}
+							)
+					}
 			}
 		)
 		_.each(
@@ -132,10 +132,15 @@ ensureDir(
 												}
 											)
 										}
+									,	link_single
+									=	function()
+										{
+										return	{href:tgt+'/'+what[src_key]}
+										}
 										source_item[transform_key]
 										=	is_single
 											?is_linked
-												?{link_me_please:'filter: '+tgt+'/'+tgt_key+' = '+src+'/'+src_key+'('+source_item[src_key]+')'}
+												?link_single()
 												:embed_single()
 											:embed_list()
 									}
