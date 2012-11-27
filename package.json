@@ -19,9 +19,10 @@
     "url": "git://github.com/SIGMA-IT/csv2json.git"
   },
   "dependencies": {
-    "csv": "0.2.3",
-    "commander": "latest",
-    "ensureDir": "latest",
-    "underscore": "latest"
+		"csv": "0.2.3"
+	,    "commander": "latest"
+	,    "ensureDir": "latest"
+	,    "underscore": "latest"
+	,    "amd-loader": "latest"
 	}
 }

@@ -1,3 +1,4 @@
+require('amd-loader')
 var	csv
 =	require('csv')
 ,	_
@@ -18,6 +19,8 @@ var	csv
 		.parse(process.argv)
 ,	ensureDir
 =	require('ensureDir')
+,	make_transformers
+=	require('./spec-transform.js')
 ,	mappings
 =	fsExists(program.mappings)
 		?require(program.mappings)
@@ -97,89 +100,7 @@ ensureDir(
 			}
 		)
 	var	transformers
-	=	(
-			function(find,filter,spec)
-			{
-			var	results={}
-				_.each(
-					spec
-				,	function(source_transform,index)
-					{
-						results[index]
-						=	function(what)
-							{
-							var	transformed
-							=	_(what).clone()
-							,	transformers
-							=	_(source_transform)
-								.reduce(
-									function(result,field_t,key)
-									{
-									var	make_transformer
-									=	function(field)
-										{
-										var	is_single
-										=	field.key!=undefined
-										,	is_linked
-										=	field.linked!=undefined
-										,	src
-										=	index
-										,	src_key
-										=	is_single
-												?field.key
-												:'id'
-										,	tgt
-										=	is_linked
-												?field.linked
-												:field.embeded
-										,	tgt_key
-										=	is_linked
-												?field.linked_key
-												:field.embeded_key
-										return	function(source_item,transform_key)
-											{
-											var	embed_single
-											=	function()
-												{
-												return	find(tgt,tgt_key,source_item[src_key])
-												}
-											,	embed_list
-											=	function()
-												{
-												return	filter(tgt,tgt_key,source_item[src_key])
-												}
-											,	link_single
-											=	function()
-												{
-												return	{href:tgt+'/'+what[src_key]}
-												}
-												source_item[transform_key]
-												=	is_single
-													?is_linked
-														?link_single()
-														:embed_single()
-													:embed_list()
-											}
-										}
-										result[key]=make_transformer(field_t)
-									return	result
-									}
-								,	{}
-								)
-								_(transformers)
-								.each(
-									function(t,k)
-									{
-										t(transformed,k)
-									}
-								)
-							return	transformed
-							}
-					}
-				)
-			return	results
-			}
-		)(store_find,store_filter,transforms)
+	=	make_transformers(_,{find:store_find,filter:store_filter},transforms)
 		_(sources)
 		.each(
 			function(source,index)
