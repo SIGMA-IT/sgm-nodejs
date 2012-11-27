@@ -12,8 +12,8 @@ var	csv
 ,	program
 =	require('commander')
 		.version('0.0.1')
-		.option('-i, --input <path>','input dir for csv data [./data/csv]',String,'./data/csv')
-		.option('-o, --output <path>','output dir for json data [./data/json]',String,'./data/json')
+		.option('-i, --input <path>','input dir for csv data [./data/raw]',String,'./data/raw')
+		.option('-o, --output <path>','output dir for json data [./data/csv]',String,'./data/csv')
 		.option('-m, --mappings <mappings.json>','text to csv parsing mappings  [./mappings.json]',String,'./mappings.json')
 		.parse(process.argv)
 ,	ensureDir
@@ -35,12 +35,12 @@ ensureDir(
 		console.log('output: '+program.output)
 	var	sources
 	=	{}
-	,	buffer
-	=	[]
 		_.each(
 			mappings
 		,	function(mapping,index)
 			{
+			var	is_first
+			=	true
 				sources[index]
 				=	{
 						csv:
@@ -48,43 +48,28 @@ ensureDir(
 							.from.path(
 								program.input+'/'+index+'.csv'
 							,	{
-									header:true
-								,	columns:mapping.fields
+									header:false
+								//,	columns:mapping.fields
+								,	columns:_.invert(mapping.fields)
 								}
 							)
 							.transform(
 								function(record)
 								{
-									if(!buffer[index])
-										buffer[index]=[]
-									else
-										buffer[index].push( record )
+									if(!is_first)
+										return	record
+									is_first=false
 								return	null
 								}
 							)
-					}
-			}
-		)
-		_(sources)
-		.each(
-			function(source,index)
-			{
-			var	out
-			=	fs.createWriteStream(program.output+'/'+index+'.json')
-				console.log('Processing: '+index)
-				source.csv
-				.on(
-					'end'
-				,	function()
-					{
-						out.write(
-							JSON.stringify(
-								buffer[index]
+							.to(
+								program.output+'/'+index+'.csv'
+							,	{
+									header:true
+								,	columns:_.invert(mapping.fields)
+								}
 							)
-						)
-						out.end()
 					}
-				)
 			}
 		)
 	}

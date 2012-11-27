@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "raw -> csv"
+node raw2csv.js
+echo "csv -> json"
+node csv2json.js
+echo "json -> hal"
+node json2hal.js
