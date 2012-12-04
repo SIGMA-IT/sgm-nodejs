@@ -28,7 +28,10 @@
 		,	"commander": "latest"
 		,	"ensureDir": "latest"
 		,	"underscore": "latest"
-		,	"amd-loader": "latest"
 		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
+		}
+	,	"devDependencies":
+		{
+			"qunit": "0.5.x"
 		}
 }
