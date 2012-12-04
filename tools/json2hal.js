@@ -19,7 +19,7 @@ var	csv
 ,	ensureDir
 =	require('ensureDir')
 ,	make_transformers
-=	require('./spec-transform.js').make_transformers
+=	require('../lib/spec-transform.js').make_transformers
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
@@ -76,7 +76,7 @@ ensureDir(
 		}
 		)
 	var	transformers
-	=	make_transformers(_,{find:store_find,filter:store_filter},transforms)
+	=	make_transformers(_)({find:store_find,filter:store_filter},transforms)
 		_(sources)
 		.each(
 			function(source,index)
