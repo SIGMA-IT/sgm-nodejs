@@ -12,7 +12,5 @@ results
 
 npm-debug.log
 
-node_modules
-tools/test/data/csv
-tools/test/data/json
-tools/test/data/hal
+tools/node_modules
+tools/test/data
