@@ -18,8 +18,12 @@ var	csv
 		.parse(process.argv)
 ,	ensureDir
 =	require('ensureDir')
+,	hal
+=	require('hal')
 ,	make_transformers
 =	require('../lib/spec-transform.js').make_transformers
+,	make_hal_builder
+=	require('../lib/hal_builder.js').make_hal_builder
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
@@ -75,15 +79,16 @@ ensureDir(
 					)
 		}
 		)
+
 	var	transformers
-	=	make_transformers(_)({find:store_find,filter:store_filter},transforms)
+	=	make_transformers(_)({find:store_find,filter:store_filter},transforms,make_hal_builder,hal)
+
 		_(sources)
 		.each(
 			function(source,index)
 			{
 			var	out
 			=	fs.createWriteStream(program.output+'/'+index+'.json')
-				console.log('Processing: '+index)
 				out.write(
 					JSON.stringify(
 						_(source)
