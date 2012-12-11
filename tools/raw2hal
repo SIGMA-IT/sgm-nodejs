@@ -1,17 +1,20 @@
 #!/bin/bash
+bindir=$(dirname $0)
+startdir=$(pwd)
+echo "bindir: $bindir"
 if test $# -eq 0 || test "$1" = "tests"
 then
-	base="./test"
+	base="$startdir/test"
 else
-	base="${1:-./}"
+	base="$startdir/$1"
 fi
 specs="${2:-$base/specs}"
 data="${3:-$base/data}"
 
 echo "raw -> csv" &&
-node raw2csv.js -i "$data/raw" -o "$data/csv" -m "$specs/mappings.json" &&
+node $bindir/raw2csv.js -i "$data/raw" -o "$data/csv" -m "$specs/mappings.json" &&
 echo "csv -> json" &&
-node csv2json.js -i "$data/csv" -o "$data/json" -m "$specs/mappings.json" &&
+node $bindir/csv2json.js -i "$data/csv" -o "$data/json" -m "$specs/mappings.json" &&
 echo "json -> hal" &&
-node json2hal.js -i "$data/json" -o "$data/hal" -t "$specs/transforms.json"
+node $bindir/json2hal.js -i "$data/json" -o "$data/hal" -t "$specs/transforms.json"
 
