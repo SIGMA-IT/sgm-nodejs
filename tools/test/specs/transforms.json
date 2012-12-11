@@ -9,6 +9,16 @@
 							,	"embeded_key":"provincia"
 							}
 				}
+		,	"collection":
+					{
+						"type":"scrollable"
+					,	"options":
+						{
+							"current_page":"2"
+						,	"items_per_page":"3"
+						,	"collection_url":"/instituciones-univ"
+						}
+					}
 		}
 ,	"instituciones-univ":
 		{

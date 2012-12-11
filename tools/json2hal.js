@@ -24,6 +24,10 @@ var	csv
 =	require('../lib/spec-transform.js').make_transformers
 ,	hal_builder
 =	require('../lib/hal_builder.js').make_hal_builder(_,hal)
+,	uritemplate
+=	require('../lib/uritemplates.js').parse
+,	collection_builder
+=	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
@@ -81,7 +85,7 @@ ensureDir(
 		)
 
 	var	transformers
-	=	make_transformers(_,hal_builder)({find:store_find,filter:store_filter},transforms,hal)
+	=	make_transformers(_,hal_builder,collection_builder)({find:store_find,filter:store_filter},transforms,hal,uritemplate)
 
 		_(sources)
 		.each(
