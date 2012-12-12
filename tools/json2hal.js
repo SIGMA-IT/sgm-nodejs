@@ -85,7 +85,7 @@ ensureDir(
 		)
 
 	var	transformers
-	=	make_transformers(_,hal_builder,collection_builder)({find:store_find,filter:store_filter},transforms,hal)
+	=	make_transformers(_,hal_builder,collection_builder,uritemplate)({find:store_find,filter:store_filter},transforms,hal)
 
 		_(sources)
 		.each(
