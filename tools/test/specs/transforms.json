@@ -14,7 +14,7 @@
 					"institutions":
 						{
 							"type":"has-many"
-						,	"target":"instituciones-univ"
+						,	"target":"institutions"
 						,	"target_key":"provincia"
 						,	"embeded":
 								{
@@ -37,20 +37,18 @@
 							,	"target_key":"provincia"
 							}
 				}
-		,	"collection":
-					{
-						"type":"scrollable"
-					,	"options":
-						{
-							"current_page":"2"
-						,	"items_per_page":"3"
-						,	"collection_url":"/instituciones-univ"
-						}
-					}
 		}
-,	"instituciones-univ":
+,	"institutions":
 		{
-			"associations":
+			"storage":
+				{
+					"name":"instituciones-univ"
+				}
+		,	"api":
+				{
+					"uri":"/api/data/institutions"
+				}
+		,	"associations":
 				{
 					"provincia":
 						{

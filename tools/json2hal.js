@@ -28,6 +28,8 @@ var	csv
 =	require('../lib/uritemplates.js').parse
 ,	collection_builder
 =	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
+,	transformers_factory
+=	make_transformers(_,hal,hal_builder,collection_builder,uritemplate)
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
@@ -69,34 +71,80 @@ ensureDir(
 				}
 			)
 		}
-		_.each(
-			transforms
-		,	function(transform,index)
+		_(transforms)
+		.each(
+			function(transform_spec,transform_entry)
 			{
-			var	input
-			=	JSON.parse(
-					fs.readFileSync(program.input+'/'+index+'.json','utf8')
+			//console.log(transform_entry,transform_spec)
+				_(transform_spec)
+				.defaults(
+					{
+						storage:
+							{
+								name:transform_entry
+							}
+					}
 				)
-			sources[index]
+			}
+		)
+		_(transforms)
+		.each(
+			function(transform_spec,transform_entry)
+			{
+			//console.log(transform_entry,transform_spec)
+				_(transform_spec)
+				.defaults(
+					{
+						api:
+							{
+								uri:'/'+transform_spec.storage.name
+							}
+					}
+				)
+			}
+		)
+		_(transforms)
+		.each(
+			function(transform_spec,transform_entry)
+			{
+			//console.log(transform_entry,transform_spec)
+				_(transform_spec.associations)
+				.each(
+					function(association)
+					{
+						if(	association.embeded
+						&&	(
+								association.embeded.type=="collection"
+							)
+						)	association.embeded.type="list"
+					}
+				)
+			}
+		)
+		_(transforms)
+		.each(
+			function(transform,name)
+			{
+				sources[name]
 				=	JSON.parse(
-						fs.readFileSync(program.input+'/'+index+'.json','utf8')
+						fs.readFileSync(program.input+'/'+transform.storage.name+'.json','utf8')
 					)
-		}
+			}
 		)
 
 	var	transformers
-	=	make_transformers(_,hal_builder,collection_builder,uritemplate)({find:store_find,filter:store_filter},transforms,hal)
+	=	transformers_factory({find:store_find,filter:store_filter},transforms)
 
 		_(sources)
 		.each(
-			function(source,index)
+			function(source,name)
 			{
 			var	out
-			=	fs.createWriteStream(program.output+'/'+index+'.json')
+			=	fs.createWriteStream(program.output+'/'+name+'.json')
 				out.write(
 					JSON.stringify(
 						_(source)
-						.map(transformers[index])
+						.map(transformers[name])
 					)
 				)
 			}
