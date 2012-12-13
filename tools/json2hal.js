@@ -97,7 +97,23 @@ ensureDir(
 					{
 						api:
 							{
-								uri:'/'+transform_spec.storage.name
+								"uri":'/'+transform_spec.storage.name
+							}
+					}
+				)
+				_(transform_spec.api)
+				.defaults(
+					{
+						"url":
+							{
+								"base":"/api"
+							,	"path":transform_entry
+							}
+					,	"templates":
+							{
+								"find_one":"{+base}{/path,id}"
+							,	"filter":"{+base}/"+transform_entry
+							,	"query":transform_entry+"{?query*}"
 							}
 					}
 				)

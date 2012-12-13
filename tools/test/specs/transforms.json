@@ -8,6 +8,11 @@
 		,	"api":
 				{
 					"uri":"/api/data/provincias"
+				,	"url":
+						{
+							"base":"/api/data"
+						,	"path":"provincias"
+						}
 				}
 		,	"associations":
 				{
