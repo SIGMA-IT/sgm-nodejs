@@ -112,7 +112,7 @@ ensureDir(
 					,	"templates":
 							{
 								"find_one":"{+base}{/path,id}"
-							,	"filter":"{+base}/"+transform_entry
+//							,	"filter":"{+base}/"+transform_entry
 							,	"query":transform_entry+"{?query*}"
 							}
 					}

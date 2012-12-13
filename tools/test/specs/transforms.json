@@ -25,7 +25,7 @@
 							"type":"has-many"
 						,	"target":"institutions"
 						,	"target_key":"provincia"
-						,	"template":"{+base}/institutions"
+						,	"template":"{+base}{/path}{/id}/institutions"
 						,	"embeded":
 								{
 									"type":"collection"
@@ -38,14 +38,6 @@
 										}
 								}
 						}
-				}
-		,	"embeded":
-				{
-					"institutions":
-							{
-								"target":"instituciones-univ"
-							,	"target_key":"provincia"
-							}
 				}
 		}
 ,	"institutions":
@@ -65,24 +57,6 @@
 						,	"target":"provincias"
 						,	"key":"provincia"
 						,	"embeded":"single"
-						}
-				}
-		,	"links":
-				{
-					"provincia":
-						{
-							"key":"provincia"
-						,	"target":"provincias"
-						,	"target_key":"id"
-						}
-				}
-		,	"embeded":
-				{
-					"provincia":
-						{
-							"key":"provincia"
-						,	"target":"provincias"
-						,	"target_key":"id"
 						}
 				}
 		}
