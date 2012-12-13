@@ -7,11 +7,15 @@
 				}
 		,	"api":
 				{
-					"uri":"/api/data/provincias"
-				,	"url":
+					"url":
 						{
 							"base":"/api/data"
 						,	"path":"provincias"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
 						}
 				}
 		,	"associations":
@@ -21,6 +25,7 @@
 							"type":"has-many"
 						,	"target":"institutions"
 						,	"target_key":"provincia"
+						,	"template":"{+base}/institutions"
 						,	"embeded":
 								{
 									"type":"collection"
@@ -51,7 +56,6 @@
 				}
 		,	"api":
 				{
-					"uri":"/api/data/institutions"
 				}
 		,	"associations":
 				{
