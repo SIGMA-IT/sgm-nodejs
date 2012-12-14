@@ -20,4 +20,47 @@
 				,	"provincia":"PROVINCIA"
 				}
 		}
+,	"facultades":
+		{
+			"fields":
+				{
+					"id":	"ID_FACULTAD"
+				,	"description":	"DESCRIPCION"
+				}
+		}
+,	"personas":
+		{
+			"fields":
+				{
+					"id":	"ID_PERSONA"
+				,	"first_name":	"NOMBRE"
+				,	"last_name":	"APELLIDO"
+				,	"tel":	"TELEFONO"
+				,	"fax":	"FAX"
+				,	"email":	"EMAIL"
+				,	"email2":	"EMAIL2"
+				,	"postal_code":	"COD_POSTAL"
+				,	"address":	"DIRECCION"
+				,	"city":	"CIUDAD"
+				,	"state":"PROVINCIA"
+				}
+		}
+,	"cargos":
+		{
+			"fields":
+				{
+					"id":	"ID_CARGO"
+				,	"description":	"DESCRIPCION"
+				}
+		}
+,	"persona_universidad_facultad_cargo":
+		{
+			"fields":
+				{
+					"id_universidad":	"ID_UNIVERSIDAD"
+				,	"id_facultad":	"ID_FACULTAD"
+				,	"id_persona":	"ID_PERSONA"
+				,	"id_cargo":	"ID_CARGO"
+				}
+		}
 }

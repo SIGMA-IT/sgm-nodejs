@@ -24,6 +24,7 @@
 						{
 							"type":"has-many"
 						,	"target":"institutions"
+						,	"target_key":"provincia"
 						,	"template":"{+base}{/path}{/id}/institutions"
 						,	"embeded":
 								{
@@ -33,6 +34,7 @@
 											"type":"scrollable"
 										,	"current_page":"2"
 										,	"items_per_page":"3"
+										,	"collection_url":"/instituciones-univ"
 										}
 								}
 						}
@@ -46,6 +48,16 @@
 				}
 		,	"api":
 				{
+					"url":
+						{
+							"base":"/api/data"
+						,	"path":"institutions"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
+						}
 				}
 		,	"associations":
 				{
@@ -54,6 +66,125 @@
 							"type":"belongs-to"
 						,	"target":"provincias"
 						,	"key":"provincia"
+						,	"embeded":"single"
+						}
+				}
+		}
+,	"personas":
+		{
+			"storage":
+				{
+					"name":"personas"
+				}
+		,	"api":
+				{
+					"url":
+						{
+							"base":"/api/data"
+						,	"path":"personas"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
+						}
+				}
+		,	"associations":
+				{
+					"provincia":
+						{
+							"type":"belongs-to"
+						,	"target":"provincias"
+						,	"key":"state"
+						,	"embeded":"single"
+						}
+				,	"institutions":
+						{
+							"type":"has-many"
+						,	"target":"institutions"
+						,	"through":"referentes"
+						,	"template":"{+base}{/path}{/id}/institutions"
+						,	"embeded":"list"
+						}
+				}
+		}
+,	"cargos":
+		{
+			"storage":
+				{
+					"name":"cargos"
+				}
+		}
+,	"facultades":
+		{
+			"storage":
+				{
+					"name":"facultades"
+				}
+		,	"api":
+				{
+					"url":
+						{
+							"base":"/api/data"
+						,	"path":"facultades"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
+						}
+				}
+		}
+,	"referentes":
+		{
+			"storage":
+				{
+					"name":"persona_universidad_facultad_cargo"
+				}
+		,	"api":
+				{
+					"url":
+						{
+							"base":"/api/data"
+						,	"path":"referentes"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
+						}
+				}
+		,	"associations":
+				{
+					"persona":
+						{
+							"type":"belongs-to"
+						,	"target":"personas"
+						,	"key":"id_persona"
+						,	"embeded":"single"
+						}
+				,	"univesidad":
+						{
+							"type":"belongs-to"
+						,	"target":"institutions"
+						,	"target_key":"id"
+						,	"key":"id_universidad"
+						,	"embeded":"single"
+						}
+				,	"cargo":
+						{
+							"type":"belongs-to"
+						,	"target":"cargos"
+						,	"target_key":"id"
+						,	"key":"id_cargo"
+						,	"embeded":"single"
+						}
+				,	"facultad":
+						{
+							"type":"belongs-to"
+						,	"target":"facultades"
+						,	"target_key":"id"
+						,	"key":"id_facultad"
 						,	"embeded":"single"
 						}
 				}
