@@ -24,7 +24,6 @@
 						{
 							"type":"has-many"
 						,	"target":"institutions"
-						,	"target_key":"provincia"
 						,	"template":"{+base}{/path}{/id}/institutions"
 						,	"embeded":
 								{
@@ -34,7 +33,6 @@
 											"type":"scrollable"
 										,	"current_page":"2"
 										,	"items_per_page":"3"
-										,	"collection_url":"/instituciones-univ"
 										}
 								}
 						}
@@ -53,7 +51,7 @@
 				{
 					"provincia":
 						{
-							"type":"has-one"
+							"type":"belongs-to"
 						,	"target":"provincias"
 						,	"key":"provincia"
 						,	"embeded":"single"
