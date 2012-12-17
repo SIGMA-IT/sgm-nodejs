@@ -160,7 +160,12 @@ ensureDir(
 				out.write(
 					JSON.stringify(
 						_(source)
-						.map(transformers[name])
+						.map(
+							function(item)
+							{
+							return	transformers[name](item).get_document()
+							}
+						)
 					)
 				)
 			}
