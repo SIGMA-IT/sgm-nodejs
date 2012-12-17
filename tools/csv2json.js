@@ -41,6 +41,8 @@ ensureDir(
 			mappings
 		,	function(mapping,index)
 			{
+			var	counter
+			=	1
 				sources[index]
 				=	{
 						csv:
@@ -55,6 +57,8 @@ ensureDir(
 							.transform(
 								function(record)
 								{
+									if(!record.id)
+										record.id=counter++
 									if(!buffer[index])
 										buffer[index]=[]
 									else

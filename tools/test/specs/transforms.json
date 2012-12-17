@@ -98,6 +98,13 @@
 						,	"key":"state"
 						,	"embeded":"single"
 						}
+				,	"linkeage":
+						{
+							"type":"has-many"
+						,	"target":"referentes"
+						,	"template":"{+base}{/path}{/id}/linkeage"
+						,	"embeded":"list"
+						}
 				,	"institutions":
 						{
 							"type":"has-many"
