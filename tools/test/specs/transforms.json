@@ -40,6 +40,36 @@
 						}
 				}
 		}
+,	"states":
+		{
+			"storage":
+				{
+					"name":"provincias"
+				}
+		,	"api":
+				{
+					"url":
+						{
+							"base":"/api/data"
+						,	"path":"states"
+						}
+				,	"templates":
+						{
+							"find_one":"{+base}{/path,id}"
+						,	"query":"{+base}{?query*}"
+						}
+				}
+		,	"associations-commented":
+				{
+					"country":
+						{
+							"type":"belongs-to"
+						,	"target":"countries"
+						,	"key":"id_country"
+						,	"embeded":false
+						}
+				}
+		}
 ,	"institutions":
 		{
 			"storage":
@@ -61,10 +91,10 @@
 				}
 		,	"associations":
 				{
-					"provincia":
+					"state":
 						{
 							"type":"belongs-to"
-						,	"target":"provincias"
+						,	"target":"states"
 						,	"key":"provincia"
 						,	"embeded":"single"
 						}
@@ -94,7 +124,7 @@
 					"provincia":
 						{
 							"type":"belongs-to"
-						,	"target":"provincias"
+						,	"target":"states"
 						,	"key":"state"
 						,	"embeded":"single"
 						}
@@ -168,7 +198,7 @@
 							"type":"belongs-to"
 						,	"target":"personas"
 						,	"key":"id_persona"
-						,	"embeded":"single"
+						,	"embeded":"partial"
 						}
 				,	"univesidad":
 						{
@@ -176,7 +206,7 @@
 						,	"target":"institutions"
 						,	"target_key":"id"
 						,	"key":"id_universidad"
-						,	"embeded":"single"
+						,	"embeded":"partial"
 						}
 				,	"cargo":
 						{
@@ -184,7 +214,7 @@
 						,	"target":"cargos"
 						,	"target_key":"id"
 						,	"key":"id_cargo"
-						,	"embeded":"single"
+						,	"embeded":"partial"
 						}
 				,	"facultad":
 						{
@@ -192,7 +222,7 @@
 						,	"target":"facultades"
 						,	"target_key":"id"
 						,	"key":"id_facultad"
-						,	"embeded":"single"
+						,	"embeded":"partial"
 						}
 				}
 		}
