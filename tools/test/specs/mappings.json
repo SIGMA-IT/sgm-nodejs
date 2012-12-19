@@ -104,9 +104,9 @@
 					"id":"ID_PROGRAMA_AREA"
 				,	"id_programa":"ID_PROGRAMA"
 				,	"id_nombre_programa":"ID_NOMBRE_PROGRAMA"
-				,	"nombre_programa":"NOMBRE_PROGRAMA"
+				,	"_nombre_programa":"NOMBRE_PROGRAMA"
 				,	"id_area_accion":"ID_AREA_ACCION"
-				,	"area_accion":	"AREA_ACCION"
+				,	"_area_accion":	"AREA_ACCION"
 			}	
 	}
 ,	"programas":
@@ -117,15 +117,15 @@
 				,	"id_nombre_programa":"ID_NOMBRE_PROGRAMA"
 				,	"nombre_programa":"NOMBRE_PROGRAMA"
 				,	"id_pais":"ID_PAIS"
-				,	"pais":	"PAIS"
+				,	"_pais":	"PAIS"
 				,	"id_plan":"ID_PLAN"
-				,	"plan":	"PLAN"
+				,	"_plan":	"PLAN"
 				,	"id_tipo_iniciativa":"ID_TIPO_INICIATIVA"
-				,	"tipo_iniciativa":"TIPO_INICIATIVA"
+				,	"_tipo_iniciativa":"TIPO_INICIATIVA"
 				,	"objetivos":"OBJETIVOS"
 				,	"impacto":"IMPACTO"
 				,	"id_area_accion":"ID_AREA_ACCION"
-				,	"area_accion":	"AREA_ACCION"
+				,	"_area_accion":	"AREA_ACCION"
 				,	"evaluacion_y_diagnostico":	"EVALUACION_Y_DIAGNOSTICO"
 				,	"estado_avance":"ESTADO_AVANCE"
 				,	"adjuntos":	"ADJUNTOS"
@@ -152,7 +152,7 @@
 				,	"id_centro":"ID_CENTRO"
 				,	"n_centro":"N_CENTRO"
 				,	"id_lugar":"ID_LUGAR"
-				,	"tipo_importancia_informe":"TIPO_IMPORTANCIA"
+				,	"_tipo_importancia_informe":"TIPO_IMPORTANCIA"
 				,	"id_tipo_importancia_informe":"ID_TIPO_IMPORTANCIA"
 				,	"n_grupo_nivel_titulo":"N_GRUPO_NIVEL_TITULO"
 			}	
@@ -166,10 +166,10 @@
 				,	"objetivos":"OBJETIVOS"
 				,	"impacto":"IMPACTO"
 				,	"id_area_accion":"ID_AREA_ACCION"
-				,	"area_accion":"AREA_ACCION"
+				,	"_area_accion":"AREA_ACCION"
 				,	"evaluacion_y_diagnostico":"EVALUACION_Y_DIAGNOSTICO"
 				,	"id_estado_avance":"ID_ESTADO_AVANCE"
-				,	"estado_avance":"ESTADO_AVANCE"
+				,	"_estado_avance":"ESTADO_AVANCE"
 				,	"adjuntos":"ADJUNTOS"
 				,	"fecha_inicio":"FECHA_INICIO"
 				,	"fecha_fin":"FECHA_FIN"
@@ -183,7 +183,7 @@
 				,	"actividad":"ACTIVIDAD"
 				,	"id_programa":"ID_PROGRAMA"
 				,	"id_nombre_programa":"ID_NOMBRE_PROGRAMA"
-				,	"nombre_programa":"NOMBRE_PROGRAMA"
+				,	"_nombre_programa":"NOMBRE_PROGRAMA"
 			}
 	}
 ,	"consolidado_programas_2012":
@@ -194,9 +194,9 @@
 				,	"nombre_plan":"NOMBRE_PLAN"
 				,	"id_programa":"ID_PROGRAMA"
 				,	"id_nombre_programa":"ID_NOMBRE_PROGRAMA"
-				,	"nombre_programa":"NOMBRE_PROGRAMA"
+				,	"_nombre_programa":"NOMBRE_PROGRAMA"
 				,	"id_actividad":"ID_ACTIVIDAD"
-				,	"nombre_actividad":"NOMBRE_ACTIVIDAD"
+				,	"_nombre_actividad":"NOMBRE_ACTIVIDAD"
 				,	"anio":"ANIO"
 				,	"pea":"PEA"
 				,	"id_centro":"ID_CENTRO"
@@ -208,9 +208,9 @@
 				,	"planta":"PLANTA"
 				,	"n_centro":"N_CENTRO"
 				,	"id_pais":"ID_PAIS"
-				,	"pais":"PAIS"
+				,	"_pais":"PAIS"
 				,	"id_region":"ID_REGION"
-				,	"region":"REGION"
+				,	"_region":"REGION"
 			}
 	}	
 }
