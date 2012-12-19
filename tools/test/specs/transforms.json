@@ -200,7 +200,7 @@
 						,	"key":"id_persona"
 						,	"embeded":"partial"
 						}
-				,	"univesidad":
+				,	"universidad":
 						{
 							"type":"belongs-to"
 						,	"target":"institutions"
@@ -226,4 +226,233 @@
 						}
 				}
 		}
+,	"paises":
+	{
+		"storage":
+			{
+				"name":"paises"
+			}
+	}
+,	"regiones":
+	{
+		"storage":
+			{
+				"name":"regiones"
+			}
+	}
+,	"areas":
+	{
+		"storage":
+			{
+				"name":"areas"
+			}
+	}
+,	"nombres-prog":
+	{
+		"storage":
+			{
+				"name":"nombre_programa"
+			}
+	}
+,	"programa-area-accion":
+	{
+		"storage":
+			{
+				"name":"programa_area_accion"
+			}
+	}
+,	"programas":
+	{
+		"storage":
+			{
+				"name":"programas"
+			}
+	,	"api":
+			{
+				"url":
+					{
+						"base":"/api/data"
+					,	"path":"programas"
+					}
+			,	"templates":
+					{
+						"find_one":"{+base}{/path,id}"
+					,	"query":"{+base}{?query*}"
+					}
+			}
+	,	"associations":
+				{
+					"nombre_programa":
+						{
+							"type":"belongs-to"
+						,	"target":"nombres-prog"
+						,	"key":"id_nombre_programa"
+						,	"embeded":"single"
+						}
+				,	"pais":
+						{
+							"type":"belongs-to"
+						,	"target":"paises"
+						,	"key":"id_pais"
+						,	"embeded":"single"
+						}
+				,	"plan":
+						{
+							"type":"belongs-to"
+						,	"target":"planes"
+						,	"key":"id_plan"
+						,	"embeded":"single"
+						}
+				,	"tipo_iniciativa":
+						{
+							"type":"belongs-to"
+						,	"target":"tipos-inic"
+						,	"key":"id_tipo_iniciativa"
+						,	"embeded":"single"
+						}
+				,	"area_accion":
+						{
+							"type":"belongs-to"
+						,	"target":"areas"
+						,	"key":"id_area_accion"
+						,	"embeded":"single"
+						}
+				}
+	}
+,	"tipos-inic":
+	{
+		"storage":
+			{
+				"name":"tipo_iniciativa"
+			}
+	}
+,	"universidades":
+	{
+		"storage":
+			{
+				"name":"universidades"
+			}
+	}
+,	"planes":
+	{
+		"storage":
+			{
+				"name":"planes"
+			}
+	,	"api":
+			{
+				"url":
+					{
+						"base":"/api/data"
+					,	"path":"planes"
+					}
+			,	"templates":
+					{
+						"find_one":"{+base}{/path,id}"
+					,	"query":"{+base}{?query*}"
+					}
+			}
+	,	"associations":
+				{
+					"area_accion":
+						{
+							"type":"belongs-to"
+						,	"target":"areas"
+						,	"key":"id_area_accion"
+						,	"embeded":"single"
+						}
+				}
+	}
+,	"actividades":
+	{
+		"storage":
+			{
+				"name":"actividades"
+			}
+	,	"api":
+			{
+				"url":
+					{
+						"base":"/api/data"
+					,	"path":"actividades"
+					}
+			,	"templates":
+					{
+						"find_one":"{+base}{/path,id}"
+					,	"query":"{+base}{?query*}"
+					}
+			}
+	}
+,	"consolidado":
+	{
+		"storage":
+			{
+				"name":"consolidado_programas_2012"
+			}
+	,	"api":
+			{
+				"url":
+					{
+						"base":"/api/data"
+					,	"path":"consolidado"
+					}
+			,	"templates":
+					{
+						"find_one":"{+base}{/path,id}"
+					,	"query":"{+base}{?query*}"
+					}
+			}
+	,	"associations":
+				{
+					"plan":
+						{
+							"type":"belongs-to"
+						,	"target":"planes"
+						,	"key":"id_plan"
+						,	"embeded":"single"
+						}
+				,	"programa":
+						{
+							"type":"belongs-to"
+						,	"target":"programas"
+						,	"key":"id_programa"
+						,	"embeded":"single"
+						}
+				,	"nombre_programa":
+						{
+							"type":"belongs-to"
+						,	"target":"nombres-prog"
+						,	"key":"id_nombre_programa"
+						,	"embeded":"single"
+						}
+				,	"actividad":
+						{
+							"type":"belongs-to"
+						,	"target":"actividades"
+						,	"key":"id_actividad"
+						,	"embeded":"single"
+						}
+				,	"universidad":
+						{
+							"type":"belongs-to"
+						,	"target":"universidades"
+						,	"key":"id_centro"
+						,	"embeded":"single"
+						}
+				,	"pais":
+						{
+							"type":"belongs-to"
+						,	"target":"paises"
+						,	"key":"pais"
+						,	"embeded":"single"
+						}
+				,	"region":
+						{
+							"type":"belongs-to"
+						,	"target":"regiones"
+						,	"key":"region"
+						,	"embeded":"single"
+						}	
+				}
+	}
 }
