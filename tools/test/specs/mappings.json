@@ -141,6 +141,7 @@
 			{
 					"id":"ID_TIPO_INICIATIVA"
 				,	"tipo_iniciativa":"TIPO_INICIATIVA"
+				,	"comentario":"COMENTARIO"
 			}
 	}
 ,	"universidades":
@@ -148,7 +149,7 @@
 		"fields":
 			{
 					"id_centro_informe":"ID_CENTRO_INFORME"
-				,	"id":"ID_CENTRO"
+				,	"id_centro":"ID_CENTRO"
 				,	"n_centro":"N_CENTRO"
 				,	"id_lugar":"ID_LUGAR"
 				,	"tipo_importancia_informe":"TIPO_IMPORTANCIA"

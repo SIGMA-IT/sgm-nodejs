@@ -331,6 +331,13 @@
 						,	"key":"id_area_accion"
 						,	"embeded":"single"
 						}
+				,	"programas":
+						{
+							"type":"has-many"
+						,	"target":"programas"
+						,	"template":"{+base}{/path}{/id}/programas"
+						,	"embeded":"list"
+						}
 				}
 	}
 ,	"actividades":
