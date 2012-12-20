@@ -20,6 +20,8 @@ var	connect
 =	require('hal')
 ,	make_transformers
 =	require('../lib/spec-transform.js').make_transformers
+,	make_assocs
+=	require('../lib/assoc-transforms.js').make_assoc_transformer
 ,	hal_builder
 =	require('../lib/hal_builder.js').make_hal_builder(_,hal)
 ,	uritemplate
@@ -27,7 +29,7 @@ var	connect
 ,	collection_builder
 =	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
 ,	transformers_factory
-=	make_transformers(_,hal,hal_builder,collection_builder,uritemplate)
+=	make_transformers(_,hal,hal_builder,collection_builder,uritemplate,make_assocs(_,collection_builder))
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
@@ -147,7 +149,7 @@ var	sources
 		=	transformers_factory({find:store_find,filter:store_filter},transforms)
 connect()
 .use(connect.logger('dev'))
-.use(connect.favicon(__dirname+'/..public/favicon.ico'))
+.use(connect.favicon(__dirname+'/../public/favicon.ico'))
 .use(
 	function(req,res)
 	{
