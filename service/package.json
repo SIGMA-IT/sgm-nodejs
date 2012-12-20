@@ -1,0 +1,35 @@
+{
+		"name": "hal-data-service"
+	,	"version": "0.0.1"
+	,	"description": "HAL data service"
+	,	"author": "Gabriel Pittau <gpittau@gmail.com>"
+	,	"contributors":
+			[
+			]
+	,	"engines":
+			{
+				"node": ">= 0.6.0"
+			}
+	,	"keywords":
+		[
+			"json"
+		,	"hal"
+		,	"hypermedia"
+		,	"server"
+		]
+	,	"repository":
+		{
+			"type": "git"
+		,	"url": "git://github.com/SIGMA-IT/sgm-nodejs.git"
+		}
+	,	"dependencies":
+		{
+			"commander": "latest"
+		,	"connect": "latest"
+		,	"underscore": "latest"
+		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
+		}
+	,	"devDependencies":
+		{
+		}
+}

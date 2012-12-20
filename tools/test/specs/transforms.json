@@ -5,19 +5,6 @@
 				{
 					"name":"provincias"
 				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"provincias"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
-				}
 		,	"associations":
 				{
 					"institutions":
@@ -46,19 +33,6 @@
 				{
 					"name":"provincias"
 				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"states"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
-				}
 		,	"associations-commented":
 				{
 					"country":
@@ -76,19 +50,6 @@
 				{
 					"name":"instituciones-univ"
 				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"institutions"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
-				}
 		,	"associations":
 				{
 					"state":
@@ -105,19 +66,6 @@
 			"storage":
 				{
 					"name":"personas"
-				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"personas"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
 				}
 		,	"associations":
 				{
@@ -158,38 +106,12 @@
 				{
 					"name":"facultades"
 				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"facultades"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
-				}
 		}
 ,	"referentes":
 		{
 			"storage":
 				{
 					"name":"persona_universidad_facultad_cargo"
-				}
-		,	"api":
-				{
-					"url":
-						{
-							"base":"/api/data"
-						,	"path":"referentes"
-						}
-				,	"templates":
-						{
-							"find_one":"{+base}{/path,id}"
-						,	"query":"{+base}{?query*}"
-						}
 				}
 		,	"associations":
 				{
@@ -267,19 +189,6 @@
 			{
 				"name":"programas"
 			}
-	,	"api":
-			{
-				"url":
-					{
-						"base":"/api/data"
-					,	"path":"programas"
-					}
-			,	"templates":
-					{
-						"find_one":"{+base}{/path,id}"
-					,	"query":"{+base}{?query*}"
-					}
-			}
 	,	"associations":
 				{
 					"nombre_programa":
@@ -339,19 +248,6 @@
 			{
 				"name":"planes"
 			}
-	,	"api":
-			{
-				"url":
-					{
-						"base":"/api/data"
-					,	"path":"planes"
-					}
-			,	"templates":
-					{
-						"find_one":"{+base}{/path,id}"
-					,	"query":"{+base}{?query*}"
-					}
-			}
 	,	"associations":
 				{
 					"area_accion":
@@ -369,38 +265,12 @@
 			{
 				"name":"actividades"
 			}
-	,	"api":
-			{
-				"url":
-					{
-						"base":"/api/data"
-					,	"path":"actividades"
-					}
-			,	"templates":
-					{
-						"find_one":"{+base}{/path,id}"
-					,	"query":"{+base}{?query*}"
-					}
-			}
 	}
 ,	"consolidado":
 	{
 		"storage":
 			{
 				"name":"consolidado_programas_2012"
-			}
-	,	"api":
-			{
-				"url":
-					{
-						"base":"/api/data"
-					,	"path":"consolidado"
-					}
-			,	"templates":
-					{
-						"find_one":"{+base}{/path,id}"
-					,	"query":"{+base}{?query*}"
-					}
 			}
 	,	"associations":
 				{
@@ -452,7 +322,7 @@
 						,	"target":"regiones"
 						,	"key":"region"
 						,	"embeded":"single"
-						}	
+						}
 				}
 	}
 }
