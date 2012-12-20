@@ -48,13 +48,15 @@ var	sources
 ,	store_filter
 =	function(what,by_key,by_id)
 	{
-	return	_(sources[what])
-		.filter(
-			function(item)
-			{
-			return	item[by_key]==by_id
-			}
-		)
+	return	(by_key&&by_id)
+			?_(sources[what])
+			.filter(
+				function(item)
+				{
+				return	item[by_key]==by_id
+				}
+			)
+			:sources[what]
 	}
 ,	store_find
 =	function(what,by_key,id_to_find)
@@ -131,6 +133,9 @@ var	sources
 									association.embeded.type=="collection"
 								)
 							)	association.embeded.type="list"
+							//ATENTI!!! PARCHE ROÑOSOOOO
+							if(	association.type=="has-many"
+							)	association.template="{protocol}://{host}:{port}{+base}{/path,id}/"+association.target
 						}
 					)
 				}
@@ -168,15 +173,30 @@ connect()
 		{
 		var	collection
 		=	parts[1]
-		,	item_id
-		=	parts[2]
-		,	item
-		=	store_find(collection,'id',item_id)
-			res.end(
-				JSON.stringify(
-					transformers[collection](item).get_document()
+		,	transformer
+		=	transformers[collection]
+			if(transformer)
+			{
+			var	item_id
+			=	parts[2]
+			var	item
+			=	(
+					item_id
+				&&	store_find(collection,'id',item_id)
 				)
-			)
+			||	false
+				res.end(
+					JSON.stringify(
+						transformer(item).get_document()
+					)
+				)
+			}
+			else
+			{
+				res.writeHead(404, {"Content-Type": "text/plain"});
+				res.write("404 Not found");
+				res.end();
+			}
 		}
 		else
 		{
