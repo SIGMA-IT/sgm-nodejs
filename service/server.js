@@ -48,25 +48,62 @@ var	sources
 ,	store_filter
 =	function(what,by_key,by_id)
 	{
-	return	(by_key&&by_id)
-			?_(sources[what])
-			.filter(
-				function(item)
-				{
-				return	item[by_key]==by_id
-				}
-			)
-			:sources[what]
+	var	cb
+	=	_.last(arguments)
+		cb(
+			(by_key&&by_id)
+				?_(sources[what])
+				.filter(
+					function(item)
+					{
+					return	item[by_key]==by_id
+					}
+				)
+				:sources[what]
+		)
 	}
 ,	store_find
 =	function(what,by_key,id_to_find)
 	{
-	return	_(sources[what])
-		.find(
-			function(item)
-			{
-			return	item[by_key]==id_to_find
-			}
+	var	cb
+	=	_.last(arguments)
+console.log(cb,arguments)
+		cb(
+			_(sources[what])
+			.find(
+				function(item)
+				{
+				return	item[by_key]==id_to_find
+				}
+			)
+		)
+	}
+,	store_filter_through
+=	function(what,by_key,through,throug_key,through_id)
+	{
+	var	cb
+	=	_.last(arguments)
+		cb(
+			_(
+				_(sources[what])
+				.filter(
+					function(item)
+					{
+					return	item[by_key]==through_id
+					}
+				)
+			).map(
+				function(item_th)
+				{
+					_(sources[through])
+					.find(
+						function(item_tg)
+						{
+						return	item_th[through_key]==item_tg.id
+						}
+					)
+				}
+			)
 		)
 	}
 			_(transforms)
@@ -179,16 +216,18 @@ connect()
 			{
 			var	item_id
 			=	parts[2]
-			var	item
-			=	(
-					item_id
-				&&	store_find(collection,'id',item_id)
-				)
-			||	false
-				res.end(
-					JSON.stringify(
-						transformer(item).get_document()
-					)
+				store_find(
+					collection
+				,	'id'
+				,	item_id
+				,	function(item)
+					{
+						res.end(
+							JSON.stringify(
+								transformer(item).get_document()
+							)
+						)
+					}
 				)
 			}
 			else
