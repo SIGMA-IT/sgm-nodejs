@@ -188,7 +188,7 @@ console.log(cb,arguments)
 				}
 			)
 		var	transformers
-		=	transformers_factory({find:store_find,filter:store_filter},transforms)
+		=	transformers_factory({find:store_find,filter:store_filter,filter_through:store_filter_through},transforms)
 connect()
 .use(connect.logger('dev'))
 .use(connect.favicon(__dirname+'/../public/favicon.ico'))
