@@ -57,6 +57,19 @@ ensureDir(
 							.transform(
 								function(record)
 								{
+                                                                  record
+                                                                 =	_(record)
+                                                                            .omit(
+                                                                                 _(
+                                                                                             _(record)
+                                                                                              .keys()
+                                                                                        ).filter(
+                                                                                              function(k)
+                                                                                            {
+                                                                                              return	_.first(k)=='_'
+                                                                                         }
+                                                                                      )
+                                                                              )
 									if(!record.id)
 										record.id=counter++
 									if(!buffer[index])
