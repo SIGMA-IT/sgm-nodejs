@@ -46,62 +46,50 @@ var	sources
 ,	store
 =	{}
 ,	store_filter
-=	function(what,by_key,by_id)
+=	function(what,filter,callback)
 	{
-	var	cb
-	=	_.last(arguments)
-		cb(
-			(by_key&&by_id)
-				?_(sources[what])
-				.filter(
-					function(item)
+		callback(
+			filter.through
+				?_(
+					_(sources[what])
+					.filter(
+						function(item)
+						{
+						return	item[filter.key]==filter.through.id
+						}
+					)
+				).map(
+					function(item_th)
 					{
-					return	item[by_key]==by_id
+						_(sources[filter.through.name])
+						.find(
+							function(item_tg)
+							{
+							return	item_th[filter.through.key]==item_tg.id
+							}
+						)
 					}
 				)
-				:sources[what]
+				:(filter.key&&filter.id)
+					?_(sources[what])
+					.filter(
+						function(item)
+						{
+						return	item[filter.key]==filter.id
+						}
+					)
+					:sources[what]
 		)
 	}
 ,	store_find
-=	function(what,by_key,id_to_find)
+=	function(what,filter,callback)
 	{
-	var	cb
-	=	_.last(arguments)
-console.log(cb,arguments)
-		cb(
+		callback(
 			_(sources[what])
 			.find(
 				function(item)
 				{
-				return	item[by_key]==id_to_find
-				}
-			)
-		)
-	}
-,	store_filter_through
-=	function(what,by_key,through,throug_key,through_id)
-	{
-	var	cb
-	=	_.last(arguments)
-		cb(
-			_(
-				_(sources[what])
-				.filter(
-					function(item)
-					{
-					return	item[by_key]==through_id
-					}
-				)
-			).map(
-				function(item_th)
-				{
-					_(sources[through])
-					.find(
-						function(item_tg)
-						{
-						return	item_th[through_key]==item_tg.id
-						}
-					)
+				return	item[filter.key]==filter.id
 				}
 			)
 		)
@@ -197,51 +185,24 @@ connect()
 	{
 	var	parsed
 	=	parseUri(req.url)
-	,	base
-	=	'/api/data'
-	,	base_parts
-	=	parsed.path.match(RegExp('^'+base+'(.*)$'))
-	,	parts
-	=	base_parts
-			?base_parts[1].match(/^(?:\/([^\/]+))?(?:\/([^\/]+))?(?:\/([^\/]+))?\/?$/)
-			:false
-		//console.log('url: ',parseUri(req.url))
-		if(parts)
-		{
-		var	collection
-		=	parts[1]
-		,	transformer
-		=	transformers[collection]
-			if(transformer)
+		transformers.route(
+			parsed
+		,	false
+		,	function(result)
 			{
-			var	item_id
-			=	parts[2]
-				store_find(
-					collection
-				,	'id'
-				,	item_id
-				,	function(item)
-					{
-						res.end(
-							JSON.stringify(
-								transformer(item).get_document()
-							)
+				if(_.isObject(result))
+					res.end(
+						JSON.stringify(
+							result
 						)
-					}
-				)
+					)
+				else
+				{
+					res.writeHead(result, {"Content-Type": "text/plain"});
+					//res.write("404 Not found");
+					res.end();
+				}
 			}
-			else
-			{
-				res.writeHead(404, {"Content-Type": "text/plain"});
-				res.write("404 Not found");
-				res.end();
-			}
-		}
-		else
-		{
-			res.writeHead(404, {"Content-Type": "text/plain"});
-			res.write("404 Not found");
-		    res.end();
-		}
+		)
 	}
 ).listen(program.port)

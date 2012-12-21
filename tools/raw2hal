@@ -15,6 +15,7 @@ echo "raw -> csv" &&
 node $bindir/raw2csv.js -i "$data/raw" -o "$data/csv" -m "$specs/mappings.json" &&
 echo "csv -> json" &&
 node $bindir/csv2json.js -i "$data/csv" -o "$data/json" -m "$specs/mappings.json" &&
+exit 0
 echo "json -> hal" &&
 node $bindir/json2hal.js -i "$data/json" -o "$data/hal" -t "$specs/transforms.json"
 
