@@ -48,8 +48,8 @@ var	sources
 ,	store_filter
 =	function(what,filter,callback)
 	{
-		callback(
-			filter.through
+		var filtered
+		=	filter.through
 				?_(
 					_(sources[what])
 					.filter(
@@ -79,12 +79,15 @@ var	sources
 						}
 					)
 					:sources[what]
-		)
+		return _.isFunction(callback)
+			?callback(filtered)
+			:filtered
 	}
 ,	store_find
 =	function(what,filter,callback)
 	{
-		callback(
+		var found
+		= 
 			_(sources[what])
 			.find(
 				function(item)
@@ -92,7 +95,10 @@ var	sources
 				return	item[filter.key]==filter.id
 				}
 			)
-		)
+
+		return _.isFunction(callback)
+			?callback(found)
+			:found
 	}
 			_(transforms)
 			.each(
