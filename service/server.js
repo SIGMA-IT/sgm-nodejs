@@ -17,7 +17,7 @@ var	connect
 
 var	_ //underscore+string
 =	require('underscore')
-	_.mixin(require('underscore.string').exports())
+//	_.mixin(require('underscore.string').exports())
 var	Overscore
 =	require('../lib/overscore.js')(_)
 	//require('../lib/underscore-data.js')
@@ -25,7 +25,7 @@ var	Overscore
 	eval(fs.readFileSync('../lib/parseuri.js')+'')
 //---------------------------------------------------
 var	hal
-=	require('hal')
+=	require('hal')	
 ,	hal_builder
 =	require('../lib/hal_builder.js').make_hal_builder(_,hal)
 ,	uritemplate
