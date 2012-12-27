@@ -1,8 +1,6 @@
 //require('amd-loader')
 var	connect
 =	require('connect')
-,	_
-=	require('underscore')
 ,	path
 =	require('path')
 ,	fs
@@ -16,90 +14,68 @@ var	connect
 		.option('-t, --transforms <transforms.json>','linking and embeding transforms [./transforms.json]',String,'./transforms.json')
 		.option('-p, --port <8000>','port [8000]',Number,8000)
 		.parse(process.argv)
-,	hal
+
+var	_ //underscore+string
+=	require('underscore')
+	_.mixin(require('underscore.string').exports())
+var	Overscore
+=	require('../lib/overscore.js')(_)
+	//require('../lib/underscore-data.js')
+//parseUri------------------------------------------
+	eval(fs.readFileSync('../lib/parseuri.js')+'')
+//---------------------------------------------------
+var	hal
 =	require('hal')
-,	make_transformers
-=	require('../lib/spec-transform.js').make_transformers
-,	make_assocs
-=	require('../lib/assoc-transforms.js').make_assoc_transformer
 ,	hal_builder
 =	require('../lib/hal_builder.js').make_hal_builder(_,hal)
 ,	uritemplate
 =	require('../lib/uritemplates.js').parse
 ,	collection_builder
 =	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
-,	transformers_factory
-=	make_transformers(_,hal,hal_builder,collection_builder,uritemplate,make_assocs(_,collection_builder))
+,	AssociationsTransformers
+=	require('../lib/assoc-transforms.js')(_)
+,	SpecTransforms
+=	require('../lib/spec-transform.js')(
+			_
+		,	hal
+		,	hal_builder
+		,	collection_builder
+		,	uritemplate
+		,	parseUri
+		,	AssociationsTransformers
+		)
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
 		:false
-	eval(fs.readFileSync('../lib/parseuri.js')+'')
 if(!fsExists(program.input))
 	throw 'error: '+program.input+' no exists'
 console.log('input: '+program.input)
 if(!transforms)
 	throw 'error: '+program.transforms+' no exists'
 console.log('transforms: '+program.transforms)
-var	sources
-=	{}
+var	Store
+=	require('../lib/store.js')(_)
 ,	store
-=	{}
-,	store_filter
-=	function(what,filter,callback)
-	{
-		var filtered
-		=	filter.through
-				?_(
-					_(sources[what])
-					.filter(
-						function(item)
-						{
-						return	item[filter.key]==filter.through.id
-						}
-					)
-				).map(
-					function(item_th)
-					{
-						_(sources[filter.through.name])
-						.find(
-							function(item_tg)
-							{
-							return	item_th[filter.through.key]==item_tg.id
-							}
-						)
-					}
-				)
-				:(filter.key&&filter.id)
-					?_(sources[what])
-					.filter(
-						function(item)
-						{
-						return	item[filter.key]==filter.id
-						}
-					)
-					:sources[what]
-		return _.isFunction(callback)
-			?callback(filtered)
-			:filtered
-	}
-,	store_find
-=	function(what,filter,callback)
-	{
-		var found
-		= 
-			_(sources[what])
-			.find(
-				function(item)
-				{
-				return	item[filter.key]==filter.id
-				}
+=	new	Store(
+		_(transforms)
+		.objMap(
+			function(transform,name)
+			{
+			return	program.input
+			+	'/'
+			+	transform.storage.name
+			+	'.json'
+			}
+		)
+	,	function(what)
+		{
+		return	JSON
+			.parse(
+				fs.readFileSync(what,'utf8')
 			)
-
-		return _.isFunction(callback)
-			?callback(found)
-			:found
-	}
+		}
+	)
 			_(transforms)
 			.each(
 				function(transform_spec,transform_entry)
@@ -114,13 +90,6 @@ var	sources
 								}
 						}
 					)
-				}
-			)
-			_(transforms)
-			.each(
-				function(transform_spec,transform_entry)
-				{
-				//console.log(transform_entry,transform_spec)
 					_(transform_spec)
 					.defaults(
 						{
@@ -148,58 +117,52 @@ var	sources
 								}
 						}
 					)
-				}
-			)
-			_(transforms)
-			.each(
-				function(transform_spec,transform_entry)
-				{
-				//console.log(transform_entry,transform_spec)
 					_(transform_spec.associations)
 					.each(
-						function(association)
+						function(association,assoc_key)
 						{
 							if(	association.embeded
 							&&	(
 									association.embeded.type=="collection"
 								)
 							)	association.embeded.type="list"
-							//ATENTI!!! PARCHE ROÑOSOOOO
-							if(	association.type=="has-many"
-							)	association.template="{protocol}://{host}:{port}{+base}{/path,id}/"+association.target
 						}
 					)
 				}
 			)
+			/*
 			_(transforms)
 			.each(
 				function(transform,name)
 				{
-					sources[name]
-					=	JSON.parse(
+					store.add(
+						name
+					,	JSON.parse(
 							fs.readFileSync(program.input+'/'+transform.storage.name+'.json','utf8')
 						)
+					)
 				}
 			)
-		var	transformers
-		=	transformers_factory({find:store_find,filter:store_filter},transforms)
+			*/
+		var	spec_transforms
+		=	new SpecTransforms(store,transforms)
+		var	router
+		=	spec_transforms.get_router()
 connect()
 .use(connect.logger('dev'))
 .use(connect.favicon(__dirname+'/../public/favicon.ico'))
 .use(
 	function(req,res)
 	{
-	var	parsed
-	=	parseUri(req.url)
-		transformers.route(
-			parsed
+		router(
+			req.url
 		,	false
 		,	function(result)
 			{
 				if(_.isObject(result))
 					res.end(
 						JSON.stringify(
-							result
+							result.get_document()
 						)
 					)
 				else

@@ -27,6 +27,7 @@
 			"commander": "latest"
 		,	"connect": "latest"
 		,	"underscore": "latest"
+		,	"underscore.string": "latest"
 		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
 		}
 	,	"devDependencies":

@@ -15,7 +15,7 @@
 						,	"template":"{+base}{/path}{/id}/institutions"
 						,	"embeded":
 								{
-									"type":"collection"
+									"type":"partial"
 								,	"options":
 										{
 											"type":"scrollable"
@@ -27,23 +27,6 @@
 						}
 				}
 		}
-,	"states":
-		{
-			"storage":
-				{
-					"name":"provincias"
-				}
-		,	"associations-commented":
-				{
-					"country":
-						{
-							"type":"belongs-to"
-						,	"target":"countries"
-						,	"key":"id_country"
-						,	"embeded":false
-						}
-				}
-		}
 ,	"institutions":
 		{
 			"storage":
@@ -52,10 +35,10 @@
 				}
 		,	"associations":
 				{
-					"state":
+					"provincia":
 						{
 							"type":"belongs-to"
-						,	"target":"states"
+						,	"target":"provincias"
 						,	"key":"provincia"
 						,	"embeded":"single"
 						}
@@ -67,19 +50,60 @@
 				{
 					"name":"personas"
 				}
+		,	"profiles":
+				{
+					"*":
+						{
+							"collection":
+								{
+									"type":"scrollable"
+								,	"ipp":10
+								}
+						}
+				,	"full":
+						{
+							"linked":"all"
+						,	"embeded":
+								{
+									"provincia":"partial"
+								,	"linkeage":
+										{
+											"collection":
+												{
+													"type":"scrollable"
+												,	"ipp":5
+												}
+										,	"linked":"all"
+										,	"embeded":
+												{
+													"all":"none"
+												,	"universidad":"partial"
+												,	"persona":"partial"
+												,	"cargo":"partial"
+												}
+										}
+								}
+						}
+				,	"partial":
+						{
+							"linked":"all"
+						,	"embeded":"none"
+						}
+				}
 		,	"associations":
 				{
 					"provincia":
 						{
 							"type":"belongs-to"
-						,	"target":"states"
-						,	"key":"state"
+						,	"target":"provincias"
+						,	"key":"provincia"
 						,	"embeded":"single"
 						}
 				,	"linkeage":
 						{
 							"type":"has-many"
 						,	"target":"referentes"
+						,	"target_key":"id_persona"
 						,	"template":"{+base}{/path}{/id}/linkeage"
 						,	"embeded":"list"
 						}
@@ -154,6 +178,15 @@
 			{
 				"name":"paises"
 			}
+		,	"associations":
+				{
+					"programas":
+						{
+							"type":"has-many"
+						,	"target":"programas"
+						,	"embeded":"partial"
+						}
+				}
 	}
 ,	"regiones":
 	{
@@ -168,13 +201,15 @@
 			{
 				"name":"areas"
 			}
-	}
-,	"nombres-prog":
-	{
-		"storage":
-			{
-				"name":"nombre_programa"
-			}
+	,	"associations":
+				{
+					"planes":
+						{
+							"type":"has-many"
+						,	"target":"planes"
+						,	"embeded":"partial"
+						}
+				}
 	}
 ,	"programa-area-accion":
 	{
@@ -191,14 +226,7 @@
 			}
 	,	"associations":
 				{
-					"nombre_programa":
-						{
-							"type":"belongs-to"
-						,	"target":"nombres-prog"
-						,	"key":"id_nombre_programa"
-						,	"embeded":"single"
-						}
-				,	"pais":
+					"pais":
 						{
 							"type":"belongs-to"
 						,	"target":"paises"
@@ -226,6 +254,12 @@
 						,	"key":"id_area_accion"
 						,	"embeded":"single"
 						}
+				,	"actividades":
+						{
+							"type":"has-many"
+						,	"target":"actividades"
+						,	"embeded":"partial"
+						}
 				}
 	}
 ,	"tipos-inic":
@@ -234,6 +268,15 @@
 			{
 				"name":"tipo_iniciativa"
 			}
+	,	"associations":
+				{
+					"programas":
+						{
+							"type":"has-many"
+						,	"target":"programas"
+						,	"embeded":"partial"
+						}
+				}
 	}
 ,	"universidades":
 	{
@@ -261,7 +304,6 @@
 						{
 							"type":"has-many"
 						,	"target":"programas"
-						,	"template":"{+base}{/path}{/id}/programas"
 						,	"embeded":"list"
 						}
 				}
@@ -272,6 +314,16 @@
 			{
 				"name":"actividades"
 			}
+	,	"associations":
+				{
+					"programa":
+						{
+							"type":"belongs-to"
+						,	"target":"programas"
+						,	"key":"id_programa"
+						,	"embeded":"single"
+						}
+				}
 	}
 ,	"consolidado":
 	{
@@ -293,13 +345,6 @@
 							"type":"belongs-to"
 						,	"target":"programas"
 						,	"key":"id_programa"
-						,	"embeded":"single"
-						}
-				,	"nombre_programa":
-						{
-							"type":"belongs-to"
-						,	"target":"nombres-prog"
-						,	"key":"id_nombre_programa"
 						,	"embeded":"single"
 						}
 				,	"actividad":
