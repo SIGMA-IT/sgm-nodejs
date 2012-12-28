@@ -1,0 +1,75 @@
+{
+	"logins":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"title":"TITLE"
+		}
+	}
+,	"roots":
+	{
+		"fields":
+		{
+			"id": "ID"	
+		,	"id_login":"ID_LOGIN"
+		}
+	}
+,	"open_ids":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"name": "NAME"
+		,	"title":"TITLE"
+		,	"id_root":"ID_ROOT"
+		}
+	}
+,	"profiles":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"description":"DESCRIPTION"
+		}
+	}
+,	"users":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"username": "USERNAME"
+		,	"password":"PASSWORD"
+		,	"name":"NOMBRE"
+		,	"last_name":"APELLIDO"
+		,	"id_perfil":"ID_PERFIL"
+		}
+	}
+,	"userdropdowns":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"title":"TITLE"
+		,	"id_user":"ID_USER"
+		}
+	}
+,	"homes":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"title":"TITLE"
+		,	"id_perfil":"ID_PERFIL"
+		}
+	}
+,	"localmenus":
+	{
+		"fields":
+		{
+			"id": "ID"
+		,	"title":"TITLE"
+		,	"id_home":"ID_HOME"
+		}
+	}
+}

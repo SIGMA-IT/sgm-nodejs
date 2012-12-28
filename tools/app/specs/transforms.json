@@ -1,0 +1,134 @@
+{
+	"logins":
+	{
+		"storage":
+		{
+			"name":"logins"
+		}
+	,	"associations":
+		{
+			"roots":
+			{
+				"type":"has-many"
+			,	"target":"roots"
+			}
+		}
+	}
+,	"roots":
+	{
+		"storage":
+		{
+			"name":"roots"
+		}
+	,	"associations":
+		{
+			"login":
+			{
+				"type":"belongs-to"
+			,	"target":"logins"
+			,	"key":"id_login"
+			}
+		,	"open_ids":
+			{
+				"type":"has-many"
+			,	"target":"open_ids"
+			}
+		}
+	}
+,	"open_ids":
+	{
+		"storage":
+		{
+			"name":"open_ids"
+		}
+	}
+,	"profiles":
+	{
+		"storage":
+		{
+			"name":"profiles"
+		}
+	,	"associations":
+		{
+			"users":
+			{
+				"type":"has-many"
+			,	"target":"users"
+			}
+		}
+	}
+,	"users":
+	{
+		"storage":
+		{
+			"name":"users"
+		}
+	,	"associations":
+		{
+			"profile":
+			{
+				"type":"belongs-to"
+			,	"target":"profiles"
+			,	"key":"id_profile"
+			}
+		,	"userdropdowns":
+			{
+				"type":"has-many"
+			,	"target":"userdropdowns"
+			}
+		}
+	}
+,	"userdropdowns":
+	{
+		"storage":
+		{
+			"name":"userdropdowns"
+		}
+	,	"associations":
+		{
+			"user":
+			{
+				"type":"belongs-to"
+			,	"target":"users"
+			,	"key":"id_user"
+			}
+		}
+	}
+,	"homes":
+	{
+		"storage":
+		{
+			"name":"homes"
+		}
+	,	"associations":
+		{
+			"localmenus":
+			{
+				"type":"has-many"
+			,	"target":"localmenus"
+			}
+		,	"profile":
+			{
+				"type":"belongs-to"
+			,	"target":"profiles"
+			,	"key":"id_profile"
+			}
+		}
+	}
+,	"localmenus":
+	{
+		"storage":
+		{
+			"name":"localmenus"
+		}
+	,	"associations":
+		{
+			"home":
+			{
+				"type":"belongs-to"
+			,	"target":"homes"
+			,	"key":"id_gome"
+			}
+		}
+	}
+}
