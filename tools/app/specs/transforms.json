@@ -7,31 +7,12 @@
 		}
 	,	"associations":
 		{
-			"roots":
+			"open_ids":
 			{
 				"type":"has-many"
-			,	"target":"roots"
-			}
-		}
-	}
-,	"roots":
-	{
-		"storage":
-		{
-			"name":"roots"
-		}
-	,	"associations":
-		{
-			"login":
-			{
-				"type":"belongs-to"
-			,	"target":"logins"
-			,	"key":"id_login"
-			}
-		,	"open_ids":
-			{
-				"type":"has-many"
-			,	"target":"open_ids"
+			,	"target": "open_ids"
+			,	"target_key":"id_login"
+			,	"embeded": "partial"
 			}
 		}
 	}
@@ -54,6 +35,8 @@
 			{
 				"type":"has-many"
 			,	"target":"users"
+			,	"target_key":"id_profile"
+			,	"embeded":"partial"
 			}
 		}
 	}
@@ -70,11 +53,14 @@
 				"type":"belongs-to"
 			,	"target":"profiles"
 			,	"key":"id_profile"
+			,	"embeded":"single"
 			}
 		,	"userdropdowns":
 			{
 				"type":"has-many"
 			,	"target":"userdropdowns"
+			,	"target_key":"id_user"
+			,	"embeded":"partial"
 			}
 		}
 	}
@@ -91,6 +77,7 @@
 				"type":"belongs-to"
 			,	"target":"users"
 			,	"key":"id_user"
+			,	"embeded":"single"
 			}
 		}
 	}
@@ -106,12 +93,15 @@
 			{
 				"type":"has-many"
 			,	"target":"localmenus"
+			,	"target_key":"id_home"
+			,	"embeded":"partial"
 			}
 		,	"profile":
 			{
 				"type":"belongs-to"
 			,	"target":"profiles"
 			,	"key":"id_profile"
+			,	"embeded":"single"
 			}
 		}
 	}
@@ -127,7 +117,8 @@
 			{
 				"type":"belongs-to"
 			,	"target":"homes"
-			,	"key":"id_gome"
+			,	"key":"id_home"
+			,	"embeded":"single"
 			}
 		}
 	}

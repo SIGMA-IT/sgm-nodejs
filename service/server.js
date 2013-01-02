@@ -154,6 +154,16 @@ connect()
 .use(
 	function(req,res)
 	{
+		res.writeHead(
+			200
+		,	{
+				"Access-Control-Allow-Origin": "*"
+			,	"Access-Control-Allow-Methods": "POST, PUT, GET, DELETE, OPTIONS"
+			,	"Access-Control-Max-Age":"0"
+			,	"Access-Control-Allow-Headers": "X-Requested-With"
+			,	"Content-Type": "text/hal+json"
+			}
+		);
 		router(
 			req.url
 		,	false

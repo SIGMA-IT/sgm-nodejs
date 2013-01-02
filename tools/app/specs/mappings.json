@@ -7,14 +7,6 @@
 		,	"title":"TITLE"
 		}
 	}
-,	"roots":
-	{
-		"fields":
-		{
-			"id": "ID"	
-		,	"id_login":"ID_LOGIN"
-		}
-	}
 ,	"open_ids":
 	{
 		"fields":
@@ -22,7 +14,7 @@
 			"id": "ID"
 		,	"name": "NAME"
 		,	"title":"TITLE"
-		,	"id_root":"ID_ROOT"
+		,	"id_login":"ID_LOGIN"
 		}
 	}
 ,	"profiles":
@@ -42,7 +34,7 @@
 		,	"password":"PASSWORD"
 		,	"name":"NOMBRE"
 		,	"last_name":"APELLIDO"
-		,	"id_perfil":"ID_PERFIL"
+		,	"id_profile":"ID_PROFILE"
 		}
 	}
 ,	"userdropdowns":
@@ -60,7 +52,7 @@
 		{
 			"id": "ID"
 		,	"title":"TITLE"
-		,	"id_perfil":"ID_PERFIL"
+		,	"id_profile":"ID_PROFILE"
 		}
 	}
 ,	"localmenus":
