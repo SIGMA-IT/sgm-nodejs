@@ -1,4 +1,4 @@
-"ID_CARGO","DESCRIPCION"
+ID_CARGO,"DESCRIPCION"
 1,"Administracion de Convenios y Trabajos a Terceros"
 2,"Coordinador de Prensa y Protocolo"
 3,"Coordinadora del Area de Pasantias"
@@ -11,287 +11,276 @@
 10,"Dirección General de Gestión en Extensión Universitaria"
 11,"Dirección General de Servicios Académicos"
 12,"Director de Asuntos Estudiantiles"
-13,"Director de Deparatmento de Ing. Civil"
-14,"Director de la Carrera de Ing. Civil"
-15,"Director de la Carrera de Ing. Electrica"
-16,"Director de la Carrera de Ing. Electricista"
-16,"Director de la Carrera de Ing. Electronica"
-17,"Director de la Carrera de Ing. Industrial"
-18,"Director de la Carrera de Ing. Informatica"
-19,"Director de la Carrera de Ing. Mecanica"
-20,"Director de la Carrera de Ing. Naval y Mecanica"
-21,"Director de la Carrera de Ing. Quimica"
-22,"Director de la Carrera de Ingenieria Civil"
-23,"Director de la Carrera de Ingenieria Civil"
-24,"Director de la Carrera de Ingenieria Electrica"
-25,"Director de la Carrera de Ingenieria Electricista"
-26,"Director de la Carrera de Ingenieria Electronica, Electricista y Eléctrica"
-27,"Director de la Carrera de Ingenieria en Materiales"
-28,"Director de la Carrera de Ingenieria Industrial"
-29,"Director de la Carrera de Ingenieria Mecanica"
-30,"Director de la Carrera de Ingenieria Metalurgica"
-31,"Director de la Carrera de Ingenieria Quimica"
-32,"Director de la Carrera de Lic. En Analisis de Sistemas"
-33,"Director de la Carrera de Lic. En Ciencias de la Computacion"
-34,"Director de la Escuela de Ing. Electronica"
-35,"Director de la Escuela de Ing. Industrial"
-36,"Director de la Escuela de Ing. Mecanica Electricista"
-37,"Director de la Escuela de Ing.en Computacion"
-38,"Director de la Secretaria de Bienestar Estudiantil"
-39,"Director de Laboratorio"
-40,"Director Decano del Departamento de Ciencias e Ingenieria de la Computacion"
-41,"Director Decano del Departamento de Fisica"
-42,"Director Decano del Departamento de Geologia"
-43,"Director Decano del Departamento de Ingenieria"
-44,"Director Decano del Departamento de Ingenieria Electrica y de Computadoras"
-45,"Director Decano del Departamento de Ingenieria Quimica"
-46,"Director del Deparatmento de Electrotecnia"
-47,"Director del Deparatmento de Ing. Quimica"
-48,"Director del Departamento de Computacion"
-49,"Director del Departamento de Electronica"
-50,"Director del Departamento de Electrónica y Automática"
-51,"Director del Departamento de Electrotecnia"
-52,"Director del Departamento de Ing Informatica"
-53,"Director del Departamento de Ing. Civil"
-54,"Director del Departamento de Ing. De Sistemas de Informacion"
-55,"Director del Departamento de Ing. Electrica"
-56,"Director del Departamento de Ing. Electronica"
-57,"Director del Departamento de Ing. en Petroleo"
-58,"Director del Departamento de Ing. En Sistemas de la Informacion"
-59,"Director del Departamento de Ing. Industrial"
-60,"Director del Departamento de Ing. Mecanica"
-61,"Director del Departamento de Ing. Metalurgica"
-62,"Director del Departamento de Ing. Quimica"
-63,"Director del Departamento de Ingeniería Civil"
-64,"Director del Departamento de Ingenieria Electrica"
-65,"Director del Departamento de Ingeniería Electromecánica"
-66,"Director del Departamento de Ingenieria Electronica"
-67,"Director del Departamento de Ingenieria Industrial"
-68,"Director del Departamento de Ingeniería Química"
-69,"Director General de Administración"
-70,"Directora de Comunicaciones Universitarias"
-71,"Directora de Cultura, Prensa y Difusion"
-72,"Directora de Ingenieria en Sistemas de Informacion"
-73,"Directora de Secretaria de Ciencia y Tecnica"
-74,"Directora de Secretaria de Extension Universitaria"
-75,"Directora del Departamente de Ing. En Materiales"
-76,"Directora del Departamento de Mecatronica"
-77,"Directos del Departamento de Materias Basicas"
-78,"Extension Universitaria - Pasantias"
-79,"Oficina de Audiencia y Secretaria Privada de la Rectora"
-80,"Oficina de Pasantías"
-81,"Prosecretaría de Administración y  Bienestar Universitario"
-82,"Prosecretaría de Asuntos Académicos"
-83,"Rector"
-84,"Secretaria Académica"
-86,"Secretaria Academica del Departamento de Ciencias e Ingenieria en la Computacion"
-87,"Secretaria Academica del Departamento de Ingenieria"
-88,"Secretaria Academica del Departamento de Ingenieria Electrica y de Computadoras"
-89,"Secretaria Academica del Departamento de Ingenieria Quimica"
-90,"Secretaria de Administracion y Coordinacion"
-91,"Secretaria de Asuntos Academicos"
-92,"Secretaría de Asuntos Estudiantiles"
-93,"Secretaria de Asuntos Universitarios"
-94,"Secretaría de Asuntos Universitarios - Área de Bienestar Estudiantil"
-95,"Secretaria de Bienestar Universitario"
-96,"Secretaria de Ciencia y Tecnica"
-97,"Secretaría de Ciencia y Tecnologia"
-98,"Secretaria de Ciencia, Tecnica y Posgrado"
-99,"Secretaría de Decanato"
-100,"Secretaria de Desarrollo Institucional"
-101,"Secretaria de Extension del Departamento de Ingenieria Quimica"
-102,"Secretaria de Extension Universitaria"
-103,"Secretaria de Pasantias o Servicios de Empleo"
-104,"Secretaria de Presidencia"
-105,"Secretaria de Relaciones Institucionales"
-105,"Secretaria de Relaciones Institucionales"
-106,"Secretaria del Consejo Superior y Relaciones Institucionales"
-107,"Secretaria del Decano"
-108,"Secretaria del Departamento de Ingenieria Industrial"
-109,"Secretaria del Secretario Academico"
-110,"Secretaria General"
-111,"Secretaria General Academica"
-112,"Secretaria General de Ciencia y Tecnologia"
-113,"Secretaria General Tecnico"
-114,"Secretaria Privada del Rector"
-115,"Secretaria Privada del Rectorado"
-116,"Secretaria Academica"
-117,"Secretario Academico del Departamento de Fisica"
-118,"Secretario Academico del Departamento de Geologia"
-119,"Secretario Administrativo"
-120,"Secretario de Administracion"
-120,"Secretario de Administracion"
-121,"Secretario de Administracion y Planeamiento Fisico"
-122,"Secretario de Asuntos Estudiantiles"
-123,"Secretario de Asuntos Estudiantiles y Relaciones Universitarias"
-124,"Secretario de Ciencia, Tecnología y Posgrado"
-125,"Secretario de Comisión de Becas e Intercambio Educativo - Área de Relaciones Internacionales"
-126,"Secretario de Extension del Departamento de Fisica"
-127,"Secretario de Extension Departamental del Departamento de Geologia"
-128,"Secretario de Extension Universitaria y Bienestar Estudiantil"
-129,"Secretario de Extension y Vinculacion Tecnologica del Departamento de Ingenieria Electrica y de Computadoras"
-130,"Secretario de Extension, Investigacion y Convenios del Departamento de Ingenieria"
-131,"Secretario de Investigacion y Extension"
-132,"Secretario de Legal y Tecnica"
-133,"Secretario De Planeamiento Institucional y Administrativo"
-134,"Secretario de Posgrados, Investigacion y Convenios del  Departamento de Ingenieria Electrica y de Computadoras"
-135,"Secretario General de Bienestar Universitario"
-136,"Secretario General de Cultura y Extension Universitaria"
-137,"Secretario General de Relaciones Institucionales y Planeamiento del Departamento de Ingenieria"
-138,"Secretario General del Consejo Superior Universitario"
-139,"Subsecretaria Academica"
-140,"Subsecretaria de Bienestar de la Comunidad Universitaria"
-141,"Subsecretaria de Extension Universitaria"
-142,"Subsecretario de Asuntos Estudiantiles"
-143,"Subsecretario de Coordinación General de Gestión"
-144,"Subsecretario de Desarrollo Institucional"
-145,"Subsecretraia de Planeamiento Institucional"
-146,"Vicedecano"
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-147,"Vicedirector  del Departamento de Ingenieria"
-148,"Vicedirector del Departamento de Ciencias e Ingenieria de la Computacion"
-149,"Vicedirector del Departamento de Fisica"
-150,"Vicedirector del Departamento de Geologia"
-151,"Vicedirector del Departamento de Ingenieria Electrica"
-152,"Vicedirector del Departamento de Ingenieria Electrica y de Computadoras"
-153,"Vicedirector del Departamento de Ingenieria Electronica"
-154,"Vicedirector del Departamento de Ingenieria Quimica"
-155,"Vicepresidencia del Area Academica"
-156,"Vicerrector"
-,
-,
-,
-,
-,
-,
-157,"Vicerrector U.T.N. y Decano"
+13,"Director del Departamento de Ingeniería Civil"
+14,"Director de la Carrera de Ingeniería Civil"
+15,"Director de la Carrera de Ingeniería Electrica"
+16,"Director de la Carrera de Ingeniería Electricista"
+17,"Director de la Carrera de Ingeniería Electronica"
+18,"Director de la Carrera de Ingeniería Industrial"
+19,"Director de la Carrera de Ingeniería Informatica"
+20,"Director de la Carrera de Ingeniería Mecanica"
+21,"Director de la Carrera de Ingeniería Naval y Mecanica"
+22,"Director de la Carrera de Ingeniería Quimica"
+23,"Director de la Carrera de Ingeniería Electronica, Electricista y Eléctrica"
+24,"Director de la Carrera de Ingeniería en Materiales"
+25,"Director de la Carrera de Ingeniería Metalurgica"
+26,"Director de la Carrera de Lic. En Analisis de Sistemas"
+27,"Director de la Carrera de Lic. En Ciencias de la Computacion"
+28,"Director de la Escuela de Ingeniería Electronica"
+29,"Director de la Escuela de Ingeniería Industrial"
+30,"Director de la Escuela de Ingeniería Mecanica Electricista"
+31,"Director de la Escuela de Ingeniería en Computacion"
+32,"Director de la Secretaria de Bienestar Estudiantil"
+33,"Director de Laboratorio"
+34,"Director Decano del Departamento de Ciencias e Ingeniería de la Computacion"
+35,"Director Decano del Departamento de Fisica"
+36,"Director Decano del Departamento de Geologia"
+37,"Director Decano del Departamento de Ingeniería"
+38,"Director Decano del Departamento de Ingeniería Electrica y de Computadoras"
+39,"Director Decano del Departamento de Ingeniería Quimica"
+40,"Director del Departamento de Electrotecnia"
+41,"Director del Departamento de Ingeniería Quimica"
+42,"Director del Departamento de Computacion"
+43,"Director del Departamento de Electronica"
+44,"Director del Departamento de Electrónica y Automática"
+45,"Director del Departamento de Ingeniería Informatica"
+46,"Director del Departamento de Ingeniería De Sistemas de Informacion"
+47,"Director del Departamento de Ingeniería Electrica"
+48,"Director del Departamento de Ingeniería Electronica"
+49,"Director del Departamento de Ingeniería en Petroleo"
+50,"Director del Departamento de Ingeniería En Sistemas de la Informacion"
+51,"Director del Departamento de Ingeniería Industrial"
+52,"Director del Departamento de Ingeniería Mecanica"
+53,"Director del Departamento de Ingeniería Metalurgica"
+54,"Director del Departamento de Ingeniería Electromecánica"
+55,"Director del Departamento de Ingeniería Química"
+56,"Director General de Administración"
+57,"Directora de Comunicaciones Universitarias"
+58,"Directora de Cultura, Prensa y Difusion"
+59,"Directora de Ingeniería en Sistemas de Informacion"
+60,"Directora de Secretaria de Ciencia y Tecnica"
+61,"Directora de Secretaria de Extension Universitaria"
+62,"Directora del Departamento de Ingeniería En Materiales"
+63,"Directora del Departamento de Mecatronica"
+64,"Directos del Departamento de Materias Basicas"
+65,"Extension Universitaria - Pasantias"
+66,"Oficina de Audiencia y Secretaria Privada de la Rectora"
+67,"Oficina de Pasantías"
+68,"Prosecretaría de Administración yÂ  Bienestar Universitario"
+69,"Prosecretaría de Asuntos Académicos"
+70,"Rector"
+71,"Secretaria Académica"
+72,"Secretaria Academica del Departamento de Ciencias e Ingeniería en la Computacion"
+73,"Secretaria Academica del Departamento de Ingeniería"
+74,"Secretaria Academica del Departamento de Ingeniería Electrica y de Computadoras"
+75,"Secretaria Academica del Departamento de Ingeniería Quimica"
+76,"Secretaria de Administracion y Coordinacion"
+77,"Secretaria de Asuntos Academicos"
+78,"Secretaría de Asuntos Estudiantiles"
+79,"Secretaria de Asuntos Universitarios"
+80,"Secretaría de Asuntos Universitarios - Ã?rea de Bienestar Estudiantil"
+81,"Secretaria de Bienestar Universitario"
+82,"Secretaria de Ciencia y Tecnica"
+83,"Secretaría de Ciencia y Tecnologia"
+84,"Secretaria de Ciencia, Tecnica y Posgrado"
+85,"Secretaría de Decanato"
+86,"Secretaria de Desarrollo Institucional"
+87,"Secretaria de Extension del Departamento de Ingeniería Quimica"
+88,"Secretaria de Extension Universitaria"
+89,"Secretaria de Pasantias o Servicios de Empleo"
+90,"Secretaria de Presidencia"
+91,"Secretaria de Relaciones Institucionales"
+92,"Secretaria del Consejo Superior y Relaciones Institucionales"
+93,"Secretaria del Decano"
+94,"Secretaria del Departamento de Ingeniería Industrial"
+95,"Secretaria del Secretario Academico"
+96,"Secretaria General"
+97,"Secretaria General Academica"
+98,"Secretaria General de Ciencia y Tecnologia"
+99,"Secretaria General Tecnico"
+100,"Secretaria Privada del Rector"
+101,"Secretaria Privada del Rectorado"
+102,"Secretaria Academica"
+103,"Secretario Academico del Departamento de Fisica"
+104,"Secretario Academico del Departamento de Geologia"
+105,"Secretario Administrativo"
+106,"Secretario de Administracion"
+107,"Secretario de Administracion y Planeamiento Fisico"
+108,"Secretario de Asuntos Estudiantiles"
+109,"Secretario de Asuntos Estudiantiles y Relaciones Universitarias"
+110,"Secretario de Ciencia, Tecnología y Posgrado"
+111,"Secretario de Comisión de Becas e Intercambio Educativo - Ã?rea de Relaciones Internacionales"
+112,"Secretario de Extension del Departamento de Fisica"
+113,"Secretario de Extension Departamental del Departamento de Geologia"
+114,"Secretario de Extension Universitaria y Bienestar Estudiantil"
+115,"Secretario de Extension y Vinculacion Tecnologica del Departamento de Ingeniería Electrica y de Computadoras"
+116,"Secretario de Extension, Investigacion y Convenios del Departamento de Ingeniería"
+117,"Secretario de Investigacion y Extension"
+118,"Secretario de Legal y Tecnica"
+119,"Secretario De Planeamiento Institucional y Administrativo"
+120,"Secretario de Posgrados, Investigacion y Convenios del  Departamento de Ingeniería Electrica y de Computadoras"
+121,"Secretario General de Bienestar Universitario"
+122,"Secretario General de Cultura y Extension Universitaria"
+123,"Secretario General de Relaciones Institucionales y Planeamiento del Departamento de Ingeniería"
+124,"Secretario General del Consejo Superior Universitario"
+125,"Subsecretaria Academica"
+126,"Subsecretaria de Bienestar de la Comunidad Universitaria"
+127,"Subsecretaria de Extension Universitaria"
+128,"Subsecretario de Asuntos Estudiantiles"
+129,"Subsecretario de Coordinación General de Gestión"
+130,"Subsecretario de Desarrollo Institucional"
+131,"Subsecretaria de Planeamiento Institucional"
+132,"Vicedecano"
+133,"Vicedirector  del Departamento de Ingeniería"
+134,"Vicedirector del Departamento de Ciencias e Ingeniería de la Computacion"
+135,"Vicedirector del Departamento de Fisica"
+136,"Vicedirector del Departamento de Geologia"
+137,"Vicedirector del Departamento de Ingeniería Electrica"
+138,"Vicedirector del Departamento de Ingeniería Electrica y de Computadoras"
+139,"Vicedirector del Departamento de Ingeniería Electronica"
+140,"Vicedirector del Departamento de Ingeniería Quimica"
+141,"Vicepresidencia del Area Academica"
+142,"Vicerrector"
+143,"Vicerrector U.T.N. y Decano"
+144,"Decano"
+145,"Secretaría de Cultura y Extensión Universitaria"
+146,"Secretaría de Extensión"
+147,"Director Departamento Ingeniería Mecánica"
+148,"Secretario de Extensión"
+149,"Secretaria de Asuntos Estudiantiles"
+150,"Departamento de Desarrollo Profesional"
+151,"Relaciones Institucionales"
+152,"Oficina de Graduados, Desarrollo Profesional y Pasantías"
+153,"Jefe Departamento Ingeniería Mecánica"
+154,"Director Departamento Ingeniería Electromecánica"
+155,"Directora Ingeniería en Materiales"
+156,"Inserción Laboral"
+157,"Secretario Académico"
+158,"Prensa"
+159,"Directora de Relaciones Institucionales"
+160,"Secretaría Académica"
+161,"Pasantías"
+162,"Desarrollo Profesional"
+163,"Secretario de Extensión Universitaria"
+164,"Servicio Universitario de Empleos y Pasantías"
+165,"Alumni Club y Relaciones con Empresas"
+166,"Área de Desarrollo Profesional"
+167,"Area Pasantías y Empleos - Secretaría de Asuntos Estudiantiles"
+168,"Asesora"
+169,"Asesora de Asuntos Legales de la Vicerrectoria de Extensión"
+170,"Asesoría Letrada"
+171,"Asistente de Coordinación de Educación Continua"
+172,"Bienestar Estudiantil - Director del Programa de Inserción Laboral"
+173,"Bienestar Estudiantil - Programa de Inserción Laboral"
+174,"Bienestar Universitario"
+175,"Bienestar Universitario UCALP"
+176,"Centro de Asistencia Técnica y Pasantías"
+177,"Coordinador - Desarrollo Profesional y Pasantías"
+178,"Coordinador Carrera de Ingeniería Industrial"
+179,"Coordinador Ciclo Superior Mecánica"
+180,"Coordinador de Eventos - Área de Desarrollo Profesional"
+181,"Coordinador de Extensión Estudiantil"
+182,"Coordinador de Inserción Laboral"
+183,"Coordinador de Posgrado y Extensión"
+184,"Coordinador Programa Universidad Trabajo - Secretaria de Vinculacion Tecnologica y Desarrollo Productivo"
+185,"Coordinadora"
+186,"Coordinadora - Desarrollo Profesional y Pasantías Facultad de Comunicación y Facultad de Ingeniería"
+187,"Coordinadora Area Pasantías y Oportunidades Laborales - Secretaría de Asuntos Estudiantiles"
+188,"Coordinadora de la Oficina de Relación con Graduados"
+189,"Coordinadora de Tutores Académicos de Pasantías"
+190,"Coordinadora Departamento de Graduados"
+191,"Coordinadora Oficina de Empleo - Secretaría de Extensión Universitaria"
+192,"Decana"
+193,"Decanato"
+194,"Decano Escuela de Negocios"
+195,"Departamento de Desarrollo y Práctica Profesional - Universidad de Ciencias Empresariales y Sociales"
+196,"Departamento de Graduados y Desarrollo Profesional"
+197,"Departamento de Ingeniería e Investigaciones Tecnológicas - Secretaria Administrativa y de Extensión"
+198,"Departamento de Ingeniería Industrial"
+199,"Departamento de Ingeniería Mecánica"
+200,"Departamento de Mecánica - Profesor"
+201,"Departamento Desarrollo y Práctica Profesional"
+202,"Departamento Vinculación Universidad-Empresa - Secretaría de Extensión Universitaria"
+203,"Desarrollo Profesional - Pasantías - Convenios y Acuerdos Individuales"
+204,"Desarrollo Profesional Ciencias Económicas"
+205,"Despacho"
+206,"Dirección de Admisiones - Relaciones Institucionales"
+207,"Dirección de Convenios - Rectorado"
+208,"Dirección de Empleos y Pasantías"
+209,"Dirección de Relaciones Institucionales"
+210,"Dirección Servicios a Terceros y Vinculación Tecnológica"
+211,"Director Adjunto Departamento de Ingenería Industrial"
+212,"Director Carrera Licenciatura en Administración de Empresas"
+213,"Director de Admisiones Posgrado"
+214,"Director de Carrera Licenciatura en Recursos Humanos y Plan Conjunto"
+215,"Director de Proyectos CEINDEPRO"
+216,"Director del Departamento de Ciencias Sociales y Humanidades"
+217,"Director Departamento de Electrónica"
+218,"Director Departamento de Ingenería Industrial"
+219,"Director Departamento de Ingenería Mecánica e Ingeniería Naval"
+220,"Director Departamento de Ingeniería en Materiales"
+221,"Director Departamento de Mecánica"
+222,"Director Departamento Ingeniería en Informática"
+223,"Director Ejecutivo - Admisiones de Grado"
+224,"Director Escuela de Ingeniería Mecánica Aeronáutica"
+225,"Director Inserción Laboral"
+226,"Director Maestría en Administración de Negocios"
+227,"Director Unidad de Vinculación, Extensión y Asistencia"
+228,"Directora"
+229,"Directora de Educación Continua y Desarrollo Profesional - Vicerrectorado Académico"
+230,"Directora de Relaciones para el Desarrollo"
+231,"Directora Departamento Administración de Empresas y Contador Público"
+232,"Directora Departamento de Ingenería Electrónica y Eléctrica"
+233,"Directora Departamento de Relaciones Institucionales"
+234,"Directora Escuela de Ingeniería Mecánica"
+235,"Directora Oficina de Graduados, Desarrollo Profesional y Pasantías"
+236,"Directora Relaciones con Graduados y Desarrollo Profesional"
+237,"Docente Departamento de Ingeniería Mecánica e Ingeniería Naval"
+238,"Docente Guía de Pasantías Educativas"
+239,"Dpto. de Pasantías UNSAM"
+240,"Ejecutiva de Relaciones Institucionales Posgrado"
+241,"Empleo y Desarrollo Profesional"
+242,"Fundación Universidad de Morón - Unidad de Vinculación, Extensión y Asistencia"
+243,"Head of Fundraising - Southamerican Business Forum"
+244,"Ingeniería Industrial - Materia: Marketing Industrial"
+245,"INTEMA - Materiales"
+246,"Jefa del Área de Bienestar Universitario"
+247,"Jefe de Comunicaciones Externas"
+248,"Oficina de Pasantías Educativas y Recursos Laborales"
+249,"Pasantías Rentadas - Secretaría de Extensión y RRII"
+250,"Pasantías y Salidas Laborales"
+251,"Prensa de Rectorado"
+252,"Prensa y Comunicación"
+253,"Presidente Consejo de Administración"
+254,"Programa de Asistencia Técnica y Pasantías"
+255,"Programa de Pasantías"
+256,"Relaciones con Empresas"
+257,"Responsable Area pasantías - Dirección de Convenios y Transferencia Tecnológica"
+258,"Responsable Area Pasantías y Empleos - Secretaría de Asuntos Estudiantiles"
+259,"Responsable Desarrollo Profesional"
+260,"Secretaria Académica - División Docentes e Información"
+261,"Secretaria de Asuntos Administrativos"
+262,"Secretaria de Cooperación Técnica y Relaciones Internacionales"
+263,"Secretaria de Decanato"
+264,"Secretaría de Extensión - Área Pasantías"
+265,"Secretaría de Extensión Universitaria"
+266,"Secretaria de Extensión Universitaria - Área Pasantías"
+267,"Secretaría de Relaciones Institucionales"
+268,"Secretaría de Tecnología, Industria y Extensión"
+269,"Secretaria de Tecnologías de la Información y Comunicación"
+270,"Secretaría Facultad de Ciencias Económicas"
+271,"Secretario Académico - Facultad de Química e Ingeniería"
+272,"Secretario de Gestión y Extensión"
+273,"Secretario de Graduados"
+274,"Secretario de Graduados y Relaciones Institucionales"
+275,"Secretario de Investigación y Transferencia - Escuela de Ciencia y Tecnología"
+276,"Secretario Financiero"
+277,"Secretario Técnico Departamento de Ingeniería Mecánica"
+278,"Subsecretaria de Administración"
+279,"Subsecretaría de Asuntos Estudiantiles"
+280,"Subsecretaria de Empleo y Formación Profesional"
+281,"Subsecretaría de Relación con Graduados,Protocolo y Ceremonial"
+282,"Subsecretario de Gestión Institucional"
+283,"Subsecretario de Relaciones Institucionales"
+284,"Unidad de Vinculación, Extensión y Asistencia"
+285,"Vicedecana a cargo del Area Relaciones Institucionales"
