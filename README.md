@@ -37,6 +37,11 @@ ejemplo de llamada en consola (linux):
 
     var/www/sgm-nodejs/service# node server.js -p 3003 -i ../tools/test/data/json -t ../tools/test/specs/transforms.json
 
+luego se puede navegar desde el browser desde la siguiente URL:
+
+    http://trabajando:3003/api/data/nombre_entidad
+
+
 Mappings & Transforms
 =====================
 
