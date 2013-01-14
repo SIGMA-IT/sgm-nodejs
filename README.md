@@ -37,4 +37,37 @@ ejemplo de llamada en consola (linux):
 
     var/www/sgm-nodejs/service# node server.js -p 3003 -i ../tools/test/data/json -t ../tools/test/specs/transforms.json
 
+Mappings & Transforms
+=====================
+
+ - mapppings.json: es el archivo donde se definen los campos para los conjuntos de datos csv a transformar a hal
+
+convenciones:
+
+ - fields: atributos donde se definen los pares nombre_campo_salida/nombre_campo_salida
+
+Los datos deben estan entre comillas dobles (""), separados por comas(","). 
+En caso de no existir algun valor entre las comas, se asignará NULL como valor pode defecto.
+
+ - transforms.json: es el archivo donde se definen las relaciones entre los conjuntos de datos csv que se reflejaran en los archivos hal (conjunto salida)
+
+convenciones:
+
+- "storage":    "name": nombre del archivo .csv input
+
+
+- "associations":   
+ 
+ - "type": tipo de relacion, has-many/belongs-to
+ - "target":nombre de la entidad que se relaciona "name"
+ - "target_key":campo clave de la relacion "name_key"
+ - "template":template de busqueda "{+base}{/path}{/id}/name_access"
+ - "embeded":definicion de como se incluirá en el conjunto de datos, partial(permite n-1 niveles de embedded) o single(1 nivel de embedded)
+  
+
+
+
+
+
+
 
