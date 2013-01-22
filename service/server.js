@@ -1,3 +1,6 @@
+//	ASYNC
+var Q
+=	require('q')
 //require('amd-loader')
 var	connect
 =	require('connect')
@@ -43,6 +46,7 @@ var	hal
 		,	uritemplate
 		,	parseUri
 		,	AssociationsTransformers
+		,	Q
 		)
 ,	transforms
 =	fsExists(program.transforms)
@@ -167,7 +171,9 @@ connect()
 		router(
 			req.url
 		,	false
-		,	function(result)
+		)
+		.then(
+			function(result)
 			{
 				if(_.isObject(result))
 					res.end(
