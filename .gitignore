@@ -16,5 +16,6 @@ service/node_modules
 tools/test/data/csv
 tools/test/data/json
 tools/test/data/hal
+node_modules
 
 tools/node_modules
