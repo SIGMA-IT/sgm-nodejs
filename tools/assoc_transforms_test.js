@@ -93,7 +93,7 @@ _(transforms)
 								assocs.push({
 									assoc: assoc_entry
 								,	valid_sintax: assoc_transforms.check_assoc_sintax(assoc,assoc_entry,spec.storage.name)
-								,	valid: assoc_transforms.check_assoc_rel(assoc,assoc_entry,spec.storage.name,mappings[spec.storage.name])
+								,	valid: assoc_transforms.check_assoc_rel(assoc,assoc_entry,spec.storage.name,mappings)
 								})
 							}
 						)
