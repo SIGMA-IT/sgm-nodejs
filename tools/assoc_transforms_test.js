@@ -28,12 +28,16 @@ var	Overscore
 
 var	uritemplate
 =	require('../lib/uritemplates.js').parse
-,	AssociationsTransformers
-=	require('../lib/assoc-transforms.js')(_)
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
 		:false
+,	AssociationsTransformers
+=	require('../lib/assoc-transforms.js')(
+		_
+	,	mappings
+	, 	transforms
+	)	
 if(!fsExists(program.input))
 	throw 'error: '+program.input+' no exists'
 console.log('input: '+program.input)
@@ -93,7 +97,7 @@ _(transforms)
 								assocs.push({
 									assoc: assoc_entry
 								,	valid_sintax: assoc_transforms.check_assoc_sintax(assoc,assoc_entry,spec.storage.name)
-								,	valid: assoc_transforms.check_assoc_rel(assoc,assoc_entry,spec.storage.name,mappings)
+								,	valid: assoc_transforms.check_assoc_rel(assoc,assoc_entry,spec.storage.name)
 								})
 							}
 						)

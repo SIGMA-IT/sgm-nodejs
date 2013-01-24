@@ -35,6 +35,8 @@ var	hal
 =	require('../lib/uritemplates.js').parse
 ,	collection_builder
 =	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
+,	server_config
+=	require('../lib/config.js')()
 ,	AssociationsTransforms
 =	require('../lib/assoc-transforms.js')(_)
 ,	SpecTransforms
@@ -55,6 +57,9 @@ var	hal
 		,	parseUri
 		,	Q
 	)
+if(!server_config)
+	throw 'error: server_config no exists'
+console.log(server_config)
 if(!fsExists(program.input))
 	throw 'error: '+program.input+' no exists'
 console.log('input: '+program.input)
@@ -83,13 +88,6 @@ var	Store
 			)
 		}
 	)	
-var	server_config
-=	{
-		base : "/api/data"
-	,	host : "trabajando"
-	,	port : "3003"
-	,	protocol : "http"
-	}
 ,	spec_transforms
 =	new SpecTransforms(server_config,transforms)
 ,	assoc_transforms
