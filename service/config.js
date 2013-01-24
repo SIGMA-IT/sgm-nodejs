@@ -6,6 +6,7 @@ var	Factory
 				{
 					"sru.api.service": "../../../api/service/"
 				,	"lib": "../lib/"
+				,	"public": "/../public/"
 				}
 			,	server: 
 				{

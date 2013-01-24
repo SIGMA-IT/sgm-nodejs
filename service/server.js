@@ -6,6 +6,8 @@ var	config
 =	require('./config.js')()
 ,	base_lib
 =	config.paths.lib
+,	base_pub
+=	config.paths.public
 var	connect
 =	require('connect')
 ,	path
@@ -44,7 +46,7 @@ var	Overscore
 =	require(base_lib+'overscore.js')(_)
 	//require('../lib/underscore-data.js')
 //parseUri------------------------------------------
-	eval(fs.readFileSync(config.paths['lib']+'parseuri.js')+'')
+	eval(fs.readFileSync(base_lib+'parseuri.js')+'')
 //---------------------------------------------------
 var	hal
 =	require('hal')	
@@ -66,7 +68,7 @@ var	hal
 		?require(program.transforms)
 		:false
 ,	AppRouter
-=	require(config.paths['lib']+'router.js')(
+=	require(base_lib+'router.js')(
 		_
 		,	hal
 		,	hal_builder
@@ -120,7 +122,7 @@ connect()
 .use(
 	connect
 		.favicon(
-			__dirname+'/../public/favicon.ico'
+			__dirname+base_pub+'favicon.ico'
 		)
 )
 .use(
