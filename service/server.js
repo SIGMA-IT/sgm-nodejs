@@ -35,23 +35,26 @@ var	hal
 =	require('../lib/uritemplates.js').parse
 ,	collection_builder
 =	require('../lib/hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
-,	AssociationsTransformers
+,	AssociationsTransforms
 =	require('../lib/assoc-transforms.js')(_)
 ,	SpecTransforms
 =	require('../lib/spec-transform.js')(
 			_
-		,	hal
-		,	hal_builder
-		,	collection_builder
 		,	uritemplate
-		,	parseUri
-		,	AssociationsTransformers
-		,	Q
 		)
 ,	transforms
 =	fsExists(program.transforms)
 		?require(program.transforms)
 		:false
+,	AppRouter
+=	require('../lib/router.js')(
+		_
+		,	hal
+		,	hal_builder
+		,	collection_builder
+		,	parseUri
+		,	Q
+	)
 if(!fsExists(program.input))
 	throw 'error: '+program.input+' no exists'
 console.log('input: '+program.input)
@@ -79,82 +82,33 @@ var	Store
 				fs.readFileSync(what,'utf8')
 			)
 		}
-	)
-			_(transforms)
-			.each(
-				function(transform_spec,transform_entry)
-				{
-				//console.log(transform_entry,transform_spec)
-					_(transform_spec)
-					.defaults(
-						{
-							storage:
-								{
-									name:transform_entry
-								}
-						}
-					)
-					_(transform_spec)
-					.defaults(
-						{
-							api:
-								{
-									"uri":'/'+transform_spec.storage.name
-								}
-						}
-					)
-					_(transform_spec.api)
-					.defaults(
-						{
-							"url":
-								{
-									"base":"/api/data"
-								,	"host":"trabajando"
-								,	"port":"3003"
-								,	"protocol":"http"
-								,	"path":transform_entry
-								}
-						,	"templates":
-								{
-									"find_one":"{protocol}://{host}:{port}{+base}{/path,id}"
-								,	"query":transform_entry+"{?query*}"
-								}
-						}
-					)
-					_(transform_spec.associations)
-					.each(
-						function(association,assoc_key)
-						{
-							if(	association.embeded
-							&&	(
-									association.embeded.type=="collection"
-								)
-							)	association.embeded.type="list"
-						}
-					)
-				}
-			)
-			/*
-			_(transforms)
-			.each(
-				function(transform,name)
-				{
-					store.add(
-						name
-					,	JSON.parse(
-							fs.readFileSync(program.input+'/'+transform.storage.name+'.json','utf8')
-						)
-					)
-				}
-			)
-			*/
-		var	spec_transforms
-		=	new SpecTransforms(store,transforms)
-		var	router
-		=	spec_transforms.get_router()
+	)	
+var	server_config
+=	{
+		base : "/api/data"
+	,	host : "trabajando"
+	,	port : "3003"
+	,	protocol : "http"
+	}
+,	spec_transforms
+=	new SpecTransforms(server_config,transforms)
+,	assoc_transforms
+=	new AssociationsTransforms(store,transforms)
+,	app_router
+=	new AppRouter(assoc_transforms,store,transforms)
+,	router
+=	app_router.get_router()
+
 connect()
-.use(connect.logger('dev'))
-.use(connect.favicon(__dirname+'/../public/favicon.ico'))
+.use(
+	connect.logger('dev')
+)
+.use(
+	connect
+		.favicon(
+			__dirname+'/../public/favicon.ico'
+		)
+)
 .use(
 	function(req,res)
 	{
@@ -170,7 +124,6 @@ connect()
 		);
 		router(
 			req.url
-		,	false
 		)
 		.then(
 			function(result)
@@ -184,10 +137,12 @@ connect()
 				else
 				{
 					res.writeHead(result, {"Content-Type": "text/plain"});
-					//res.write("404 Not found");
 					res.end();
 				}
 			}
 		)
 	}
-).listen(program.port)
+)
+.listen(
+	program.port
+)
