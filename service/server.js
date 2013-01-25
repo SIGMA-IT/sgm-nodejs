@@ -85,7 +85,7 @@ if(!transforms)
 	throw 'error: '+program.transforms+' no exists'
 console.log('transforms: '+program.transforms)
 var	Store
-=	require(base_lib+'store.js')(_)
+=	require(base_lib+'store.js')(_,Q)
 ,	store
 =	new	Store(
 		_(transforms)
