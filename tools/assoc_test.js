@@ -106,8 +106,7 @@ _(transforms)
 						= 	new Array
 						_(t_spec).each(
 							function(assoc,assoc_entry){
-								assoc_transforms.check_spec(spec)
-
+								
 								assocs.push({
 									assoc: assoc_entry
 								,	valid_sintax: assoc_transforms.check_assoc_sintax(assoc,assoc_entry,spec.storage.name)
@@ -119,7 +118,7 @@ _(transforms)
 							{
 								spec: spec.storage.name
 							,	assocs: assocs
-							,	valid: assoc_transforms.check_spec(spec)	
+							,	valid: assoc_transforms.check_all_spec(spec)	
 							}
 						)
 					}
