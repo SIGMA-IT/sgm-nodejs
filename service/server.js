@@ -25,6 +25,11 @@ var	connect
 			,	String
 			,	config.paths['sru.api.service']+'data/json'
 		)
+		.option(	'-m, --mappings <mappings.json>'
+			,	'mappings fields in csv data [./mappings.json]'
+			,	String
+			,	config.paths['sru.api.service']+'specs/mappings.json'
+		)
 		.option(
 				'-t, --transforms <transforms.json>'
 			,	'linking and embeding transforms [./specs/transforms.json]'
@@ -56,17 +61,25 @@ var	hal
 =	require(base_lib+'uritemplates.js').parse
 ,	collection_builder
 =	require(base_lib+'hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
+,	mappings
+=	fsExists(program.mappings)
+		?require(program.mappings)
+		:false
+,	transforms
+=	fsExists(program.transforms)
+		?require(program.transforms)
+		:false
 ,	AssociationsTransforms
-=	require(base_lib+'assoc-transforms.js')(_)
+=	require(base_lib+'assoc-transforms.js')(
+		_
+	,	mappings
+	,	transforms	
+	)
 ,	SpecTransforms
 =	require(base_lib+'spec-transform.js')(
 			_
 		,	uritemplate
 		)
-,	transforms
-=	fsExists(program.transforms)
-		?require(program.transforms)
-		:false
 ,	AppRouter
 =	require(base_lib+'router.js')(
 		_
