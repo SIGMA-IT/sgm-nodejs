@@ -128,6 +128,35 @@ var	Store
 ,	router
 =	app_router.get_router()
 
+_(transforms)
+	.each(
+		function(spec){
+			var	visited
+			=	[]
+			
+			//checking all spec
+			assoc_transforms.check_all_spec(spec)
+
+			_.objMap(
+				spec
+			,	function(t_spec,t_entry){
+					//(k)->(v) : transform_entry -> transform_spec
+					if(spec.associations && t_entry=='associations'){
+						_(t_spec).each(
+							function(assoc,assoc_entry){
+								//checking assoc_sintax
+								assoc_transforms.check_assoc_sintax(assoc,assoc_entry,spec.storage.name)
+								//checking assoc_rel
+								assoc_transforms.check_assoc_rel(assoc,assoc_entry,spec.storage.name)
+							}
+						)
+					}
+				}
+			)
+			visited.pop()
+		}
+	)
+
 connect()
 .use(
 	connect.logger('dev')
