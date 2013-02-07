@@ -162,6 +162,9 @@ connect()
 	connect.logger('dev')
 )
 .use(
+	connect.bodyParser()
+)
+.use(
 	connect
 		.favicon(
 			__dirname+base_pub+'favicon.ico'
@@ -173,9 +176,11 @@ connect()
 		res.writeHead(
 			200
 		,	config.header
-		);
+		)
 		router(
-			req.url
+			req.method
+		,	req.url
+		,	req.body
 		)
 		.then(
 			function(result)
