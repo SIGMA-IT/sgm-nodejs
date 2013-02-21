@@ -141,35 +141,7 @@ _(transforms)
 					,	0
 					,	new Array()
 				)
-				
-				_.objMap(
-					spec
-				,	function(t_spec,t_entry){
-						//(v)<-(k)
-						if(t_entry=='associations'){
-							_(t_spec).each(
-								function(assoc,assoc_entry){
-									//checking assoc_sintax
-									assoc_transforms
-										.check_assoc_sintax(
-											assoc
-										,	assoc_entry
-										,	spec.storage.name
-										)
-									//checking assoc_rel
-									assoc_transforms
-										.check_assoc_rel(
-											assoc
-										,	assoc_entry
-										,	spec.storage.name
-										)
-								}
-							)
-						}
-					}
-				)
 			}
-			
 		}
 	)
 
