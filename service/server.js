@@ -137,12 +137,19 @@ _(transforms)
 			if(!_.isUndefined(spec.associations))
 			{
 				assoc_transforms
+					.check_rels(
+						spec
+					,	spec_key
+					)
+					
+				assoc_transforms
 					.check_specs(
 						spec
 					,	spec_key
 					,	0
 					,	new Array()
 				)
+
 			}
 		}
 	)
