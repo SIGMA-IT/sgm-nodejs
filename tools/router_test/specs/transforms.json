@@ -1,0 +1,164 @@
+{
+	"pacientes":
+	{
+		"storage":
+		{
+			"name":"pacientes"
+		}
+	,	"associations":
+		{
+			"turnos":
+			{
+				"type":"has-many"
+			,	"target":"turnos"
+			,	"target_key":"id_paciente"
+			,	"embedded":"partial"
+			}
+		,	"doctor":
+			{
+				"type":"has-many:through"
+			,	"target":"doctors"
+			,	"through":"turnos"
+			,	"through_key":"id_paciente"
+			,	"through_target_key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"turnos":
+	{
+		"storage":
+		{
+			"name":"turnos"
+		}
+	,	"associations":
+		{
+			"paciente":
+			{
+				"type":"belongs-to"
+			,	"target":"pacientes"
+			,	"key":"id_paciente"
+			,	"embedded":"partial"
+			}
+		,	"paciente":
+			{
+				"type":"belongs-to"
+			,	"target":"doctors"
+			,	"key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"doctors":
+	{
+		"storage":
+		{
+			"name":"doctors"
+		}
+	,	"associations":
+		{
+			"turnos":
+			{
+				"type":"has-many"
+			,	"target":"turnos"
+			,	"target_key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		,	"pacientes":
+			{
+				"type":"has-many:through"
+			,	"target":"pacientes"
+			,	"through":"turnos"
+			,	"through_key":"id_doctor"
+			,	"through_target_key":"id_paciente"
+			,	"embedded":"partial"
+			}
+		,	"honors":
+			{
+				"type":"has-many"
+			,	"target":"honors"
+			,	"target_key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		,	"calificacion":
+			{
+				"type":"has-one"
+			,	"target":"calificacions"
+			,	"target_key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		,	"institucion":
+			{
+				"type":"has-one:through"
+			,	"target":"institucions"
+			,	"through":"calificacions"
+			,	"through_key":"id_doctor"
+			,	"through_target_key":"id_institucion"
+			}
+		}
+	}
+,	"honors":
+	{
+		"storage":
+		{
+			"name":"honors"
+		}
+	,	"associations":
+		{
+			"doctor":
+			{
+				"type":"belongs-to"
+			,	"target":"doctors"
+			,	"key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"calificacions":
+	{
+		"storage":
+		{
+			"name":"calificacions"
+		}
+	,	"associations":
+		{
+			"doctor":
+			{
+				"type":"belongs-to"
+			,	"target":"doctors"
+			,	"key":"id_doctor"
+			,	"embedded":"partial"
+			}
+		,	"institucion":
+			{
+				"type":"has-one"
+			,	"target":"institucions"
+			,	"target_key":"id_calificacion"
+			}
+		}
+	}
+,	"institucions":
+	{
+		"storage":
+		{
+			"name":"institucions"
+		}
+	,	"associations":
+		{
+			"calificacion":
+			{
+				"type":"belongs-to"
+			,	"target":"calificacions"
+			,	"key":"id_calificacion"
+			}
+		,	"doctor":
+			{
+				"type":"belongs-to:through"
+			,	"target":"doctors"
+			,	"through":"calificacions"
+			,	"through_key":"id_institucion"
+			,	"through_target_key":"id_doctor"
+			}
+		}
+	}
+}

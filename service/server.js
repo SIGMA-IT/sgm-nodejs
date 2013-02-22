@@ -69,25 +69,27 @@ var	hal
 =	fsExists(program.transforms)
 		?require(program.transforms)
 		:false
+,	SpecTransforms
+=	require(base_lib+'spec-transform.js')(
+		_
+	,	uritemplate
+	,	mappings
+	,	transforms
+	)
 ,	AssociationsTransforms
 =	require(base_lib+'assoc-transforms.js')(
 		_
 	,	mappings
 	,	transforms	
 	)
-,	SpecTransforms
-=	require(base_lib+'spec-transform.js')(
-			_
-		,	uritemplate
-		)
 ,	AppRouter
 =	require(base_lib+'router.js')(
-		_
-		,	hal
-		,	hal_builder
-		,	collection_builder
-		,	parseUri
-		,	Q
+	_
+	,	hal
+	,	hal_builder
+	,	collection_builder
+	,	parseUri
+	,	Q
 	)
 if(!config)
 	throw 'error: config no exists'

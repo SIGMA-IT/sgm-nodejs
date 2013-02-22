@@ -1,0 +1,57 @@
+{
+	"pacientes":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"nombre":"NOMBRE"
+		,	"apellido":"APELLIDO"
+		}
+	}
+,	"turnos":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_doctor":"ID_DOCTOR"
+		,	"id_paciente":"ID_PACIENTE"
+		}
+	}
+,	"doctors":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"nombre":"NOMBRE"
+		,	"especialidad":"ESPECIALIDAD"
+		}
+	}
+,	"honors":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"titulo":"TITULO"
+		,	"id_doctor":"ID_DOCTOR"
+		}
+	}
+,	"calificacions":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"calificacion":"CALIFICACION"
+		,	"id_doctor":"ID_DOCTOR"
+		,	"id_institucion":"ID_INSTITUCION"
+		}
+	}
+,	"institucions":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_doctor":"ID_DOCTOR"
+		,	"id_calificacion":"ID_CALIFICACION"
+		}
+	}
+}
