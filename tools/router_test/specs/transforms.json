@@ -40,7 +40,7 @@
 			,	"key":"id_paciente"
 			,	"embedded":"partial"
 			}
-		,	"paciente":
+		,	"doctor":
 			{
 				"type":"belongs-to"
 			,	"target":"doctors"
