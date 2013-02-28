@@ -19,8 +19,6 @@
 				"type":"has-many:through"
 			,	"target":"doctors"
 			,	"through":"turnos"
-			,	"through_key":"id_paciente"
-			,	"through_target_key":"id_doctor"
 			,	"embedded":"partial"
 			}
 		}
@@ -69,8 +67,6 @@
 				"type":"has-many:through"
 			,	"target":"pacientes"
 			,	"through":"turnos"
-			,	"through_key":"id_doctor"
-			,	"through_target_key":"id_paciente"
 			,	"embedded":"partial"
 			}
 		,	"honors":
@@ -92,8 +88,6 @@
 				"type":"has-one:through"
 			,	"target":"institucions"
 			,	"through":"calificacions"
-			,	"through_key":"id_doctor"
-			,	"through_target_key":"id_institucion"
 			}
 		}
 	}
@@ -150,14 +144,6 @@
 				"type":"belongs-to"
 			,	"target":"calificacions"
 			,	"key":"id_calificacion"
-			}
-		,	"doctor":
-			{
-				"type":"belongs-to:through"
-			,	"target":"doctors"
-			,	"through":"calificacions"
-			,	"through_key":"id_institucion"
-			,	"through_target_key":"id_doctor"
 			}
 		}
 	}

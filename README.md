@@ -86,10 +86,6 @@ Ejemplo de navegacion
 
 > > - target_key :campo clave de la relacion "name_key"
 
-> > - through_key: campo clave de la relacion en la entidad intermediaria
-
-> > - through_target_key: campo clave de la relacion en la entidad final.
-
 > > - embedded: tipo de embedded dentro del hal
 
 > > - linked: tipo de links dentro del hal
@@ -115,18 +111,49 @@ Ejemplo de navegacion
 
 > > > - type : belongs-to
 > > > - target: entidad a la que pertenece
-> > > - key: clave con la que se relaciona a dicha entidad
+> > > - key: clave con la que se relaciona a dicha entidad target (Tabla: la clave se encuentra dentro de la entidad)
 
 > > Ejemplo:
 
 > > > Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
 
 > > > ```json
-			"doctor":
+			//mapping
 			{
-				"type":"belongs-to"
-			,	"target":"doctors"
-			,	"key": "id_doctor"
+				"turnos":
+				{
+					"fields":
+					{
+						"id": "ID"
+					,	"id_doctor":"ID_DOCTOR"
+					...
+					}
+				}
+			,	"doctors"
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					...
+					}
+				}
+			}
+
+			// transform
+			"turnos":
+			{
+				...
+			,	"associations":
+				{
+					"doctor":
+					{
+						"type":"belongs-to"
+					,	"target":"doctors"
+					,	"key": "id_doctor"
+					}
+				...
+				}
 			}
 	 ```
 
@@ -136,18 +163,48 @@ Ejemplo de navegacion
 
 > > > - type : has-one
 > > > - target: entidad que contiene
-> > > - key: clave con la que se relaciona a dicha entidad
+> > > - target\_key: clave con la que se relaciona a dicha entidad (Tabla: la clave se encuentra en la entidad target)
 
 > > Ejemplo:
 
 > > > Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
 
 > > > ```json
-			"welcome":
+			//mappings
 			{
-				"type":"has-one"
-			,	"target":"welcome"
-			,	"key":"id_welcome"
+				"login":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"id_welcome":"ID_WELCOME"
+					}
+				}
+
+			,	"welcome":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"msg":"MSG"
+					}
+				}
+			}
+
+			//transforms
+			"login":
+			{
+				...
+				"associations":
+				{
+					"welcome":
+					{
+						"type":"has-one"
+					,	"target":"welcome"
+					,	"target_key":"id_welcome"
+					}
+					...
+				}
 			}
 	```
 
@@ -157,41 +214,47 @@ Ejemplo de navegacion
 
 > > > - type : has-many
 > > > - target: entidad que contiene
-> > > - target\_key: clave con la que se relaciona a dichas entidades
+> > > - target\_key: clave con la que se relaciona a dichas entidades (Tabla: la clave se encuentra en la entidad que contiene)
 
 > > Ejemplo:
 
 > > > Supongamos que tenemos una entidad provincias la cual contiene una relacion con instituciones del tipo <i>has-many</i>. Definimos una asociacion dentro de provincias llamada instituciones.
 
 > > > ```json
-			"instituciones":
+			//mappings
 			{
-				"type":"has-many"
-			,	"target":"instituciones"
-			,	"target_key":"id_provincia"
+				"provincias":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"provincia":"PROVINCIA"
+					}
+				}
+			,	"instituciones":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"id_provincia":"ID_PROVINCIA"
+					,	"institucion":"INSTITUCION"
+					}
+				}
 			}
-	```
 
-> # belongs-to:through
-
-> > Requiere:
-
-> > > - type : belongs-to:through
-> > > - through: entidad intermediaria
-> > > - target: entidad final
-> > > - through_key: clave que relaciona la entidad intermediaria con la final
-
-> > Ejemplo:
-
-> > > Supongamos que en el ambito escolar, un grupo de alumnos tendra un profesor segun el grado en el que se encuentre. Si el alumno pertenece al grupo A, tendra el profesor asociado al grupo A. Entonces dado un alumno cualquiera del grupo A, podemos encontrar su profesor. Para ello definimos una asociacion del tipo <i>belongs-to:through</i> dentro de la entidad alumno y la llamamos profesor.
-
-> > > ```json
-			"profesor":
+			//transforms
+			"provincias":
 			{
-				"type":"belongs-to:through"
-			,	"through":"grados"
-			,	"target":"profesores"
-			,	"through_key":"id_profesor_grado"
+				...
+				"associations":
+				{
+					"instituciones":
+					{
+						"type":"has-many"
+					,	"target":"instituciones"
+					,	"target_key":"id_provincia"
+					}
+				}
 			}
 	```
 
@@ -202,19 +265,54 @@ Ejemplo de navegacion
 > > > - type : has-one:through
 > > > - through: entidad intermediaria
 > > > - target: entidad final
-> > > - through_key: clave que relaciona la entidad intermediaria con la final
 
 > > Ejemplo:
 
 > > > Supongamos que tenemos un video club, cada socio del video club, va a tener asociado un historial de peliculas alquiladas. Ahora bien si qusieramos saber que dia alquile la pelicula Campanita, tendriamos que definir una asociacion del tipo <i>has-one:through</i> en socio, llamemosla pelicula.
 
 > > > ```json
-			"pelicula":
+			//mappings
 			{
-				"type":"has-one:through"
-			,	"through":"historial"
-			,	"target":"peliculas"
-			,	"through_key":"id_pelicula"
+				"socio":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRe"
+					}
+				}
+			,	"historial":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"id_socio":"ID_SOCIO"
+					,	"id_pelicula":"ID_PELICULA"
+					}
+				}
+			,	"peliculas":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					}
+				}
+			}
+
+			//transforms
+			"socio":
+			{
+				...
+				"associations":
+				{
+					"pelicula":
+					{
+						"type":"has-one:through"
+					,	"through":"historial"
+					,	"target":"peliculas"
+					}	
+				}
 			}
 	```
 
@@ -225,21 +323,55 @@ Ejemplo de navegacion
 > > > - type : has-many:through
 > > > - through: entidad intermediaria
 > > > - target: entidad final
-> > > - through\_key: clave que relaciona la entidad con la entidad intermediaria
-> > > - through\_target_key: clave que relaciona la entidad intermediaria con la final
 
 > > Ejemplo:
 
 > > > Supongamos que en un hospital se asignan un turno a un paciente y que cada turno tambien tiene un doctor asignado. Si quisieramos saber que pacientes va a atender un doctor segun los turnos asignados, tendriamos que definir una asociacion del tipo <i>has-many:through</i> en doctor, llamemosla pacientes.
 
 > > > ```json
-			"pacientes":
+			//mappings
 			{
-				"type":"has-many:through"
-			,	"through":"turnos"
-			,	"target":"pacientes"
-			,	"through_key":"id_doctor"
-			,	"through_target_key":"id_paciente"
+				"doctors":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					}
+				}
+			,	"turnos":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"id_paciente":"ID_PACIENTE"
+					,	"id_doctor":"ID_DOCTOR"
+					}
+				}
+			,	"paciente":
+				{
+					"field":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					}
+				}
+			}
+
+
+			//transforms
+			"doctors":
+			{
+				...
+				"associations":
+				{
+					"pacientes":
+					{
+						"type":"has-many:through"
+					,	"through":"turnos"
+					,	"target":"pacientes"
+					}	
+				}
 			}
 	```
 
@@ -396,9 +528,154 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > - Find: es la funcion encargada de devolver la data asociada a una peticion simple. Recibe dos argumentos: 
 
-> > > 1. what (nombre de la entidad), por ejemplo, personas
+> > > find(what,filter) --> {object}
 
-> > > 2. filter (filtro a aplicar)
+> > > Ejemplos: 
+
+> > > > Supongamos las siguientes relaciones establecidas en los mappings y transforms
+
+	```json
+		//mappings
+		{
+			"personas":
+			{
+				"fields":
+				{
+					"id":"ID"
+				,	"nombre":"NOMBRE"
+				,	"id_ciudad":"ID_CIUDAD"
+				}
+			}
+		,	"ciudads":
+			{
+				"fields":
+				{
+					"id":"ID"
+				,	"nombre":"NOMBRE"
+				,	"id_privincia":"ID_PROVINCIA"
+				}
+			}
+		,	"provincias":
+			{
+				"field":
+				{
+					"id":"ID"
+				,	"nombre":"NOMBRE"
+				}
+			}
+		}
+
+
+		//transforms
+		"personas":
+		{
+			...
+			"associations":
+			{
+				"ciudad":
+				{
+					"type":"belongs-to"
+				,	"target":"ciudad"
+				,	"key":"id_ciudad"
+				}
+			,	"provincia":
+				{
+					"type":"belongs-to:through"
+				,	"target":"provincias"
+				,	"through":"ciudads"
+				}
+			}
+		}
+		"ciudads":
+		{
+			...
+			"associations":
+			{
+				"provincia":
+				{
+					"type":"belongs-to"
+				,	"target":"provincia"
+				,	"key":"id_provincia"
+				}
+			}
+		}
+		"provincias":
+		{
+			...
+			"personas":
+			{
+				"type":"has-one:through"
+			,	"target":"provincias"
+			,	"through":"ciudads"
+			}
+		}
+	```
+
+> > > > 1. Buscamos la ciudad cuya id sea 12
+
+	```javaScript
+
+		find(
+			"ciudades"
+		,	{
+				"key":"id"
+			,	"value": "12"
+			}
+		)
+	```
+
+> > > > 2. Buscamos la Ciudad a la que pertenece la persona cuya id es 2
+
+	```javaScript
+
+		find(
+			"ciudades"
+		,	{
+				source: 'personas',
+			,	source_key: 'id',
+			,	source_value: '2',
+			,	key: 'id_ciudad',
+			,	target_key: 'id'
+			}
+		)
+	```
+
+> > > > 3. Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
+	```javaScript
+
+		find(
+			"provincias"
+		,	{
+				source: 'personas',
+			,	source_key: 'id',
+			,	source_value: '2',
+			,	through:
+				[
+					{
+						target: 'provincias'
+					,	key: 'id_provincia'
+					,	target_key: 'id'
+					}
+				]
+			,	key: 'id',
+			,	target_key: 'id'
+			}
+		)
+	```
+		what {string} // nombre de la entidad a buscar
+
+		filter {object} // parametros necesario para la busqueda
+
+		filter:
+		{
+		    through: [{array}],
+		    source: [{string}],
+		    source_key: {string},
+		    source_value: {string},
+		    key: {string},
+		    target_key: {string}
+		}
+	```
 
 > > - Filter
 
