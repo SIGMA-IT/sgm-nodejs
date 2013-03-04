@@ -182,12 +182,15 @@ connect()
 		.then(
 			function(result)
 			{
-				if(_.isObject(result))
+				if(_.isObject(result)){
 					res.end(
 						JSON.stringify(
 							result.get_document()
 						)
 					)
+					app_router
+						.clear_register()
+				}
 				else
 				{
 					res.writeHead(result, {"Content-Type": "text/plain"});

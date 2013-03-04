@@ -54,4 +54,30 @@
 		,	"id_calificacion":"ID_CALIFICACION"
 		}
 	}
+,	"menus":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"menu":"MENU"
+		}
+	}
+,	"items":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"item":"ITEM"
+		,	"id_menu":"ID_MENU"
+		}
+	}
+,	"submenus":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_menu":"ID_MENU"
+		,	"id_submenu":"ID_SUBMENU"
+		}
+	}
 }

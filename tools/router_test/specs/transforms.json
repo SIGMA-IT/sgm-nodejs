@@ -14,7 +14,7 @@
 			,	"target_key":"id_paciente"
 			,	"embedded":"partial"
 			}
-		,	"doctor":
+		,	"doctors":
 			{
 				"type":"has-many:through"
 			,	"target":"doctors"
@@ -144,6 +144,66 @@
 				"type":"belongs-to"
 			,	"target":"calificacions"
 			,	"key":"id_calificacion"
+			}
+		}
+	}
+,	"menus":
+	{
+		"storage":
+		{
+			"name":"menus"
+		}
+	,	"associations":
+		{
+			"items":
+			{
+				"type":"has-many"
+			,	"target":"items"
+			,	"target_key":"id_menu"
+			,	"embedded":"partial"
+			}
+		,	"submenus":
+			{
+				"type":"has-many:through"
+			,	"target":"menus"
+			,	"through":"submenus"
+			,	"through_key":"id_menu"
+			,	"through_target_key":"id_submenu"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"items":
+	{
+		"storage":
+		{
+			"name":"items"
+		}
+	,	"associations":
+		{
+			"menu":
+			{
+				"type":"belongs-to"
+			,	"target":"menus"
+			,	"key":"id_menu"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"submenus":
+	{
+		"storage":
+		{
+			"name":"submenus"	
+		}
+	,	"associations":
+		{
+			"menu":
+			{
+				"type":"belongs-to"
+			,	"target":"menus"
+			,	"key":"id_menu"
+			,	"embedded":"partial"
 			}
 		}
 	}
