@@ -54,6 +54,16 @@
 		,	"id_calificacion":"ID_CALIFICACION"
 		}
 	}
+,	"hospitals":
+	{
+		"fields":
+		{
+			"id_institucion":"ID_INSTITUCION"
+		,	"id_doctor":"ID_DOCTOR"
+		,	"id_calificacion":"ID_CALIFICACION"
+		,	"nombre":"NOMBRE_HOSPITAL"
+		}
+	}
 ,	"menus":
 	{
 		"fields":
@@ -78,6 +88,37 @@
 			"id":"ID"
 		,	"id_menu":"ID_MENU"
 		,	"id_submenu":"ID_SUBMENU"
+		}
+	}
+,	"ent1":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_ent4":"ID_ENT4"
+		}
+	}
+,	"ent2":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_ent1":"ID_ENT1"
+		}
+	}
+,	"ent3":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"id_ent1":"ID_ENT1"
+		}
+	}
+,	"ent4":
+	{
+		"fields":
+		{
+			"id":"ID"
 		}
 	}
 }

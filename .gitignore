@@ -16,6 +16,9 @@ service/node_modules
 tools/test/data/csv
 tools/test/data/json
 tools/test/data/hal
+tools/router_test/data/csv
+tools/router_test/data/json
+tools/router_test/data/hal
 node_modules
 
 tools/node_modules

@@ -4,6 +4,8 @@ var Q
 //require('amd-loader')
 var	config
 =	require('./config.js')()
+,	defaults
+=	require('./default.js')()
 ,	base_lib
 =	config.paths.lib
 ,	base_pub
@@ -75,12 +77,14 @@ var	hal
 	,	uritemplate
 	,	mappings
 	,	transforms
+	,	defaults
 	)
 ,	AssociationsTransforms
 =	require(base_lib+'assoc-transforms.js')(
 		_
 	,	mappings
-	,	transforms	
+	,	transforms
+	,	defaults
 	)
 ,	AppRouter
 =	require(base_lib+'router.js')(
@@ -99,6 +103,7 @@ console.log('input: '+program.input)
 if(!transforms)
 	throw 'error: '+program.transforms+' no exists'
 console.log('transforms: '+program.transforms)
+console.log('listening to port: '+config.server.port)
 var	Store
 =	require(base_lib+'store.js')(_,Q)
 ,	store
@@ -121,38 +126,31 @@ var	Store
 			)
 		}
 	)	
-,	spec_transforms
-=	new SpecTransforms(config.server,transforms)
 ,	assoc_transforms
 =	new AssociationsTransforms(store,transforms)
+,	transforms_to_check
+=	_.keys(transforms)
+
+while (transforms_to_check.length != 0)
+{
+	transforms_to_check
+	= 	_.difference(
+			transforms_to_check
+		,	assoc_transforms
+				.check_spec(
+					transforms[_.first(transforms_to_check)]
+				,	_.first(transforms_to_check)
+			)
+		)
+}
+
+
+var	spec_transforms
+=	new SpecTransforms(config.server,transforms)
 ,	app_router
 =	new AppRouter(assoc_transforms,store,transforms)
 ,	router
 =	app_router.get_router()
-
-_(transforms)
-	.each(
-		function(spec,spec_key){
-			//(v)<-(k)
-			if(!_.isUndefined(spec.associations))
-			{
-				assoc_transforms
-					.check_rels(
-						spec
-					,	spec_key
-					)
-					
-				assoc_transforms
-					.check_specs(
-						spec
-					,	spec_key
-					,	0
-					,	new Array()
-				)
-
-			}
-		}
-	)
 
 connect()
 .use(
@@ -201,5 +199,5 @@ connect()
 	}
 )
 .listen(
-	program.port
+	config.server.port
 )

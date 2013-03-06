@@ -4,7 +4,7 @@ var	Factory
 		return	{
 				paths: 
 				{
-						"sru.api.service": "../../../api/service/"
+						"sru.api.service": "../tools/router_test/"
 					,	"lib": "../lib/"
 					,	"public": "/../public/"
 				}

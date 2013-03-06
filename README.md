@@ -99,9 +99,8 @@ Ejemplo de navegacion
 > > 1. belongs-to
 > > 2. has-one
 > > 3. has-many
-> > 4. belongs-to\:through
-> > 5. has-one\:through
-> > 6. has-many\:through
+> > 4. has-one\:through
+> > 5. has-many\:through
 
 > Cada una de estas relaciones son definidas dentro de la associations de cada entidad. A su vez, cada una de ellas tiene campos obligatorios y opcionales.
 
@@ -117,7 +116,7 @@ Ejemplo de navegacion
 
 > > > Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
 
-> > > ```json
+> > >	```json
 			//mapping
 			{
 				"turnos":
@@ -139,7 +138,8 @@ Ejemplo de navegacion
 					}
 				}
 			}
-
+	 	```
+> > > 	```json
 			// transform
 			"turnos":
 			{
@@ -155,7 +155,7 @@ Ejemplo de navegacion
 				...
 				}
 			}
-	 ```
+		```
 
 > # has-one
 
@@ -169,7 +169,7 @@ Ejemplo de navegacion
 
 > > > Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
 
-> > > ```json
+> > >	```json
 			//mappings
 			{
 				"login":
@@ -190,7 +190,8 @@ Ejemplo de navegacion
 					}
 				}
 			}
-
+		```
+> > >	```json
 			//transforms
 			"login":
 			{
@@ -206,7 +207,7 @@ Ejemplo de navegacion
 					...
 				}
 			}
-	```
+		```
 
 > # has-many
 
@@ -220,7 +221,7 @@ Ejemplo de navegacion
 
 > > > Supongamos que tenemos una entidad provincias la cual contiene una relacion con instituciones del tipo <i>has-many</i>. Definimos una asociacion dentro de provincias llamada instituciones.
 
-> > > ```json
+> > >	```json
 			//mappings
 			{
 				"provincias":
@@ -241,7 +242,8 @@ Ejemplo de navegacion
 					}
 				}
 			}
-
+		```
+> > >	```json
 			//transforms
 			"provincias":
 			{
@@ -256,7 +258,7 @@ Ejemplo de navegacion
 					}
 				}
 			}
-	```
+		```
 
 > # has-one:through
 
@@ -299,7 +301,8 @@ Ejemplo de navegacion
 					}
 				}
 			}
-
+		```
+> > >	```json
 			//transforms
 			"socio":
 			{
@@ -314,7 +317,7 @@ Ejemplo de navegacion
 					}	
 				}
 			}
-	```
+		```
 
 > # has-many:through
 
@@ -328,7 +331,7 @@ Ejemplo de navegacion
 
 > > > Supongamos que en un hospital se asignan un turno a un paciente y que cada turno tambien tiene un doctor asignado. Si quisieramos saber que pacientes va a atender un doctor segun los turnos asignados, tendriamos que definir una asociacion del tipo <i>has-many:through</i> en doctor, llamemosla pacientes.
 
-> > > ```json
+> > > 	```json
 			//mappings
 			{
 				"doctors":
@@ -357,8 +360,8 @@ Ejemplo de navegacion
 					}
 				}
 			}
-
-
+		```
+> > > 	```json
 			//transforms
 			"doctors":
 			{
@@ -373,7 +376,7 @@ Ejemplo de navegacion
 					}	
 				}
 			}
-	```
+		```
 
 ## Embeddeds
 
@@ -439,21 +442,21 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > - Peticion simple, se devuelve un unico recurso
 
-```json
-	GET http://trabajando:3003/api/data/personas/1
-```
+> > > 	```json
+			GET http://trabajando:3003/api/data/personas/1
+		```
 
 > > > - Peticion compuesta, se devuelve una coleccion
 
-```json
-	GET http://trabajando:3003/api/data/personas
-```
+> > > 	```json
+			GET http://trabajando:3003/api/data/personas
+		```
 
 > > > - Peticion compuesta filtrada, se devuelve una coleccion
 
-```json
-	GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
-```
+> > > 	```json
+			GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
+		```
 
 > ## POST
 
@@ -463,31 +466,31 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > - Peticion Simple sin body
 
-```json
-	POST http://trabajando:3003/api/data/personas/1 -> GET http://trabajando:3003/api/data/personas/1
-```
+> > > 	```json
+			POST http://trabajando:3003/api/data/personas/1 -> GET http://trabajando:3003/api/data/personas/1
+		```
 
 > > > - Peticion simple con body
 
-```json
-	POST http://trabajando:3003/api/data/personas/1
+> > >	```json
+			POST http://trabajando:3003/api/data/personas/1
 
-	body:
-	{
-		nombre: 'OTRO NOMBRE'
-	}
-```
+			body:
+			{
+				nombre: 'OTRO NOMBRE'
+			}
+		```
 
 > > > - Peticion compuesta con body
 
-```json
-	POST http://trabajando:3003/api/data/personas
+> > > 	```json
+			POST http://trabajando:3003/api/data/personas
 
-	body:
-	{
-		nombre: 'Un nombre para filtrar'
-	}
-```
+			body:
+			{
+				nombre: 'Un nombre para filtrar'
+			}
+		```
 
 > ## PUT
 
@@ -497,16 +500,16 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > - Se crea un nuevo recurso persona
 
-```json
-	PUT http://trabajando:3003/api/data/personas
+> > > 	```json
+			PUT http://trabajando:3003/api/data/personas
 
-	body:
-	{
-		nombre: 'unnombre'
-	,	apellido: 'unapellido'
-	,	telefono: 'untelefono'
-	}
-```
+			body:
+			{
+				nombre: 'unnombre'
+			,	apellido: 'unapellido'
+			,	telefono: 'untelefono'
+			}
+		```
 
 > ## DELETE
 
@@ -516,9 +519,9 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > - Se elimina un recurso de persona
 
-```json
-	DELETE http://trabajando:3003/api/data/personas/1
-```
+> > > 	```json
+			DELETE http://trabajando:3003/api/data/personas/1
+		```
 
 # Store
 
@@ -534,149 +537,153 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > > Supongamos las siguientes relaciones establecidas en los mappings y transforms
 
-	```json
-		//mappings
-		{
+> > > > ```json
+			//mappings
+			{
+				"personas":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					,	"id_ciudad":"ID_CIUDAD"
+					}
+				}
+			,	"ciudads":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					,	"id_privincia":"ID_PROVINCIA"
+					}
+				}
+			,	"provincias":
+				{
+					"field":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					}
+				}
+			}
+		```
+> > > > ```json
+			//transforms
 			"personas":
 			{
-				"fields":
+				...
+				"associations":
 				{
-					"id":"ID"
-				,	"nombre":"NOMBRE"
-				,	"id_ciudad":"ID_CIUDAD"
+					"ciudad":
+					{
+						"type":"belongs-to"
+					,	"target":"ciudad"
+					,	"key":"id_ciudad"
+					}
+				,	"provincia":
+					{
+						"type":"belongs-to:through"
+					,	"target":"provincias"
+					,	"through":"ciudads"
+					}
 				}
 			}
-		,	"ciudads":
+			"ciudads":
 			{
-				"fields":
+				...
+				"associations":
 				{
-					"id":"ID"
-				,	"nombre":"NOMBRE"
-				,	"id_privincia":"ID_PROVINCIA"
+					"provincia":
+					{
+						"type":"belongs-to"
+					,	"target":"provincia"
+					,	"key":"id_provincia"
+					}
 				}
 			}
-		,	"provincias":
+			"provincias":
 			{
-				"field":
+				...
+				"personas":
 				{
-					"id":"ID"
-				,	"nombre":"NOMBRE"
-				}
-			}
-		}
-
-
-		//transforms
-		"personas":
-		{
-			...
-			"associations":
-			{
-				"ciudad":
-				{
-					"type":"belongs-to"
-				,	"target":"ciudad"
-				,	"key":"id_ciudad"
-				}
-			,	"provincia":
-				{
-					"type":"belongs-to:through"
+					"type":"has-one:through"
 				,	"target":"provincias"
 				,	"through":"ciudads"
 				}
 			}
-		}
-		"ciudads":
-		{
-			...
-			"associations":
-			{
-				"provincia":
-				{
-					"type":"belongs-to"
-				,	"target":"provincia"
-				,	"key":"id_provincia"
-				}
-			}
-		}
-		"provincias":
-		{
-			...
-			"personas":
-			{
-				"type":"has-one:through"
-			,	"target":"provincias"
-			,	"through":"ciudads"
-			}
-		}
-	```
+		```
 
 > > > > 1. Buscamos la ciudad cuya id sea 12
 
-	```javaScript
+> > > >	```javaScript
 
-		find(
-			"ciudades"
-		,	{
-				"key":"id"
-			,	"value": "12"
-			}
-		)
-	```
+			find(
+				"ciudades"
+			,	{
+					"key":"id"
+				,	"value": "12"
+				}
+			)
+		```
 
 > > > > 2. Buscamos la Ciudad a la que pertenece la persona cuya id es 2
 
-	```javaScript
+> > > >	```javaScript
 
-		find(
-			"ciudades"
-		,	{
-				source: 'personas',
-			,	source_key: 'id',
-			,	source_value: '2',
-			,	key: 'id_ciudad',
-			,	target_key: 'id'
-			}
-		)
-	```
+			find(
+				"ciudades"
+			,	{
+					source: 'personas',
+				,	source_key: 'id',
+				,	source_value: '2',
+				,	key: 'id_ciudad',
+				,	target_key: 'id'
+				}
+			)
+		```
 
 > > > > 3. Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
-	```javaScript
 
-		find(
-			"provincias"
-		,	{
-				source: 'personas',
-			,	source_key: 'id',
-			,	source_value: '2',
-			,	through:
-				[
-					{
-						target: 'provincias'
-					,	key: 'id_provincia'
-					,	target_key: 'id'
-					}
-				]
-			,	key: 'id',
-			,	target_key: 'id'
+> > > >	```javaScript
+
+			find(
+				"provincias"
+			,	{
+					source: 'personas',
+				,	source_key: 'id',
+				,	source_value: '2',
+				,	through:
+					[
+						{
+							target: 'provincias'
+						,	key: 'id_provincia'
+						,	target_key: 'id'
+						}
+					]
+				,	key: 'id',
+				,	target_key: 'id'
+				}
+			)
+		```
+
+> > > > Nomenclatura General del Metodo Find
+
+> > > >	```javaScript	
+			what {string} // nombre de la entidad a buscar
+
+			filter {object} // parametros necesario para la busqueda
+
+			filter:
+			{
+			    through: [{array}],
+			    source: [{string}],
+			    source_key: {string},
+			    source_value: {string},
+			    key: {string},
+			    target_key: {string}
 			}
-		)
-	```
-		what {string} // nombre de la entidad a buscar
-
-		filter {object} // parametros necesario para la busqueda
-
-		filter:
-		{
-		    through: [{array}],
-		    source: [{string}],
-		    source_key: {string},
-		    source_value: {string},
-		    key: {string},
-		    target_key: {string}
-		}
-	```
-
+		```
 > > - Filter
 
 > > - Update

@@ -12,14 +12,12 @@
 				"type":"has-many"
 			,	"target":"turnos"
 			,	"target_key":"id_paciente"
-			,	"embedded":"partial"
 			}
 		,	"doctors":
 			{
 				"type":"has-many:through"
 			,	"target":"doctors"
 			,	"through":"turnos"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -36,14 +34,12 @@
 				"type":"belongs-to"
 			,	"target":"pacientes"
 			,	"key":"id_paciente"
-			,	"embedded":"partial"
 			}
 		,	"doctor":
 			{
 				"type":"belongs-to"
 			,	"target":"doctors"
 			,	"key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -60,28 +56,24 @@
 				"type":"has-many"
 			,	"target":"turnos"
 			,	"target_key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		,	"pacientes":
 			{
 				"type":"has-many:through"
 			,	"target":"pacientes"
 			,	"through":"turnos"
-			,	"embedded":"partial"
 			}
 		,	"honors":
 			{
 				"type":"has-many"
 			,	"target":"honors"
 			,	"target_key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		,	"calificacion":
 			{
 				"type":"has-one"
 			,	"target":"calificacions"
 			,	"target_key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		,	"institucion":
 			{
@@ -104,7 +96,6 @@
 				"type":"belongs-to"
 			,	"target":"doctors"
 			,	"key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -121,7 +112,6 @@
 				"type":"belongs-to"
 			,	"target":"doctors"
 			,	"key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		,	"institucion":
 			{
@@ -147,6 +137,22 @@
 			}
 		}
 	}
+,	"hospitals":
+	{
+		"storage":
+		{
+			"name":"hospitals"
+		}
+	,	"associations":
+		{
+			"institucions":
+			{
+				"type":"is-a"
+			,	"target":"institucions"
+			,	"key":"id_institucion"
+			}
+		}
+	}
 ,	"menus":
 	{
 		"storage":
@@ -160,7 +166,6 @@
 				"type":"has-many"
 			,	"target":"items"
 			,	"target_key":"id_menu"
-			,	"embedded":"partial"
 			}
 		,	"submenus":
 			{
@@ -169,7 +174,6 @@
 			,	"through":"submenus"
 			,	"through_key":"id_menu"
 			,	"through_target_key":"id_submenu"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -186,7 +190,6 @@
 				"type":"belongs-to"
 			,	"target":"menus"
 			,	"key":"id_menu"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -203,6 +206,87 @@
 				"type":"belongs-to"
 			,	"target":"menus"
 			,	"key":"id_menu"
+			}
+		}
+	}
+,	"ent1":
+	{
+		"storage":
+		{
+			"name":"ent1"
+		}
+	,	"associations":
+		{
+			"ent2":
+			{
+				"type":"has-one"
+			,	"target":"ent2"
+			,	"target_key":"id_ent1"
+			,	"embedded":"partial"
+			}
+		,	"ent3s":
+			{
+				"type":"has-many"
+			,	"target":"ent3"
+			,	"target_key":"id_ent1"
+			,	"embedded":"partial"
+			}
+		,	"ent4":
+			{
+				"type":"belongs-to"
+			,	"target":"ent4"
+			,	"key":"id_ent4"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"ent2":
+	{
+		"storage":
+		{
+			"name":"ent2"
+		}
+	,	"associations":
+		{
+			"ent1":
+			{
+				"type":"belongs-to"
+			,	"target":"ent1"
+			,	"key":"id_ent1"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"ent3":
+	{
+		"storage":
+		{
+			"name":"ent3"
+		}
+	,	"associations":
+		{
+			"ent1":
+			{
+				"type":"belongs-to"
+			,	"target":"ent1"
+			,	"key":"id_ent1"
+			,	"embedded":"partial"
+			}
+		}
+	}
+,	"ent4":
+	{
+		"storage":
+		{
+			"name":"ent4"
+		}
+	,	"associations":
+		{
+			"ent1":
+			{
+				"type":"has-one"
+			,	"target":"ent1"
+			,	"target_key":"id_ent4"
 			,	"embedded":"partial"
 			}
 		}
