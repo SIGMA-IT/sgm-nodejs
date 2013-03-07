@@ -42,7 +42,7 @@ ensureDir(
 		,	function(mapping,index)
 			{
 			var	counter
-			=	1
+			=	0
 				sources[index]
 				=	{
 						csv:

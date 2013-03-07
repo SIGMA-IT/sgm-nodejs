@@ -101,6 +101,7 @@ Ejemplo de navegacion
 > > 3. has-many
 > > 4. has-one\:through
 > > 5. has-many\:through
+> > 6. is-a
 
 > Cada una de estas relaciones son definidas dentro de la associations de cada entidad. A su vez, cada una de ellas tiene campos obligatorios y opcionales.
 
@@ -138,8 +139,6 @@ Ejemplo de navegacion
 					}
 				}
 			}
-	 	```
-> > > 	```json
 			// transform
 			"turnos":
 			{
@@ -180,7 +179,6 @@ Ejemplo de navegacion
 					,	"id_welcome":"ID_WELCOME"
 					}
 				}
-
 			,	"welcome":
 				{
 					"fields":
@@ -190,8 +188,6 @@ Ejemplo de navegacion
 					}
 				}
 			}
-		```
-> > >	```json
 			//transforms
 			"login":
 			{
@@ -242,8 +238,6 @@ Ejemplo de navegacion
 					}
 				}
 			}
-		```
-> > >	```json
 			//transforms
 			"provincias":
 			{
@@ -301,8 +295,6 @@ Ejemplo de navegacion
 					}
 				}
 			}
-		```
-> > >	```json
 			//transforms
 			"socio":
 			{
@@ -360,8 +352,6 @@ Ejemplo de navegacion
 					}
 				}
 			}
-		```
-> > > 	```json
 			//transforms
 			"doctors":
 			{
@@ -373,6 +363,55 @@ Ejemplo de navegacion
 						"type":"has-many:through"
 					,	"through":"turnos"
 					,	"target":"pacientes"
+					}	
+				}
+			}
+		```
+
+> # is-a
+
+> > Requiere:
+
+> > > - type : is-a
+> > > - target: entidad final
+> > > - key: clave del padre
+
+> > Ejemplo:
+
+> > > Supongamos que tenemos una entidad Mascotas la cual tiene entidades "hijas". Llamemoslas Perros y Loros.
+
+> > > 	```json
+			//mappings
+			{
+				"animales":
+				{
+					"fields":
+					{
+						"id":"ID"
+					,	"nombre":"NOMBRE"
+					}
+				}
+			,	"domesticos":
+				{
+					"fields":
+					{
+						"id_animal":"id_animal"
+					,	"nombre":"NOMBRE"
+					,	"id_dueño":"id_dueño"
+					}
+				}
+			}
+			//transforms
+			"domesticos":
+			{
+				...
+				"associations":
+				{
+					"animales":
+					{
+						"type":"is-a"
+					,	"target":"animales"
+					,	"key":"id_mascota"
 					}	
 				}
 			}
@@ -444,19 +483,16 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 
 > > > 	```json
 			GET http://trabajando:3003/api/data/personas/1
-		```
 
 > > > - Peticion compuesta, se devuelve una coleccion
 
 > > > 	```json
 			GET http://trabajando:3003/api/data/personas
-		```
 
 > > > - Peticion compuesta filtrada, se devuelve una coleccion
 
 > > > 	```json
 			GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
-		```
 
 > ## POST
 
@@ -467,30 +503,32 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > - Peticion Simple sin body
 
 > > > 	```json
-			POST http://trabajando:3003/api/data/personas/1 -> GET http://trabajando:3003/api/data/personas/1
-		```
+			//	Peticion
+			POST http://trabajando:3003/api/data/personas/1 
+			//	Body
+			body: {}
 
 > > > - Peticion simple con body
 
 > > >	```json
+			//	Peticion
 			POST http://trabajando:3003/api/data/personas/1
-
+			//	Body
 			body:
 			{
 				nombre: 'OTRO NOMBRE'
 			}
-		```
 
 > > > - Peticion compuesta con body
 
 > > > 	```json
+			//	Peticion
 			POST http://trabajando:3003/api/data/personas
-
+			//	Body
 			body:
 			{
 				nombre: 'Un nombre para filtrar'
 			}
-		```
 
 > ## PUT
 
@@ -501,15 +539,15 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > - Se crea un nuevo recurso persona
 
 > > > 	```json
+			//	Peticion
 			PUT http://trabajando:3003/api/data/personas
-
+			//	Body
 			body:
 			{
 				nombre: 'unnombre'
 			,	apellido: 'unapellido'
 			,	telefono: 'untelefono'
 			}
-		```
 
 > ## DELETE
 
@@ -520,8 +558,8 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > - Se elimina un recurso de persona
 
 > > > 	```json
+			//	Peticion
 			DELETE http://trabajando:3003/api/data/personas/1
-		```
 
 # Store
 
@@ -567,8 +605,6 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 					}
 				}
 			}
-		```
-> > > > ```json
 			//transforms
 			"personas":
 			{
@@ -617,7 +653,6 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > > 1. Buscamos la ciudad cuya id sea 12
 
 > > > >	```javaScript
-
 			find(
 				"ciudades"
 			,	{
@@ -630,7 +665,6 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > > 2. Buscamos la Ciudad a la que pertenece la persona cuya id es 2
 
 > > > >	```javaScript
-
 			find(
 				"ciudades"
 			,	{
@@ -646,7 +680,6 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 > > > > 3. Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
 
 > > > >	```javaScript
-
 			find(
 				"provincias"
 			,	{
