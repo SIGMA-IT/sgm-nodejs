@@ -160,8 +160,6 @@
 			{
 				"type":"is-a"
 			,	"target":"institucions"
-			,	"key":"id_institucion"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -300,6 +298,21 @@
 			,	"target":"ent1"
 			,	"target_key":"id_ent4"
 			,	"embedded":"partial"
+			}
+		}
+	}
+,	"ent5":
+	{
+		"storage":
+		{
+			"name":"ent5"
+		}
+	,	"associations":
+		{
+			"ent1":
+			{
+				"type":"is-a"
+			,	"target":"ent1"
 			}
 		}
 	}

@@ -113,6 +113,10 @@ Ejemplo de navegacion
 > > > - target: entidad a la que pertenece
 > > > - key: clave con la que se relaciona a dicha entidad target (Tabla: la clave se encuentra dentro de la entidad)
 
+> > Optional:
+
+> > > - target\_key: clave en la entidad target que se relaciona con la entidad. 
+
 > > Ejemplo:
 
 > > > Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
@@ -164,6 +168,10 @@ Ejemplo de navegacion
 > > > - target: entidad que contiene
 > > > - target\_key: clave con la que se relaciona a dicha entidad (Tabla: la clave se encuentra en la entidad target)
 
+> > Optional:
+
+> > > - key: clave en la entidad que se relaciona con la entidad target
+
 > > Ejemplo:
 
 > > > Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
@@ -212,6 +220,10 @@ Ejemplo de navegacion
 > > > - type : has-many
 > > > - target: entidad que contiene
 > > > - target\_key: clave con la que se relaciona a dichas entidades (Tabla: la clave se encuentra en la entidad que contiene)
+
+> > Optional:
+
+> > > - key: clave en la entidad que se relaciona con la entidad target
 
 > > Ejemplo:
 
@@ -374,7 +386,11 @@ Ejemplo de navegacion
 
 > > > - type : is-a
 > > > - target: entidad final
-> > > - key: clave del padre
+
+> > Optional:
+
+> > > - key: clave en la entidad que se relaciona con la entidad padre
+> > > - target\_key: clave en la entidad padre que se relaciona con la entidad. 
 
 > > Ejemplo:
 
@@ -411,7 +427,6 @@ Ejemplo de navegacion
 					{
 						"type":"is-a"
 					,	"target":"animales"
-					,	"key":"id_mascota"
 					}	
 				}
 			}

@@ -58,7 +58,7 @@
 	{
 		"fields":
 		{
-			"id_institucion":"ID_INSTITUCION"
+			"id":"ID_INSTITUCION"
 		,	"id_doctor":"ID_DOCTOR"
 		,	"id_calificacion":"ID_CALIFICACION"
 		,	"nombre":"NOMBRE_HOSPITAL"
@@ -119,6 +119,14 @@
 		"fields":
 		{
 			"id":"ID"
+		}
+	}
+,	"ent5":
+	{
+		"fields":
+		{
+			"id":"ID_ENT5"
+		,	"id_ent4":"ID_ENT4"
 		}
 	}
 }

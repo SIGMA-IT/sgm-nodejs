@@ -83,8 +83,8 @@ var	Factory
 							}
 						,	'is-a':
 							{
-								required:['target','key']
-							,	optional:['target_key']
+								required:['target']
+							,	optional:['key','target_key']
 							}
 					}
 				,	assoc_values:
