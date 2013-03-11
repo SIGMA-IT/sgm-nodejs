@@ -313,6 +313,8 @@
 			{
 				"type":"is-a"
 			,	"target":"ent1"
+			,	"asd":"2"
+			,	"asddd":"Asd"
 			}
 		}
 	}

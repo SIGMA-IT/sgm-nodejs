@@ -110,6 +110,9 @@ var	Factory
 							target_key:'id'
 						}
 					}
+				,	specs: ["storage","associations","profiles","collection"]
+				,	assocs: ["type","target","through","key","target_key","linked","embedded","source","parent","name"]
+				,	types: ["none","single","partial","nested","list","pageable","scrollable"]
 				}
 	}
 if(

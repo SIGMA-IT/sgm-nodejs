@@ -8,9 +8,11 @@ var	config
 =	require('./default.js')()
 ,	base_lib
 =	config.paths.lib
+,	server_log
+=	config.paths.server_log
 ,	base_pub
 =	config.paths.public
-var	connect
+,	connect
 =	require('connect')
 ,	path
 =	require('path')
@@ -45,17 +47,29 @@ var	connect
 			,	3003
 		)
 		.parse(process.argv)
-
-var	_ //underscore+string
+var	_
 =	require('underscore')
-//	_.mixin(require('underscore.string').exports())
 var	Overscore
 =	require(base_lib+'overscore.js')(_)
-	//require('../lib/underscore-data.js')
 //parseUri------------------------------------------
 	eval(fs.readFileSync(base_lib+'parseuri.js')+'')
 //---------------------------------------------------
-var	hal
+var	Colour
+=	require('coloured')
+,	Log
+=	require('log')
+,	fs_log_stream
+=	fs.createWriteStream(server_log)
+,	ServerLog
+=	require(base_lib+'logger.js')(
+		_
+	,	Log
+	,	Colour
+	,	fs_log_stream
+	)
+,	logger
+=	new ServerLog()
+,	hal
 =	require('hal')	
 ,	hal_builder
 =	require(base_lib+'hal_builder.js').make_hal_builder(_,hal)
@@ -78,6 +92,7 @@ var	hal
 	,	mappings
 	,	transforms
 	,	defaults
+	,	logger
 	)
 ,	AssociationsTransforms
 =	require(base_lib+'assoc-transforms.js')(
@@ -85,6 +100,7 @@ var	hal
 	,	mappings
 	,	transforms
 	,	defaults
+	,	logger
 	)
 ,	AppRouter
 =	require(base_lib+'router.js')(
@@ -94,16 +110,18 @@ var	hal
 	,	collection_builder
 	,	parseUri
 	,	Q
+	,	logger
 	)
 if(!config)
-	throw 'error: config no exists'
+	logger.error('Config: no such file ./config.js')
 if(!fsExists(program.input))
-	throw 'error: '+program.input+' no exists'
-console.log('input: '+program.input)
+	logger.error('Program Input: no such file'+program.input)
 if(!transforms)
-	throw 'error: '+program.transforms+' no exists'
-console.log('transforms: '+program.transforms)
-console.log('listening to port: '+config.server.port)
+	logger.error('Program Transforms: no such file'+program.transforms)
+logger.info('Program input: '+program.input)
+logger.info('Program transforms: '+program.transforms)
+logger.info('Listening to port: '+config.server.port)
+
 var	Store
 =	require(base_lib+'store.js')(_,Q)
 ,	store
