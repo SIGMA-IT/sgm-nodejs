@@ -29,6 +29,8 @@
 		,	"underscore": "latest"
 		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
 		,	"q":"git://github.com/kriskowal/q.git"
+		,	"coloured": "latest"
+		,	"log": "latest"
 		}
 	,	"devDependencies":
 		{

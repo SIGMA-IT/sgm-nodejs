@@ -4,9 +4,14 @@ var	Factory
 		return	{
 				paths: 
 				{
+
 						"sru.api.service": "../../../api/service/"
+
+						//"sru.api.service": "../../../api/test_service/"
+
 					,	"lib": "../lib/"
 					,	"public": "/../public/"
+					,	"server_log": "server.log"
 				}
 			,	server: 
 				{

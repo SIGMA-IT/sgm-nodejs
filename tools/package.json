@@ -29,6 +29,8 @@
 		,	"ensureDir": "latest"
 		,	"underscore": "latest"
 		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
+		,	"coloured": "latest"
+		,	"log": "latest"
 		}
 	,	"devDependencies":
 		{

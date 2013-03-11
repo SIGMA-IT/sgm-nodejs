@@ -22,17 +22,29 @@ var	csv
 =	fsExists(program.mappings)
 		?require(program.mappings)
 		:false
+,	Colour
+=	require('coloured')
+,	Log
+=	require('log')
+,	ServerLog
+=	require('../lib/logger.js')(
+		_
+	,	Log
+	,	Colour
+	)
+,	logger
+=	new ServerLog()
 if(!fsExists(program.input))
-	throw 'error: '+program.input+' no exists'
-console.log('input: '+program.input)
+	logger.error('Program Input: no such file'+program.input)
 if(!mappings)
-	throw 'error: '+program.mappings+' no exists'
-console.log('mappings: '+program.mappings)
+	logger.error('Program Mappings: no such file'+program.mappings)
+logger.info('Program Input: '+program.input)
+logger.info('Program Mappings: '+program.mappings)
 ensureDir(
 	program.output
 ,	function()
 	{
-		console.log('output: '+program.output)
+		logger.info('Program Output: '+program.output)
 	var	sources
 	=	{}
 		_.each(
