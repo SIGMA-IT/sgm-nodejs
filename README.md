@@ -17,43 +17,44 @@ Estos se definen en tools/package.json y en service/package.json
 
 ### raw2hal
 
-> Convierte los datos del formato csv(raw) a json(hal)
+Convierte los datos del formato csv(raw) a json(hal)
 
-> El archivo raw2hal es un .sh que invoca a 3 procesos intermedios: 
-> > 1.  raw -> csv donde se convierten los csv crudos en csv sanitizados.
-> > 2.  csv -> json donde se convierten los csv en json. 
-> > 3.  json -> hal donde se convierten los json en HAL.
+El archivo raw2hal es un .sh que invoca a 3 procesos intermedios: 
 
-> Ejemplo de llamada en consola (linux):
-
-> > DIR\_RAIZ_PROYECTO/service# ./raw2hal
-
-### server.js
-
-> Levanta un servicio que sirve hals, y los permite navegar via links (url).
-
-> Este servicio utiliza un archivo de configuración "config.js" de donde obtiene los valores por defecto para poder realizar una conección y servirse de los mappings y transforms necesarios.
-
-> También soporta la recepeción de parámetros por linea de consola a la hora de levantar el servicio. 
-
-> - -i: --input <path>, directorio de entrada para los archivos json
-> > <code>[./data/json]',String,'./data/json'</code>
-> - -t: --transforms <transforms.json>, ubicacion del archivo transform.json
-> > <code>[./transforms.json]',String,'./transforms.json'</code>
-> - -m: --mappings <mappings.json>, ubicacion del archivo mappings.json
-> > <code>[./mappings.json]',String,'./mappings.json'</code>
-> - -p: --port <8000>', puerto a utilizar en la coneccion
-> > <code> 'port [3003]', Number, 3003</code>
+1.  raw -> csv donde se convierten los csv crudos en csv sanitizados.
+2.  csv -> json donde se convierten los csv en json. 
+3.  json -> hal donde se convierten los json en HAL.
 
 Ejemplo de llamada en consola (linux):
 
-> > DIR\_RAIZ_PROYECTO/service# node server.js -p 3003 -i test/data/json -t test/specs/transforms.json -m test/specs/mappings.json
+> DIR\_RAIZ_PROYECTO/service# ./raw2hal
+
+### server.js
+
+Levanta un servicio que sirve hals, y los permite navegar via links (url).
+
+Este servicio utiliza un archivo de configuración "config.js" de donde obtiene los valores por defecto para poder realizar una conección y servirse de los mappings y transforms necesarios.
+
+También soporta la recepeción de parámetros por linea de consola a la hora de levantar el servicio. 
+
+- -i: --input <path>, directorio de entrada para los archivos json
+<code>[./data/json]',String,'./data/json'</code>
+- -t: --transforms <transforms.json>, ubicacion del archivo transform.json
+<code>[./transforms.json]',String,'./transforms.json'</code>
+- -m: --mappings <mappings.json>, ubicacion del archivo mappings.json
+<code>[./mappings.json]',String,'./mappings.json'</code>
+-  -p: --port <8000>', puerto a utilizar en la coneccion
+<code> 'port [3003]', Number, 3003</code>
+
+Ejemplo de llamada en consola (linux):
+
+> DIR\_RAIZ_PROYECTO/service# node server.js -p 3003 -i test/data/json -t test/specs/transforms.json -m test/specs/mappings.json
 
 Una ves que el servicio este en ejecucion se podra acceder a los HAL generados mediante el navegador.
 
 Ejemplo de navegacion
 
-> > http://trabajando:3003/api/data/personas (donde personas es el nombre de la entidad)
+```http://trabajando:3003/api/data/personas (donde personas es el nombre de la entidad)```
 
 
 # Mappings & Transforms
@@ -70,7 +71,7 @@ Ejemplo de navegacion
 
 - <b>transforms.json</b>: es el archivo donde se definen las relaciones entre entidades
 
-> convenciones:
+> Convenciones:
 
 > - storage: define el lugar donde se encuentra el archivo de entrada (input csv) 
 
@@ -94,34 +95,33 @@ Ejemplo de navegacion
 
 ## Tipos de Relaciones
 
-> Se ofrece soporte para las siguientes relaciones
+Se ofrece soporte para las siguientes relaciones
 
-> > 1. belongs-to
-> > 2. has-one
-> > 3. has-many
-> > 4. has-one\:through
-> > 5. has-many\:through
-> > 6. is-a
+1. belongs-to
+2. has-one
+3. has-many
+4. has-one\:through
+5. has-many\:through
+6. is-a
 
-> Cada una de estas relaciones son definidas dentro de la associations de cada entidad. A su vez, cada una de ellas tiene campos obligatorios y opcionales.
+Cada una de estas relaciones son definidas dentro de la associations de cada entidad. A su vez, cada una de ellas tiene campos obligatorios y opcionales.
 
-> # belongs-to
+# belongs-to
 
-> > Requiere:
+####  Requiere:
 
-> > > - type : belongs-to
-> > > - target: entidad a la que pertenece
-> > > - key: clave con la que se relaciona a dicha entidad target (Tabla: la clave se encuentra dentro de la entidad)
+- type : belongs-to
+- target: entidad a la que pertenece
+- key: clave con la que se relaciona a dicha entidad target (Tabla: la clave se encuentra dentro de la entidad)
 
-> > Optional:
+####  Optional:
 
-> > > - target\_key: clave en la entidad target que se relaciona con la entidad. 
+- target\_key: clave en la entidad target que se relaciona con la entidad. 
 
-> > Ejemplo:
+####  Ejemplo:
 
-> > > Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
+Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
 
-> > >	```json
 			//mapping
 			{
 				"turnos":
@@ -158,25 +158,24 @@ Ejemplo de navegacion
 				...
 				}
 			}
-		```
 
-> # has-one
 
-> > Requiere:
+# has-one
 
-> > > - type : has-one
-> > > - target: entidad que contiene
-> > > - target\_key: clave con la que se relaciona a dicha entidad (Tabla: la clave se encuentra en la entidad target)
+####  Requiere:
 
-> > Optional:
+- type : has-one
+- target: entidad que contiene
+- target\_key: clave con la que se relaciona a dicha entidad (Tabla: la clave se encuentra en la entidad target)
 
-> > > - key: clave en la entidad que se relaciona con la entidad target
+####  Optional:
 
-> > Ejemplo:
+- key: clave en la entidad que se relaciona con la entidad target
 
-> > > Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
+#### Ejemplo:
 
-> > >	```json
+Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
+	
 			//mappings
 			{
 				"login":
@@ -211,25 +210,23 @@ Ejemplo de navegacion
 					...
 				}
 			}
-		```
 
-> # has-many
+#  has-many
 
-> > Requiere:
+####  Requiere:
 
-> > > - type : has-many
-> > > - target: entidad que contiene
-> > > - target\_key: clave con la que se relaciona a dichas entidades (Tabla: la clave se encuentra en la entidad que contiene)
+- type : has-many
+- target: entidad que contiene
+- target\_key: clave con la que se relaciona a dichas entidades (Tabla: la clave se encuentra en la entidad que contiene)
 
-> > Optional:
+####  Optional:
 
-> > > - key: clave en la entidad que se relaciona con la entidad target
+- key: clave en la entidad que se relaciona con la entidad target
 
-> > Ejemplo:
+####  Ejemplo:
 
-> > > Supongamos que tenemos una entidad provincias la cual contiene una relacion con instituciones del tipo <i>has-many</i>. Definimos una asociacion dentro de provincias llamada instituciones.
+Supongamos que tenemos una entidad provincias la cual contiene una relacion con instituciones del tipo <i>has-many</i>. Definimos una asociacion dentro de provincias llamada instituciones.
 
-> > >	```json
 			//mappings
 			{
 				"provincias":
@@ -264,21 +261,19 @@ Ejemplo de navegacion
 					}
 				}
 			}
-		```
 
-> # has-one:through
+# has-one:through
 
-> > Requiere:
+####  Requiere:
 
-> > > - type : has-one:through
-> > > - through: entidad intermediaria
-> > > - target: entidad final
+- type : has-one:through
+- through: entidad intermediaria
+- target: entidad final
 
-> > Ejemplo:
+#### Ejemplo:
 
-> > > Supongamos que tenemos un video club, cada socio del video club, va a tener asociado un historial de peliculas alquiladas. Ahora bien si qusieramos saber que dia alquile la pelicula Campanita, tendriamos que definir una asociacion del tipo <i>has-one:through</i> en socio, llamemosla pelicula.
+Supongamos que tenemos un video club, cada socio del video club, va a tener asociado un historial de peliculas alquiladas. Ahora bien si qusieramos saber que dia alquile la pelicula Campanita, tendriamos que definir una asociacion del tipo <i>has-one:through</i> en socio, llamemosla pelicula.
 
-> > > ```json
 			//mappings
 			{
 				"socio":
@@ -321,21 +316,19 @@ Ejemplo de navegacion
 					}	
 				}
 			}
-		```
 
-> # has-many:through
+# has-many:through
 
-> > Requiere:
+####  Requiere:
 
-> > > - type : has-many:through
-> > > - through: entidad intermediaria
-> > > - target: entidad final
+- type : has-many:through
+- through: entidad intermediaria
+- target: entidad final
 
-> > Ejemplo:
+#####  Ejemplo:
 
-> > > Supongamos que en un hospital se asignan un turno a un paciente y que cada turno tambien tiene un doctor asignado. Si quisieramos saber que pacientes va a atender un doctor segun los turnos asignados, tendriamos que definir una asociacion del tipo <i>has-many:through</i> en doctor, llamemosla pacientes.
+Supongamos que en un hospital se asignan un turno a un paciente y que cada turno tambien tiene un doctor asignado. Si quisieramos saber que pacientes va a atender un doctor segun los turnos asignados, tendriamos que definir una asociacion del tipo <i>has-many:through</i> en doctor, llamemosla pacientes.
 
-> > > 	```json
 			//mappings
 			{
 				"doctors":
@@ -378,25 +371,23 @@ Ejemplo de navegacion
 					}	
 				}
 			}
-		```
 
-> # is-a
+# is-a
 
-> > Requiere:
+####  Requiere:
 
-> > > - type : is-a
-> > > - target: entidad final
+- type : is-a
+- target: entidad final
 
-> > Optional:
+####  Optional:
 
-> > > - key: clave en la entidad que se relaciona con la entidad padre
-> > > - target\_key: clave en la entidad padre que se relaciona con la entidad. 
+-  key: clave en la entidad que se relaciona con la entidad padre
+- target\_key: clave en la entidad padre que se relaciona con la entidad. 
 
-> > Ejemplo:
+####  Ejemplo:
 
-> > > Supongamos que tenemos una entidad Mascotas la cual tiene entidades "hijas". Llamemoslas Perros y Loros.
+Supongamos que tenemos una entidad Mascotas la cual tiene entidades "hijas". Llamemoslas Perros y Loros.
 
-> > > 	```json
 			//mappings
 			{
 				"animales":
@@ -430,102 +421,98 @@ Ejemplo de navegacion
 					}	
 				}
 			}
-		```
+
 
 ## Embeddeds
 
-> ### Tipos de Embeddeds
+### Tipos de Embeddeds
 
-> > - none : define que no se incluira ningun embedded en la entidad (Si no se establece el campo embedded, por defecto se tomara none)
+- none : define que no se incluira ningun embedded en la entidad (Si no se establece el campo embedded, por defecto se tomara none)
 
-> > - single: define que existe un embedded, pero este nuevo recurso embebido no contendra nuevos embeddeds, solamente sus links
+- single: define que existe un embedded, pero este nuevo recurso embebido no contendra nuevos embeddeds, solamente sus links
 
-> > - partial: define que existe un embedded y este sera completo (incluye tanto links como embeddeds)
+- partial: define que existe un embedded y este sera completo (incluye tanto links como embeddeds)
 
-> ### Propiedades los Embeddeds
+### Propiedades los Embeddeds
 
-> > - type: define el tipo de embedded (none,single,partial)
+- type: define el tipo de embedded (none,single,partial)
 
-> > - collection: si existe una coleccion y como sera
+- collection: si existe una coleccion y como sera
 
-> ### Colecciones
+### Colecciones
 
-> > - type: define el tipo de coleccion (en caso de estar vacio, por defecto se tomara list)
+- type: define el tipo de coleccion (en caso de estar vacio, por defecto se tomara list)
 
-> > - ipp: define la cantidad de items por paginas a mostrar
+- ipp: define la cantidad de items por paginas a mostrar
 
-> > - current\_page: define la pagina desde la que se comenzara a mostrar (por defecto 1)
+- page: define la pagina desde la que se comenzara a mostrar (por defecto 1)
 
-> > #### Tipo de Collecciones
+#### Tipo de Collecciones
 
-> > > - list: coleccion sin indices, ni siguientes, ni anteriores, solo una lista de recursos
+- list: coleccion sin indices, ni siguientes, ni anteriores, solo una lista de recursos
 
-> > > - pageable: coleccion paginable, contiene los links <i>next</i> y <i>prev</i>
+- pageable: coleccion paginable, contiene los links <i>next</i> y <i>prev</i>
 
-> > > - scrollable: coleccion que contiene un unico link <i>more</i> 
+- scrollable: coleccion que contiene un unico link <i>more</i> 
 
 ## Links
 
-> ### Atributos de Links
+### Atributos de Links
 
-> > - type: define el tipo de links
+- type: define el tipo de links
 
-> > - target: entidad de la que se obtendra el recurso. Esto permite generar un link que apunte a una nueva entidad.
+- target: entidad de la que se obtendra el recurso. Esto permite generar un link que apunte a una nueva entidad.
 
-> > - target\_key: en caso de estar definido target, se necesitara la clave que une ambas entidades
+- target\_key: en caso de estar definido target, se necesitara la clave que une ambas entidades
 
-> > - target\_attr: define que atributos de la entidad se usaran en el link. Solamente se permitiran ['name', 'hreflang', 'title', 'templated','icon','align']
+- target\_attr: define que atributos de la entidad se usaran en el link. Solamente se permitiran ['name', 'hreflang', 'title', 'templated','icon','align']
 
-> ### Tipos de Links
+### Tipos de Links
 
-> > - none: define que dado una coleccion el link solo apuntara a la coleccion completa.
+- none: define que dado una coleccion el link solo apuntara a la coleccion completa.
 
-> > - single: define que dado una coleccion el link solo apuntara a la coleccion completa.
+- single: define que dado una coleccion el link solo apuntara a la coleccion completa.
 
-> > - nested: define que dada una coleccion se creara un link por cada uno de sus elementos pero todas bajo un mismo rel.
+- nested: define que dada una coleccion se creara un link por cada uno de sus elementos pero todas bajo un mismo rel.
 
 # Servicio REST
 
 El servicio generado por este proyecto es un servicio REST FULL, se utilizan los metodos GET, POST, PUT y DELETE para acceder, editar, crear y borrar recursos. Sin embargo, si utilizamos este servicio unicamente conectado con los csv y no con algun backend real (SQL, MongoDB), las modificaciones realizadas caducaran junto al servicio, es decir, si eliminamos un recurso, este no se vera reflejado se reiniciamos el servicio.
 
-> ## GET
+## GET
 
-> > Solo basta con acceder a una url para obtener los datos. Sin embargo, se puede pasar datos vias url para filtrar la busqueda del GET. Una utilidad de este metodo es para la generacion de collections, donde pasamos via url, a parte de la peticion de la entidad, parametros de filtros propios de la collecion (type, ipp, current_page - VER COLLECTIONS PARA MAS DETALLE)
+Solo basta con acceder a una url para obtener los datos. Sin embargo, se puede pasar datos vias url para filtrar la busqueda del GET. Una utilidad de este metodo es para la generacion de collections, donde pasamos via url, a parte de la peticion de la entidad, parametros de filtros propios de la collecion (type, ipp, current_page - VER COLLECTIONS PARA MAS DETALLE)
 
-> > Ejemplo
+#### Ejemplo
 
-> > > - Peticion simple, se devuelve un unico recurso
+- Peticion simple, se devuelve un unico recurso
 
-> > > 	```json
+
 			GET http://trabajando:3003/api/data/personas/1
 
-> > > - Peticion compuesta, se devuelve una coleccion
+- Peticion compuesta, se devuelve una coleccion
 
-> > > 	```json
 			GET http://trabajando:3003/api/data/personas
 
-> > > - Peticion compuesta filtrada, se devuelve una coleccion
+- Peticion compuesta filtrada, se devuelve una coleccion
 
-> > > 	```json
 			GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
 
-> ## POST
+## POST
 
-> > Se accede a una url y se pasan atributos mediante el body. Si el body llega vacio se procedera como si fuese un <i>GET</i>, si la url es simple y el body no esta vacio, se procedera como si fuese una modificacion de un recurso existente y si la peticion es compuesta y el body no esta vacio la peticion serea un filtro.
+Se accede a una url y se pasan atributos mediante el body. Si el body llega vacio se procedera como si fuese un <i>GET</i>, si la url es simple y el body no esta vacio, se procedera como si fuese una modificacion de un recurso existente y si la peticion es compuesta y el body no esta vacio la peticion serea un filtro.
 
-> > Ejemplo
+#### Ejemplo
 
-> > > - Peticion Simple sin body
+- Peticion Simple sin body
 
-> > > 	```json
 			//	Peticion
 			POST http://trabajando:3003/api/data/personas/1 
 			//	Body
 			body: {}
 
-> > > - Peticion simple con body
+- Peticion simple con body
 
-> > >	```json
 			//	Peticion
 			POST http://trabajando:3003/api/data/personas/1
 			//	Body
@@ -534,9 +521,8 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				nombre: 'OTRO NOMBRE'
 			}
 
-> > > - Peticion compuesta con body
+- Peticion compuesta con body
 
-> > > 	```json
 			//	Peticion
 			POST http://trabajando:3003/api/data/personas
 			//	Body
@@ -545,15 +531,14 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				nombre: 'Un nombre para filtrar'
 			}
 
-> ## PUT
+## PUT
 
-> > Se accede a una url compuesta y se agrega un nuevo recurso. La url debe ser compuesta, body debe llegar con un prototipo del nuevo recurso a guardar y los datos correspondientes al nuevo recurso.
+Se accede a una url compuesta y se agrega un nuevo recurso. La url debe ser compuesta, body debe llegar con un prototipo del nuevo recurso a guardar y los datos correspondientes al nuevo recurso.
 
-> > Ejemplo
+#### Ejemplo
 
-> > > - Se crea un nuevo recurso persona
+- Se crea un nuevo recurso persona
 
-> > > 	```json
 			//	Peticion
 			PUT http://trabajando:3003/api/data/personas
 			//	Body
@@ -564,33 +549,39 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 			,	telefono: 'untelefono'
 			}
 
-> ## DELETE
+## DELETE
 
-> > Se accede a una url simple y se elimina el recurso. La url debe ser simple.
+Se accede a una url simple y se elimina el recurso. La url debe ser simple.
 
-> > Ejemplo
+####  Ejemplo
 
-> > > - Se elimina un recurso de persona
+- Se elimina un recurso de persona
 
-> > > 	```json
 			//	Peticion
 			DELETE http://trabajando:3003/api/data/personas/1
 
 # Store
 
-> El Store es el intermediario entre el servicio y el backend. Analiza la peticion y en conjunto con el transform.json y la descripcion de las relaciones del mismo devuelve una query que el backend debe entender y devuelve los datos obtenidos segun dicha query.
+El Store es el intermediario entre el servicio y el backend. Analiza la peticion y en conjunto con el transform.json y la descripcion de las relaciones del mismo devuelve una query que el backend debe entender y devuelve los datos obtenidos segun dicha query.
 
-> Este utiliza 5 metodos:
+Este utiliza 5 metodos:
 
-> > - Find: es la funcion encargada de devolver la data asociada a una peticion simple. Recibe dos argumentos: 
+1. Find
+2. Filter
+3. Update
+4. Create
+5. Delete
 
-> > > find(what,filter) --> {object}
+## Find: 
 
-> > > Ejemplos: 
+Es la funcion encargada de devolver la data asociada a una peticion simple.
 
-> > > > Supongamos las siguientes relaciones establecidas en los mappings y transforms
+<code>find(what,filter) --> {object}</code>
 
-> > > > ```json
+#### Ejemplos: 
+
+Supongamos las siguientes relaciones establecidas en los mappings y transforms
+
 			//mappings
 			{
 				"personas":
@@ -663,25 +654,21 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				,	"through":"ciudads"
 				}
 			}
-		```
 
-> > > > 1. Buscamos la ciudad cuya id sea 12
+- Buscamos la ciudad cuya id sea 12
 
-> > > >	```javaScript
 			find(
-				"ciudades"
+				"ciudads"
 			,	{
 					"key":"id"
 				,	"value": "12"
 				}
 			)
-		```
 
-> > > > 2. Buscamos la Ciudad a la que pertenece la persona cuya id es 2
+- Buscamos la Ciudad a la que pertenece la persona cuya id es 2
 
-> > > >	```javaScript
 			find(
-				"ciudades"
+				"ciudads"
 			,	{
 					source: 'personas',
 				,	source_key: 'id',
@@ -690,11 +677,10 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				,	target_key: 'id'
 				}
 			)
-		```
 
-> > > > 3. Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
 
-> > > >	```javaScript
+- Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
+
 			find(
 				"provincias"
 			,	{
@@ -704,7 +690,7 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				,	through:
 					[
 						{
-							target: 'provincias'
+							target: 'ciudads'
 						,	key: 'id_provincia'
 						,	target_key: 'id'
 						}
@@ -713,29 +699,11 @@ El servicio generado por este proyecto es un servicio REST FULL, se utilizan los
 				,	target_key: 'id'
 				}
 			)
-		```
+		
+##  Filter
 
-> > > > Nomenclatura General del Metodo Find
+## Update
 
-> > > >	```javaScript	
-			what {string} // nombre de la entidad a buscar
+##  Create
 
-			filter {object} // parametros necesario para la busqueda
-
-			filter:
-			{
-			    through: [{array}],
-			    source: [{string}],
-			    source_key: {string},
-			    source_value: {string},
-			    key: {string},
-			    target_key: {string}
-			}
-		```
-> > - Filter
-
-> > - Update
-
-> > - Create
-
-> > - Delete.
+##  Delete

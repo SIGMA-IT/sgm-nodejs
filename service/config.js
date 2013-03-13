@@ -4,7 +4,8 @@ var	Factory
 		return	{
 				paths: 
 				{
-						"sru.api.service": "../../../api/test_service/"
+						"app":"../../../api/service/"
+					,	"data": "../../../api/test_service/"
 					,	"lib": "../lib/"
 					,	"public": "/../public/"
 					,	"server_log": "server.log"
@@ -22,7 +23,7 @@ var	Factory
 					,	"Access-Control-Allow-Methods": "POST, PUT, GET, DELETE, OPTIONS"
 					,	"Access-Control-Max-Age":"0"
 					,	"Access-Control-Allow-Headers": "X-Requested-With"
-					,	"Content-Type": "text/hal+json"
+					,	"Content-Type": "text/hal+json; charset=utf-8"
 				}
 			}
 			

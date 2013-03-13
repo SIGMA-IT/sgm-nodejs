@@ -24,21 +24,38 @@ var	config
 =	require('commander')
 		.version('0.0.1')
 		.option(
-				'-i, --input <path>'
+				'-iapp, --inputapp <path>'
 			,	'input dir to find json data [./data/json]'
 			,	String
-			,	config.paths['sru.api.service']+'data/json'
+			,	config.paths['app']+'data/json'
 		)
-		.option(	'-m, --mappings <mappings.json>'
+		.option('-mapp, --mappingsapp <mappings.json>'
 			,	'mappings fields in csv data [./mappings.json]'
 			,	String
-			,	config.paths['sru.api.service']+'specs/mappings.json'
+			,	config.paths['app']+'specs/mappings.json'
 		)
 		.option(
-				'-t, --transforms <transforms.json>'
+				'-tapp, --transformsapp <transforms.json>'
 			,	'linking and embeding transforms [./specs/transforms.json]'
 			,	String
-			,	config.paths['sru.api.service']+'specs/transforms.json'
+			,	config.paths['app']+'specs/transforms.json'
+		)
+		.option(
+				'-idata, --inputdata <path>'
+			,	'input dir to find json data [./data/json]'
+			,	String
+			,	config.paths['data']+'data/json'
+		)
+		.option('-mdata, --mappingsdata <mappings.json>'
+			,	'mappings fields in csv data [./mappings.json]'
+			,	String
+			,	config.paths['data']+'specs/mappings.json'
+		)
+		.option(
+				'-tdata, --transformsdata <transforms.json>'
+			,	'linking and embeding transforms [./specs/transforms.json]'
+			,	String
+			,	config.paths['data']+'specs/transforms.json'
 		)
 		.option(
 				'-p, --port <3003>'
@@ -77,15 +94,37 @@ var	Colour
 =	require(base_lib+'uritemplates.js').parse
 ,	collection_builder
 =	require(base_lib+'hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
-,	mappings
-=	fsExists(program.mappings)
-		?require(program.mappings)
+,	mappingsapp
+=	fsExists(program.mappingsapp)
+		?require(program.mappingsapp)
 		:false
-,	transforms
-=	fsExists(program.transforms)
-		?require(program.transforms)
+,	transformsapp
+=	fsExists(program.transformsapp)
+		?require(program.transformsapp)
 		:false
-,	SpecTransforms
+,	mappingsdata
+=	fsExists(program.mappingsdata)
+		?require(program.mappingsdata)
+		:false
+,	transformsdata
+=	fsExists(program.transformsdata)
+		?require(program.transformsdata)
+		:false
+var	mappings
+=	new Object()
+	_.extend(
+		mappings
+	,	mappingsapp
+	,	mappingsdata
+	)
+var	transforms
+=	new Object()
+	_.extend(
+		transforms
+	,	transformsapp
+	,	transformsdata
+	)
+var	SpecTransforms
 =	require(base_lib+'spec-transform.js')(
 		_
 	,	uritemplate
@@ -114,12 +153,24 @@ var	Colour
 	)
 if(!config)
 	logger.error('Config: no such file ./config.js')
-if(!fsExists(program.input))
-	logger.error('Program Input: no such file'+program.input)
-if(!transforms)
-	logger.error('Program Transforms: no such file'+program.transforms)
-logger.info('Program input: '+program.input)
-logger.info('Program transforms: '+program.transforms)
+if(!fsExists(program.inputapp) && !fsExists(program.inputdata))
+	logger.error('Program Input: no such file'+!fsExists(program.inputapp) ? program.inputapp : program.inputdata)
+if(!fsExists(program.transformsapp) && !fsExists(program.transformsdata))
+	logger.error('Program Transforms: no such file'+!fsExists(program.transformsapp) ? program.transformsapp : program.transformsdata)
+if(!fsExists(program.mappingsapp) && !fsExists(program.mappingsdata))
+	logger.error('Program Mappings: no such file'+!fsExists(program.mappingsapp) ? program.mappingsapp : program.mappingsdata)
+if (program.inputapp)
+	logger.info('Program Application Input: '+program.inputapp)
+if (program.transformsapp)
+	logger.info('Program Applicatión Transforms: '+program.transformsapp)
+if (program.mappingsapp)
+	logger.info('Program Application Mappings: '+program.mappingsapp)
+if (program.inputdata)
+	logger.info('Program Data Input: '+program.inputdata)
+if (program.transformsdata)
+	logger.info('Program Data Transforms: '+program.transformsdata)
+if (program.mappingsdata)
+	logger.info('Program Data Mappings: '+program.mappingsdata)
 logger.info('Listening to port: '+config.server.port)
 
 var	Store
@@ -130,7 +181,13 @@ var	Store
 		.objMap(
 			function(transform,name)
 			{
-			return	program.input
+			var input
+			=	_.isUndefined(
+					transformsapp[name]	
+				)
+				?	program.inputdata
+				:	program.inputapp
+			return	input
 			+	'/'
 			+	transform.storage.name
 			+	'.json'
@@ -197,10 +254,13 @@ connect()
 		.then(
 			function(result)
 			{
-				if(_.isObject(result)){
+				if(_.isObject(result))
+				{
 					res.end(
 						JSON.stringify(
-							result.get_document()
+							_.isUndefined(result.error)
+							?	result.get_document()
+							:	result
 						)
 					)
 					app_router

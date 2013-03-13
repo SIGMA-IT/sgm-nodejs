@@ -1,0 +1,14 @@
+#!/bin/bash
+bindir=$(dirname $0)
+startdir=$(pwd)
+echo "bindir: $bindir"
+if test $# -eq 0 || test "$1" = "tests"
+then
+	base="$startdir/test"
+else
+	base="$startdir/$1"
+fi
+specs="${2:-$base/specs}"
+
+echo "specs -> yuml" &&
+node $bindir/specs2yuml.js -t "$specs/transforms.json" -m "$specs/mappings.json" -o "$base/yuml.json"
