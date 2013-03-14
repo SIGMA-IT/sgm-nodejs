@@ -11,4 +11,4 @@ fi
 specs="${2:-$base/specs}"
 
 echo "specs -> yuml" &&
-node $bindir/specs2yuml.js -t "$specs/transforms.json" -m "$specs/mappings.json" -o "$base/yuml.json"
+node $bindir/specs2yuml.js -t "$specs/transforms.json" -m "$specs/mappings.json"
