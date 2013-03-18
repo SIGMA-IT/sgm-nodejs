@@ -173,26 +173,41 @@ if (program.mappingsdata)
 	logger.info('Program Data Mappings: '+program.mappingsdata)
 logger.info('Listening to port: '+config.server.port)
 
-var	Store
-=	require(base_lib+'store.js')(_,Q)
-,	store
-=	new	Store(
-		_(transforms)
-		.objMap(
-			function(transform,name)
-			{
+var transforms_input
+=	new Object()
+_.each(
+	transforms
+,	function(transform,name)
+	{
+		if (_.isUndefined(transform.source))
+		{
 			var input
 			=	_.isUndefined(
 					transformsapp[name]	
 				)
 				?	program.inputdata
 				:	program.inputapp
-			return	input
-			+	'/'
-			+	transform.storage.name
-			+	'.json'
-			}
-		)
+			_.extend(
+				transforms_input
+			,	_.object(
+					[name]
+				,	[
+						input
+					+	'/'
+					+	transform.storage.name
+					+	'.json'
+					]
+				)
+			)
+		}	
+	}
+)
+
+var	Store
+=	require(config.store.path)(_,Q)
+,	store
+=	new	Store(
+		transforms_input
 	,	function(what)
 		{
 		return	JSON
@@ -242,6 +257,7 @@ connect()
 .use(
 	function(req,res)
 	{
+		logger.notice("Incomming request from <<"+req.connection.remoteAddress+">>. <<"+req.method+">> "+config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url)
 		res.writeHead(
 			200
 		,	config.header

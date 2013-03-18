@@ -110,7 +110,7 @@ var	Factory
 							target_key:'id'
 						}
 					}
-				,	specs: ["storage","associations","profiles","collection"]
+				,	specs: ["storage","associations","profiles","collection","source"]
 				,	assocs: ["type","target","through","key","target_key","linked","embedded","source","parent","name"]
 				,	types: ["none","single","partial","nested","list","pageable","scrollable"]
 				}

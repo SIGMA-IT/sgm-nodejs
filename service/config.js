@@ -25,6 +25,10 @@ var	Factory
 					,	"Access-Control-Allow-Headers": "X-Requested-With"
 					,	"Content-Type": "text/hal+json; charset=utf-8"
 				}
+			,	store:
+				{
+					path: '../lib/store.js'
+				}
 			}
 			
 	}
