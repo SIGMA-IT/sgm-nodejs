@@ -57,41 +57,143 @@ Ejemplo de navegacion
 ```http://trabajando:3003/api/data/personas (donde personas es el nombre de la entidad)```
 
 
-# Mappings & Transforms
+# Mappings
 
-- <b>mapppings.json</b>: es el archivo donde se definen los campos de las entidades
+El mapping establece los campos de cada entidad.
 
-> Convenciones:
+Convenciones:
 
-> - fields: atributos donde se definen los pares "nombre_campo_salida":"nombre_campo_entrada"
+- fields: atributos donde se definen los pares "nombre_campo_salida":"nombre_campo_entrada"
 
-> Los datos deben estan entre comillas dobles (""), separados por comas(","). 
+Los datos deben estan entre comillas dobles (""), separados por comas(","). 
 
-> En caso de no existir algun valor entre las comas, se asignará NULL como valor pode defecto.
+En caso de no existir algun valor entre las comas, se asignará NULL como valor pode defecto.
 
-- <b>transforms.json</b>: es el archivo donde se definen las relaciones entre entidades
+# Transforms
 
-> Convenciones:
+El transform define las entidades y sus relaciones.
 
-> - storage: define el lugar donde se encuentra el archivo de entrada (input csv) 
+Existen dos tipos de entidades:
 
-> > - name: nombre del archivo .csv input
+1. Entidades Reales
+2. Entidades Ficticias.
 
-> - associations: define las asociaciones entre los csv de entrada, su tipo y la forma en la que se relacionan.  
+## Entidades Reales
 
-> > - type: define el tipo de relacion
+Las entidades reales, son aquellas que establecen relaciones entre si mediante claves foraneas. Estas entidades contienen campos y estos estan definidos en el mappings.
 
-> > - target: nombre de la entidad que se relaciona
+Convenciones para entidades reales:
 
-> > - through: nombre de la entidad por la cual se relaciona
+- storage: define el lugar donde se encuentra el archivo de entrada (input csv) 
 
-> > - target_key :campo clave de la relacion "name_key"
+> - name: nombre del archivo .csv input
 
-> > - embedded: tipo de embedded dentro del hal
+- associations: define las asociaciones entre los csv de entrada, su tipo y la forma en la que se relacionan.  
 
-> > - linked: tipo de links dentro del hal
+> - type: define el tipo de relacion
 
-> > - template : template de busqueda "{+base}{/path}{/id}/name_access"
+> - target: nombre de la entidad que se relaciona (entidad real)
+
+> - through: nombre de la entidad por la cual se relaciona
+
+> - target_key :campo clave de la relacion "name_key"
+
+> - embedded: tipo de embedded dentro del hal
+
+> - linked: tipo de links dentro del hal
+
+> - template : template de busqueda "{+base}{/path}{/id}/name_access"
+
+Son accedidas mediante cualquier metodo REST, es decir, tienen soporte para GET, POST, PUT y DELETE.
+
+Ejemplo:
+
+Supongamos 4 entidades, <i>Searchers</i>, <i>Fields</i>, <i>Universidades</i> y <i>Referentes</i>. Searcher tiene una relacion del tipo has-many con fields. mientras que fields, unisversidades y referentes no tienen ninguna relacion.
+
+	//entidad real
+		"searchers":
+		{
+			"storage":
+			{
+				name: "searchers"
+			}
+		,	"associations":
+			{
+				"fields":
+				{
+					"type":"has-many"
+				,	"target":"fields"
+				,	"target_key":"fields"
+				}
+			}
+		}
+	,	"fields":
+		{
+			"storage":
+			{
+				"name":"fields"
+			}
+		}
+	,	"univerisidades":
+		{
+			"storage":
+			{
+				"name":"universidades"
+			}
+		}
+	,	"referentes":
+		{
+			"storage":
+			{
+				"name":"referentes"
+			}
+		}
+
+## Entidades Ficticias
+
+Son entidades que establecen relacion entre dos entidades reales.
+
+Convenciones para entidades ficticias
+
+- source: define la entidad principal (entidad real)
+
+- associations: son las posibles entidades con las que se relaciona
+
+> - target: nombre de la entidad real con la que se relaciona
+
+Ejemplo:
+
+Supongamos que tenemos definidas las entidades reales del ejemplo anterior (<i>Searchers</i>, <i>Fields</i>, <i>Universidades</i> y <i>Referentes</i>). Definimos una entidad ficticia llamada fic_searcher, la cual tiene como origen a searcher y como posible union a referentes o universidades.
+
+	// entidad ficticia
+		"fic_searcher":
+		{
+			"source": "searchers"
+		,	"associations":
+			{
+				"listado_referentes":
+				{
+					"target":"referentes"
+				}
+			,	"listado_universidades":
+				{
+					"target":"universidades"
+				}
+			}
+		}
+
+Solo pueden ser accedidas mediante el metodo REST POST. En el body de la peticion se debe de sumistrar la id de la entidad fuente y el nombre de la associacion a traer.
+
+Para acceder a esta entidad debemos hacer una peticion similar a la siguiente
+
+	//	Peticion
+	POST http://trabajando:3003/api/data/fic_searcher
+	//	Body
+	body:
+	{
+		"id": "1"
+	,	"association":"listado_referentes"
+	}
 
 ## Tipos de Relaciones
 
@@ -122,42 +224,42 @@ Cada una de estas relaciones son definidas dentro de la associations de cada ent
 
 Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en particular. Definimos dentro de la entidad turnos una asociacion del tipo <i>belongs-to</i> y la llamamos doctor.
 
-			//mapping
+	//mapping
+	{
+		"turnos":
+		{
+			"fields":
 			{
-				"turnos":
-				{
-					"fields":
-					{
-						"id": "ID"
-					,	"id_doctor":"ID_DOCTOR"
-					...
-					}
-				}
-			,	"doctors"
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					...
-					}
-				}
+				"id": "ID"
+			,	"id_doctor":"ID_DOCTOR"
+			...
 			}
-			// transform
-			"turnos":
+		}
+	,	"doctors"
+		{
+			"fields":
 			{
-				...
-			,	"associations":
-				{
-					"doctor":
-					{
-						"type":"belongs-to"
-					,	"target":"doctors"
-					,	"key": "id_doctor"
-					}
-				...
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			...
 			}
+		}
+	}
+	// transform
+	"turnos":
+	{
+		...
+	,	"associations":
+		{
+			"doctor":
+			{
+				"type":"belongs-to"
+			,	"target":"doctors"
+			,	"key": "id_doctor"
+			}
+		...
+		}
+	}
 
 
 # has-one
@@ -176,40 +278,40 @@ Supongamos que tenemos una entidad turno, turno esta asociado a un doctor en par
 
 Supongamos que tenemos una entidad login la cual contiene un mensage de bievenida a los usuarios. Definimos una asociacion dentro de la entidad de login del tipo <i>has-one</i> llamada welcome.
 	
-			//mappings
+	//mappings
+	{
+		"login":
+		{
+			"fields":
 			{
-				"login":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"id_welcome":"ID_WELCOME"
-					}
-				}
-			,	"welcome":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"msg":"MSG"
-					}
-				}
+				"id":"ID"
+			,	"id_welcome":"ID_WELCOME"
 			}
-			//transforms
-			"login":
+		}
+	,	"welcome":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"welcome":
-					{
-						"type":"has-one"
-					,	"target":"welcome"
-					,	"target_key":"id_welcome"
-					}
-					...
-				}
+				"id":"ID"
+			,	"msg":"MSG"
 			}
+		}
+	}
+	//transforms
+	"login":
+	{
+		...
+		"associations":
+		{
+			"welcome":
+			{
+				"type":"has-one"
+			,	"target":"welcome"
+			,	"target_key":"id_welcome"
+			}
+			...
+		}
+	}
 
 #  has-many
 
@@ -227,40 +329,40 @@ Supongamos que tenemos una entidad login la cual contiene un mensage de bievenid
 
 Supongamos que tenemos una entidad provincias la cual contiene una relacion con instituciones del tipo <i>has-many</i>. Definimos una asociacion dentro de provincias llamada instituciones.
 
-			//mappings
+	//mappings
+	{
+		"provincias":
+		{
+			"fields":
 			{
-				"provincias":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"provincia":"PROVINCIA"
-					}
-				}
-			,	"instituciones":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"id_provincia":"ID_PROVINCIA"
-					,	"institucion":"INSTITUCION"
-					}
-				}
+				"id":"ID"
+			,	"provincia":"PROVINCIA"
 			}
-			//transforms
-			"provincias":
+		}
+	,	"instituciones":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"instituciones":
-					{
-						"type":"has-many"
-					,	"target":"instituciones"
-					,	"target_key":"id_provincia"
-					}
-				}
+				"id":"ID"
+			,	"id_provincia":"ID_PROVINCIA"
+			,	"institucion":"INSTITUCION"
 			}
+		}
+	}
+	//transforms
+	"provincias":
+	{
+		...
+		"associations":
+		{
+			"instituciones":
+			{
+				"type":"has-many"
+			,	"target":"instituciones"
+			,	"target_key":"id_provincia"
+			}
+		}
+	}		
 
 # has-one:through
 
@@ -274,48 +376,48 @@ Supongamos que tenemos una entidad provincias la cual contiene una relacion con 
 
 Supongamos que tenemos un video club, cada socio del video club, va a tener asociado un historial de peliculas alquiladas. Ahora bien si qusieramos saber que dia alquile la pelicula Campanita, tendriamos que definir una asociacion del tipo <i>has-one:through</i> en socio, llamemosla pelicula.
 
-			//mappings
+	//mappings
+	{
+		"socio":
+		{
+			"fields":
 			{
-				"socio":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRe"
-					}
-				}
-			,	"historial":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"id_socio":"ID_SOCIO"
-					,	"id_pelicula":"ID_PELICULA"
-					}
-				}
-			,	"peliculas":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRe"
 			}
-			//transforms
-			"socio":
+		}
+	,	"historial":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"pelicula":
-					{
-						"type":"has-one:through"
-					,	"through":"historial"
-					,	"target":"peliculas"
-					}	
-				}
+				"id":"ID"
+			,	"id_socio":"ID_SOCIO"
+			,	"id_pelicula":"ID_PELICULA"
 			}
+		}
+	,	"peliculas":
+		{
+			"fields":
+			{
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			}
+		}
+	}
+	//transforms
+	"socio":
+	{
+		...
+		"associations":
+		{
+			"pelicula":
+			{
+				"type":"has-one:through"
+			,	"through":"historial"
+			,	"target":"peliculas"
+			}	
+		}
+	}
 
 # has-many:through
 
@@ -329,48 +431,48 @@ Supongamos que tenemos un video club, cada socio del video club, va a tener asoc
 
 Supongamos que en un hospital se asignan un turno a un paciente y que cada turno tambien tiene un doctor asignado. Si quisieramos saber que pacientes va a atender un doctor segun los turnos asignados, tendriamos que definir una asociacion del tipo <i>has-many:through</i> en doctor, llamemosla pacientes.
 
-			//mappings
+	//mappings
+	{
+		"doctors":
+		{
+			"fields":
 			{
-				"doctors":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					}
-				}
-			,	"turnos":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"id_paciente":"ID_PACIENTE"
-					,	"id_doctor":"ID_DOCTOR"
-					}
-				}
-			,	"paciente":
-				{
-					"field":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
 			}
-			//transforms
-			"doctors":
+		}
+	,	"turnos":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"pacientes":
-					{
-						"type":"has-many:through"
-					,	"through":"turnos"
-					,	"target":"pacientes"
-					}	
-				}
+				"id":"ID"
+			,	"id_paciente":"ID_PACIENTE"
+			,	"id_doctor":"ID_DOCTOR"
 			}
+		}
+	,	"paciente":
+		{
+			"field":
+			{
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			}
+		}
+	}
+	//transforms
+	"doctors":
+	{
+		...
+		"associations":
+		{
+			"pacientes":
+			{
+				"type":"has-many:through"
+			,	"through":"turnos"
+			,	"target":"pacientes"
+			}	
+		}
+	}
 
 # is-a
 
@@ -388,39 +490,39 @@ Supongamos que en un hospital se asignan un turno a un paciente y que cada turno
 
 Supongamos que tenemos una entidad Mascotas la cual tiene entidades "hijas". Llamemoslas Perros y Loros.
 
-			//mappings
+	//mappings
+	{
+		"animales":
+		{
+			"fields":
 			{
-				"animales":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					}
-				}
-			,	"domesticos":
-				{
-					"fields":
-					{
-						"id_animal":"id_animal"
-					,	"nombre":"NOMBRE"
-					,	"id_dueño":"id_dueño"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
 			}
-			//transforms
-			"domesticos":
+		}
+	,	"domesticos":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"animales":
-					{
-						"type":"is-a"
-					,	"target":"animales"
-					}	
-				}
+				"id_animal":"id_animal"
+			,	"nombre":"NOMBRE"
+			,	"id_dueño":"id_dueño"
 			}
+		}
+	}
+	//transforms
+	"domesticos":
+	{
+		...
+		"associations":
+		{
+			"animales":
+			{
+				"type":"is-a"
+			,	"target":"animales"
+			}	
+		}
+	}
 
 
 ## Embeddeds
@@ -487,16 +589,15 @@ Solo basta con acceder a una url para obtener los datos. Sin embargo, se puede p
 
 - Peticion simple, se devuelve un unico recurso
 
-
-			GET http://trabajando:3003/api/data/personas/1
+	GET http://trabajando:3003/api/data/personas/1
 
 - Peticion compuesta, se devuelve una coleccion
 
-			GET http://trabajando:3003/api/data/personas
+	GET http://trabajando:3003/api/data/personas
 
 - Peticion compuesta filtrada, se devuelve una coleccion
 
-			GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
+	GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
 
 ## POST
 
@@ -506,30 +607,30 @@ Se accede a una url y se pasan atributos mediante el body. Si el body llega vaci
 
 - Peticion Simple sin body
 
-			//	Peticion
-			POST http://trabajando:3003/api/data/personas/1 
-			//	Body
-			body: {}
+	//	Peticion
+	POST http://trabajando:3003/api/data/personas/1 
+	//	Body
+	body: {}
 
 - Peticion simple con body
 
-			//	Peticion
-			POST http://trabajando:3003/api/data/personas/1
-			//	Body
-			body:
-			{
-				nombre: 'OTRO NOMBRE'
-			}
+	//	Peticion
+	POST http://trabajando:3003/api/data/personas/1
+	//	Body
+	body:
+	{
+		nombre: 'OTRO NOMBRE'
+	}
 
 - Peticion compuesta con body
 
-			//	Peticion
-			POST http://trabajando:3003/api/data/personas
-			//	Body
-			body:
-			{
-				nombre: 'Un nombre para filtrar'
-			}
+	//	Peticion
+	POST http://trabajando:3003/api/data/personas
+	//	Body
+	body:
+	{
+		nombre: 'Un nombre para filtrar'
+	}
 
 ## PUT
 
@@ -539,15 +640,15 @@ Se accede a una url compuesta y se agrega un nuevo recurso. La url debe ser comp
 
 - Se crea un nuevo recurso persona
 
-			//	Peticion
-			PUT http://trabajando:3003/api/data/personas
-			//	Body
-			body:
-			{
-				nombre: 'unnombre'
-			,	apellido: 'unapellido'
-			,	telefono: 'untelefono'
-			}
+	//	Peticion
+	PUT http://trabajando:3003/api/data/personas
+	//	Body
+	body:
+	{
+		nombre: 'unnombre'
+	,	apellido: 'unapellido'
+	,	telefono: 'untelefono'
+	}
 
 ## DELETE
 
@@ -557,8 +658,7 @@ Se accede a una url simple y se elimina el recurso. La url debe ser simple.
 
 - Se elimina un recurso de persona
 
-			//	Peticion
-			DELETE http://trabajando:3003/api/data/personas/1
+	DELETE http://trabajando:3003/api/data/personas/1
 
 # Store
 
@@ -582,128 +682,400 @@ Es la funcion encargada de devolver la data asociada a una peticion simple.
 
 Supongamos las siguientes relaciones establecidas en los mappings y transforms
 
-			//mappings
+	//mappings
+	{
+		"personas":
+		{
+			"fields":
 			{
-				"personas":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					,	"id_ciudad":"ID_CIUDAD"
-					}
-				}
-			,	"ciudads":
-				{
-					"fields":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					,	"id_privincia":"ID_PROVINCIA"
-					}
-				}
-			,	"provincias":
-				{
-					"field":
-					{
-						"id":"ID"
-					,	"nombre":"NOMBRE"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			,	"id_ciudad":"ID_CIUDAD"
 			}
-			//transforms
-			"personas":
+		}
+	,	"ciudads":
+		{
+			"fields":
 			{
-				...
-				"associations":
-				{
-					"ciudad":
-					{
-						"type":"belongs-to"
-					,	"target":"ciudad"
-					,	"key":"id_ciudad"
-					}
-				,	"provincia":
-					{
-						"type":"belongs-to:through"
-					,	"target":"provincias"
-					,	"through":"ciudads"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			,	"id_privincia":"ID_PROVINCIA"
 			}
-			"ciudads":
+		}
+	,	"provincias":
+		{
+			"field":
 			{
-				...
-				"associations":
-				{
-					"provincia":
-					{
-						"type":"belongs-to"
-					,	"target":"provincia"
-					,	"key":"id_provincia"
-					}
-				}
+				"id":"ID"
+			,	"nombre":"NOMBRE"
 			}
-			"provincias":
+		}
+	}
+	//transforms
+	"personas":
+	{
+		...
+		"associations":
+		{
+			"ciudad":
 			{
-				...
-				"personas":
-				{
-					"type":"has-one:through"
-				,	"target":"provincias"
-				,	"through":"ciudads"
-				}
+				"type":"belongs-to"
+			,	"target":"ciudad"
+			,	"key":"id_ciudad"
 			}
+		,	"provincia":
+			{
+				"type":"belongs-to:through"
+			,	"target":"provincias"
+			,	"through":"ciudads"
+			}
+		}
+	}
+	"ciudads":
+	{
+		...
+		"associations":
+		{
+			"provincia":
+			{
+				"type":"belongs-to"
+			,	"target":"provincia"
+			,	"key":"id_provincia"
+			}
+		}
+	}
+	"provincias":
+	{
+		...
+		"personas":
+		{
+			"type":"has-one:through"
+		,	"target":"provincias"
+		,	"through":"ciudads"
+		}
+	}
 
 - Buscamos la ciudad cuya id sea 12
 
-			find(
-				"ciudads"
-			,	{
-					"key":"id"
-				,	"value": "12"
-				}
-			)
+	find(
+		"ciudads"
+	,	{
+			"key":"id"
+		,	"value": "12"
+		}
+	)
 
 - Buscamos la Ciudad a la que pertenece la persona cuya id es 2
 
-			find(
-				"ciudads"
-			,	{
-					source: 'personas',
-				,	source_key: 'id',
-				,	source_value: '2',
-				,	key: 'id_ciudad',
-				,	target_key: 'id'
-				}
-			)
+	find(
+		"ciudads"
+	,	{
+			source: 'personas',
+		,	source_key: 'id',
+		,	source_value: '2',
+		,	key: 'id_ciudad',
+		,	target_key: 'id'
+		}
+	)
 
 
 - Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
 
-			find(
-				"provincias"
-			,	{
-					source: 'personas',
-				,	source_key: 'id',
-				,	source_value: '2',
-				,	through:
-					[
-						{
-							target: 'ciudads'
-						,	key: 'id_provincia'
-						,	target_key: 'id'
-						}
-					]
-				,	key: 'id',
+	find(
+		"provincias"
+	,	{
+			source: 'personas',
+		,	source_key: 'id',
+		,	source_value: '2',
+		,	through:
+			[
+				{
+					target: 'ciudads'
+				,	key: 'id_provincia'
 				,	target_key: 'id'
 				}
-			)
+			]
+		,	key: 'id',
+		,	target_key: 'id'
+		}
+	)
 		
-##  Filter
+##	Filter
 
-## Update
+Es la funcion encargada de devolver la data asociada a una peticion simple o compuesta pero filtrada por algunos parametros.
 
-##  Create
+<code>filter(what,filter) --> {object}</code>
 
-##  Delete
+#### Ejemplos: 
+
+Supongamos las siguientes relaciones establecidas en los mappings y transforms
+
+	//mappings
+	{
+		"personas":
+		{
+			"fields":
+			{
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			,	"id_ciudad":"ID_CIUDAD"
+			}
+		}
+	,	"ciudads":
+		{
+			"fields":
+			{
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			,	"id_privincia":"ID_PROVINCIA"
+			}
+		}
+	,	"provincias":
+		{
+			"field":
+			{
+				"id":"ID"
+			,	"nombre":"NOMBRE"
+			}
+		}
+	}
+	//transforms
+	"personas":
+	{
+		...
+		"associations":
+		{
+			"ciudad":
+			{
+				"type":"belongs-to"
+			,	"target":"ciudad"
+			,	"key":"id_ciudad"
+			}
+		,	"provincia":
+			{
+				"type":"belongs-to:through"
+			,	"target":"provincias"
+			,	"through":"ciudads"
+			}
+		}
+	}
+	"ciudads":
+	{
+		...
+		"associations":
+		{
+			"provincia":
+			{
+				"type":"belongs-to"
+			,	"target":"provincia"
+			,	"key":"id_provincia"
+			}
+		}
+	}
+	"provincias":
+	{
+		...
+		"personas":
+		{
+			"type":"has-one:through"
+		,	"target":"provincias"
+		,	"through":"ciudads"
+		}
+	}
+
+- Buscamos las ciudades cuyo id_provincia sea 2
+
+	filter(
+		"ciudads"
+	,	{
+			query:
+			{
+				id_provincia: '2'
+			}
+		}
+	)
+
+- Buscamos las ciudades cuyo id_provincia sea 2 pero dentro de un rango
+
+	filter(
+		"ciudads"
+	,	{
+			query:
+			{
+				id_provincia: '35'
+			}
+		,	collection_query:
+			{
+				page: 2
+			,	ipp: 2
+			}
+		}
+	)
+
+RESTA DEFINIR THROUGH
+
+##	Update
+
+Es la funcion encargada de actualizar un elemento de una entidad. Devuelve la entidad actualizada.
+
+<code>update(what,prototype,query) --> {object}</code>
+
+#### Ejemplos:
+
+Supongamos que tenemos la siguiente entidad y su mapping.
+
+	//mappings
+	"personas":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"nombre":"NOMBRE"
+		,	"id_ciudad":"ID_CIUDAD"
+		}
+	}
+	//transforms
+	"personas":
+	{
+		"storage":
+		{
+			"name":"personas"
+		}
+		"associations":
+		{
+			"ciudad":
+			{
+				"type":"belongs-to"
+			,	"target":"ciudad"
+			,	"key":"id_ciudad"
+			}
+		}
+	}
+
+- Actualizamos el nombre de la persona cuya id es <i>2</i>.
+	
+	->	PUT http://trabajando:3003/api/data/personas/2
+		//Body
+		{
+			"nombre":"Juan Ernesto Gomez"
+		}
+	
+	->	update(
+			"personas"
+		,	{
+				"id":"2"
+			}
+		,	{
+				"nombre":"Juan Ernesto Gomez"
+			}
+		)
+
+	->	{"id":"2","nombre":"Juan Ernesto Gomez","id_ciudad":"2"}
+
+##	Create
+
+Es la funcion encargada de crear un nuevo elemento segun una entidad. Devuelve la entidad creada.
+
+<code>create(what,query) --> {object}</code>
+
+#### Ejemplos:
+
+Supongamos que tenemos la siguiente entidad y su mapping.
+
+	//mappings
+	"personas":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"nombre":"NOMBRE"
+		,	"id_ciudad":"ID_CIUDAD"
+		}
+	}
+	//transforms
+	"personas":
+	{
+		"storage":
+		{
+			"name":"personas"
+		}
+		"associations":
+		{
+			"ciudad":
+			{
+				"type":"belongs-to"
+			,	"target":"ciudad"
+			,	"key":"id_ciudad"
+			}
+		}
+	}
+
+- Creamos una persona cuyo nombre es <i>Juan Gomez</i> y tiene una relacion con la ciudad cuya id es <i>2</i>.
+	
+	->	POST http://trabajando:3003/api/data/personas
+		//Body
+		{
+			"nombre":"Juan Gomez"
+		,	"id_ciudad":"2"
+		}
+	
+	->	create(
+			"personas"
+		,	{
+				"nombre":"Juan Gomez"
+			,	"id_ciudad":"2"
+			}
+		)
+
+	->	{"id":"2","nombre":"Juan Gomez","id_ciudad":"2"}
+
+##	Delete
+
+Es la funcion encargada eliminar un elemento de una entidad. Devuelve <i>error</i> en caso de no poder eliminarlo y <i>success</i> si logra eliminarlo.
+
+<code>delete(what,query) --> {object}</code>
+
+#### Ejemplos:
+
+Supongamos que tenemos la siguiente entidad y su mapping.
+
+	//mappings
+	"personas":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"nombre":"NOMBRE"
+		,	"id_ciudad":"ID_CIUDAD"
+		}
+	}
+	//transforms
+	"personas":
+	{
+		"storage":
+		{
+			"name":"personas"
+		}
+		"associations":
+		{
+			"ciudad":
+			{
+				"type":"belongs-to"
+			,	"target":"ciudad"
+			,	"key":"id_ciudad"
+			}
+		}
+	}
+
+- Queremos eliminar a la persona cuya id es <i>2</i>.
+	
+	->	DELETE http://trabajando:3003/api/data/personas/1
+
+	->	delete(
+			"personas"
+		,	{
+				"id":"2"
+			}
+		)
+
+	-> 	{ "msg": "success"}
