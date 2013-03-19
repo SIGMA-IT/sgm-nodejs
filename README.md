@@ -954,23 +954,23 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Actualizamos el nombre de la persona cuya id es <i>2</i>.
 	
-	->	PUT http://trabajando:3003/api/data/personas/2
-		//Body
-		{
+	PUT http://trabajando:3003/api/data/personas/2
+	//Body
+	{
+		"nombre":"Juan Ernesto Gomez"
+	}
+	
+	update(
+		"personas"
+	,	{
+			"id":"2"
+		}
+	,	{
 			"nombre":"Juan Ernesto Gomez"
 		}
-	
-	->	update(
-			"personas"
-		,	{
-				"id":"2"
-			}
-		,	{
-				"nombre":"Juan Ernesto Gomez"
-			}
-		)
+	)
 
-	->	{"id":"2","nombre":"Juan Ernesto Gomez","id_ciudad":"2"}
+	{"id":"2","nombre":"Juan Ernesto Gomez","id_ciudad":"2"}
 
 ##	Create
 
@@ -1012,22 +1012,22 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Creamos una persona cuyo nombre es <i>Juan Gomez</i> y tiene una relacion con la ciudad cuya id es <i>2</i>.
 	
-	->	POST http://trabajando:3003/api/data/personas
-		//Body
-		{
+	POST http://trabajando:3003/api/data/personas
+	//Body
+	{
+		"nombre":"Juan Gomez"
+	,	"id_ciudad":"2"
+	}
+	
+	create(
+		"personas"
+	,	{
 			"nombre":"Juan Gomez"
 		,	"id_ciudad":"2"
 		}
-	
-	->	create(
-			"personas"
-		,	{
-				"nombre":"Juan Gomez"
-			,	"id_ciudad":"2"
-			}
-		)
+	)
 
-	->	{"id":"2","nombre":"Juan Gomez","id_ciudad":"2"}
+	{"id":"2","nombre":"Juan Gomez","id_ciudad":"2"}
 
 ##	Delete
 
@@ -1069,13 +1069,13 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Queremos eliminar a la persona cuya id es <i>2</i>.
 	
-	->	DELETE http://trabajando:3003/api/data/personas/1
+	DELETE http://trabajando:3003/api/data/personas/2
 
-	->	delete(
-			"personas"
-		,	{
-				"id":"2"
-			}
-		)
+	delete(
+		"personas"
+	,	{
+			"id":"2"
+		}
+	)
 
-	-> 	{ "msg": "success"}
+	{ "msg": "success"}
