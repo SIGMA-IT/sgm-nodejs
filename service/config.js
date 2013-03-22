@@ -4,8 +4,7 @@ var	Factory
 		return	{
 				paths: 
 				{
-						"app":"../../../api/service/"
-					,	"data": "../../../api/test_service/"
+						"input": ["../../../api/test_service/","../../../api/service/"]
 					,	"lib": "../lib/"
 					,	"public": "/../public/"
 					,	"server_log": "server.log"

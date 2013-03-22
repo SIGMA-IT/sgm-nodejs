@@ -27,8 +27,8 @@
 			"commander": "latest"
 		,	"connect": "latest"
 		,	"underscore": "latest"
-		,	"hal":"git://github.com/SIGMA-IT/js-hal.git#master"
-		,	"q":"git://github.com/kriskowal/q.git"
+		,	"hal":"latest"
+		,	"q":"latest"
 		,	"coloured": "latest"
 		,	"log": "latest"
 		}

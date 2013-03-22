@@ -4,7 +4,9 @@ var Q
 //require('amd-loader')
 var	config
 =	require('./config.js')()
-,	defaults
+if(!config)
+	throw new Error("config.js not loaded")
+var	defaults
 =	require('./default.js')()
 ,	base_lib
 =	config.paths.lib
@@ -24,38 +26,18 @@ var	config
 =	require('commander')
 		.version('0.0.1')
 		.option(
-				'-iapp, --inputapp <path>'
+				'-i, --input <path>'
 			,	'input dir to find json data [./data/json]'
 			,	String
-			,	config.paths['app']+'data/json'
 		)
-		.option('-mapp, --mappingsapp <mappings.json>'
+		.option('-m, --mappings <mappings.json>'
 			,	'mappings fields in csv data [./mappings.json]'
 			,	String
-			,	config.paths['app']+'specs/mappings.json'
 		)
 		.option(
-				'-tapp, --transformsapp <transforms.json>'
+				'-t, --transforms <transforms.json>'
 			,	'linking and embeding transforms [./specs/transforms.json]'
 			,	String
-			,	config.paths['app']+'specs/transforms.json'
-		)
-		.option(
-				'-idata, --inputdata <path>'
-			,	'input dir to find json data [./data/json]'
-			,	String
-			,	config.paths['data']+'data/json'
-		)
-		.option('-mdata, --mappingsdata <mappings.json>'
-			,	'mappings fields in csv data [./mappings.json]'
-			,	String
-			,	config.paths['data']+'specs/mappings.json'
-		)
-		.option(
-				'-tdata, --transformsdata <transforms.json>'
-			,	'linking and embeding transforms [./specs/transforms.json]'
-			,	String
-			,	config.paths['data']+'specs/transforms.json'
 		)
 		.option(
 				'-p, --port <3003>'
@@ -94,36 +76,88 @@ var	Colour
 =	require(base_lib+'uritemplates.js').parse
 ,	collection_builder
 =	require(base_lib+'hal_collection_builder.js').make_collection(_,hal_builder,uritemplate)
-,	mappingsapp
-=	fsExists(program.mappingsapp)
-		?require(program.mappingsapp)
-		:false
-,	transformsapp
-=	fsExists(program.transformsapp)
-		?require(program.transformsapp)
-		:false
-,	mappingsdata
-=	fsExists(program.mappingsdata)
-		?require(program.mappingsdata)
-		:false
-,	transformsdata
-=	fsExists(program.transformsdata)
-		?require(program.transformsdata)
-		:false
-var	mappings
+,	mappings
 =	new Object()
-	_.extend(
-		mappings
-	,	mappingsapp
-	,	mappingsdata
-	)
-var	transforms
+,	transforms
 =	new Object()
-	_.extend(
-		transforms
-	,	transformsapp
-	,	transformsdata
+logger.info("Running NodeJS "+process.version)
+
+var	commander_input
+=	_.isUndefined(program.input)
+	fsExists(program.input)
+	?	require(program.input)
+	:	{}
+if	(_.isString(program.input) && _.isEmpty(commander_input))
+	logger.warning('Program Input: no such file or empty file '+program.input)
+
+var	commander_mappings
+=	fsExists(program.mappings)
+	?	require(program.mappings)
+	:	{}
+if	(_.isString(program.mappings) && _.isEmpty(commander_mappings))
+	logger.warning('Program Mappings: no such file or empty file '+program.mappings)
+
+var	commander_transforms
+=	fsExists(program.transforms)
+	?	require(program.transforms)
+	:	{}
+if	(_.isString(program.transforms) && _.isEmpty(commander_transforms))
+	logger.warning('Program Transforms: no such file or empty file '+program.transforms)
+if	(_.isUndefined(config.paths.input))
+	config.paths.input = new Array()
+
+_.each(
+	_.union(
+		_.map(
+			config.paths.input
+		,	function(path)
+			{
+				if	(fsExists(path+'specs/mappings.json'))
+					return	require(path+'specs/mappings.json')
+				else
+				{
+					logger.warning('Program Mapping: no such file '+path+'specs/mappings.json')
+					return	{}
+				}
+			}
+		)
+	,	[commander_mappings]
 	)
+,	function(partial)
+	{
+		_.extend(
+			mappings
+		,	partial
+		)
+	}
+)
+
+_.each(
+	_.union(
+		_.map(
+			config.paths.input
+		,	function(path)
+			{
+				if	(fsExists(path+'specs/transforms.json'))
+					return	require(path+'specs/transforms.json')
+				else
+				{
+					logger.warning('Program Input: no such file '+path+'specs/transforms.json')
+					return	{}
+				}
+			}
+		)
+	,	[commander_transforms]
+	)
+,	function(partial)
+	{
+		_.extend(
+			transforms
+		,	partial
+		)
+	}
+)
+
 var	SpecTransforms
 =	require(base_lib+'spec-transform.js')(
 		_
@@ -151,54 +185,51 @@ var	SpecTransforms
 	,	Q
 	,	logger
 	)
-if(!config)
-	logger.error('Config: no such file ./config.js')
-if(!fsExists(program.inputapp) && !fsExists(program.inputdata))
-	logger.error('Program Input: no such file'+!fsExists(program.inputapp) ? program.inputapp : program.inputdata)
-if(!fsExists(program.transformsapp) && !fsExists(program.transformsdata))
-	logger.error('Program Transforms: no such file'+!fsExists(program.transformsapp) ? program.transformsapp : program.transformsdata)
-if(!fsExists(program.mappingsapp) && !fsExists(program.mappingsdata))
-	logger.error('Program Mappings: no such file'+!fsExists(program.mappingsapp) ? program.mappingsapp : program.mappingsdata)
-if (program.inputapp)
-	logger.info('Program Application Input: '+program.inputapp)
-if (program.transformsapp)
-	logger.info('Program Applicatión Transforms: '+program.transformsapp)
-if (program.mappingsapp)
-	logger.info('Program Application Mappings: '+program.mappingsapp)
-if (program.inputdata)
-	logger.info('Program Data Input: '+program.inputdata)
-if (program.transformsdata)
-	logger.info('Program Data Transforms: '+program.transformsdata)
-if (program.mappingsdata)
-	logger.info('Program Data Mappings: '+program.mappingsdata)
-logger.info('Listening to port: '+config.server.port)
-
-var transforms_input
+,	transforms_input
 =	new Object()
+
 _.each(
 	transforms
 ,	function(transform,name)
 	{
 		if (_.isUndefined(transform.source))
 		{
-			var input
-			=	_.isUndefined(
-					transformsapp[name]	
-				)
-				?	program.inputdata
-				:	program.inputapp
-			_.extend(
-				transforms_input
-			,	_.object(
-					[name]
-				,	[
-						input
-					+	'/'
-					+	transform.storage.name
-					+	'.json'
-					]
-				)
+			var	found
+			=	_.find(
+				_.union(config.paths.input,[program.input])
+			,	function(path)
+				{
+					var full_path
+					=	_.contains(config.paths.input,path)
+						?	path+'data/json'
+						:	path
+					return fsExists(
+								full_path
+							+	'/'
+							+	transform.storage.name
+							+	'.json'
+							)
+				}
 			)
+			var found_path
+			=	_.contains(config.paths.input,found)
+				?	found+'data/json'
+				:	found
+			if (_.isString(found))	
+				_.extend(
+					transforms_input
+				,	_.object(
+						[name]
+					,	[
+							found_path
+						+	'/'
+						+	transform.storage.name
+						+	'.json'
+						]
+					)
+				)
+			else
+				logger.warning('Data Input: no such file '+found_path+'/'+transform.storage.name+'.json')
 		}	
 	}
 )
@@ -237,9 +268,11 @@ while (transforms_to_check.length != 0)
 var	spec_transforms
 =	new SpecTransforms(config.server,transforms)
 ,	app_router
-=	new AppRouter(assoc_transforms,store,transforms)
+=	new AppRouter(assoc_transforms,store,transforms,config.server)
 ,	router
 =	app_router.get_router()
+
+logger.info('Listening to port: '+config.server.port)
 
 connect()
 .use(
