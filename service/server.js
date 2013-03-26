@@ -297,7 +297,7 @@ connect()
 		)
 		router(
 			req.method
-		,	req.url
+		,	config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url
 		,	req.body
 		)
 		.then(
