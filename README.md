@@ -73,16 +73,7 @@ En caso de no existir algun valor entre las comas, se asignará NULL como valor 
 
 El transform define las entidades y sus relaciones.
 
-Existen dos tipos de entidades:
-
-1. Entidades Reales
-2. Entidades Ficticias.
-
-## Entidades Reales
-
-Las entidades reales, son aquellas que establecen relaciones entre si mediante claves foraneas. Estas entidades contienen campos y estos estan definidos en el mappings.
-
-Convenciones para entidades reales:
+Convenciones para entidades:
 
 - storage: define el lugar donde se encuentra el archivo de entrada (input csv) 
 
@@ -92,7 +83,7 @@ Convenciones para entidades reales:
 
 > - type: define el tipo de relacion
 
-> - target: nombre de la entidad que se relaciona (entidad real)
+> - target: nombre de la entidad que se relaciona
 
 > - through: nombre de la entidad por la cual se relaciona
 
@@ -110,7 +101,6 @@ Ejemplo:
 
 Supongamos 4 entidades, <i>Searchers</i>, <i>Fields</i>, <i>Universidades</i> y <i>Referentes</i>. Searcher tiene una relacion del tipo has-many con fields. mientras que fields, unisversidades y referentes no tienen ninguna relacion.
 
-	//entidad real
 		"searchers":
 		{
 			"storage":
@@ -148,52 +138,6 @@ Supongamos 4 entidades, <i>Searchers</i>, <i>Fields</i>, <i>Universidades</i> y 
 				"name":"referentes"
 			}
 		}
-
-## Entidades Ficticias
-
-Son entidades que establecen relacion entre dos entidades reales.
-
-Convenciones para entidades ficticias
-
-- source: define la entidad principal (entidad real)
-
-- associations: son las posibles entidades con las que se relaciona
-
-> - target: nombre de la entidad real con la que se relaciona
-
-Ejemplo:
-
-Supongamos que tenemos definidas las entidades reales del ejemplo anterior (<i>Searchers</i>, <i>Fields</i>, <i>Universidades</i> y <i>Referentes</i>). Definimos una entidad ficticia llamada fic_searcher, la cual tiene como origen a searcher y como posible union a referentes o universidades.
-
-	// entidad ficticia
-		"fic_searcher":
-		{
-			"source": "searchers"
-		,	"associations":
-			{
-				"listado_referentes":
-				{
-					"target":"referentes"
-				}
-			,	"listado_universidades":
-				{
-					"target":"universidades"
-				}
-			}
-		}
-
-Solo pueden ser accedidas mediante el metodo REST POST. En el body de la peticion se debe de sumistrar la id de la entidad fuente y el nombre de la associacion a traer.
-
-Para acceder a esta entidad debemos hacer una peticion similar a la siguiente
-
-	//	Peticion
-	POST http://trabajando:3003/api/data/fic_searcher
-	//	Body
-	body:
-	{
-		"id": "1"
-	,	"association":"listado_referentes"
-	}
 
 ## Tipos de Relaciones
 
@@ -478,13 +422,13 @@ Supongamos que en un hospital se asignan un turno a un paciente y que cada turno
 
 ####  Requiere:
 
-- type : is-a
-- target: entidad final
+-	type : is-a
+-	target: entidad final
 
 ####  Optional:
 
--  key: clave en la entidad que se relaciona con la entidad padre
-- target\_key: clave en la entidad padre que se relaciona con la entidad. 
+-	key: clave en la entidad que se relaciona con la entidad padre
+-	target\_key: clave en la entidad padre que se relaciona con la entidad. 
 
 ####  Ejemplo:
 
@@ -588,49 +532,157 @@ Solo basta con acceder a una url para obtener los datos. Sin embargo, se puede p
 #### Ejemplo
 
 - Peticion simple, se devuelve un unico recurso
-
-	GET http://trabajando:3003/api/data/personas/1
+	
+	````
+		GET http://trabajando:3003/api/data/personas/1
+	````
 
 - Peticion compuesta, se devuelve una coleccion
 
-	GET http://trabajando:3003/api/data/personas
-
+	````
+		GET http://trabajando:3003/api/data/personas
+	````
+	
 - Peticion compuesta filtrada, se devuelve una coleccion
 
-	GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
-
+	````
+		GET http://trabajando:3003/api/data/personas?ipp=10&page=1&type=pageable
+	````
+	
 ## POST
 
-Se accede a una url y se pasan atributos mediante el body. Si el body llega vacio se procedera como si fuese un <i>GET</i>, si la url es simple y el body no esta vacio, se procedera como si fuese una modificacion de un recurso existente y si la peticion es compuesta y el body no esta vacio la peticion serea un filtro.
+Se accede a una url y se pasan atributos mediante el body. A la hora de hacer un POST, se puede proceder de 3 maneras diferentes.
 
-#### Ejemplo
+1.	Crear
+2.	Filtrar
+3.	Unir
 
-- Peticion Simple sin body
+### Crear
 
-	//	Peticion
-	POST http://trabajando:3003/api/data/personas/1 
-	//	Body
-	body: {}
-
-- Peticion simple con body
-
-	//	Peticion
-	POST http://trabajando:3003/api/data/personas/1
-	//	Body
-	body:
-	{
-		nombre: 'OTRO NOMBRE'
-	}
-
-- Peticion compuesta con body
+Creamos una nueva persona, enviamos una solicitud POST y pasamos los datos de la persona mediante el body.
 
 	//	Peticion
 	POST http://trabajando:3003/api/data/personas
 	//	Body
-	body:
-	{
-		nombre: 'Un nombre para filtrar'
-	}
+	body:	{
+				"action": "create"
+			,	"query":
+				{
+					"nombre":"Neri"
+				,	"apellido":"Guidi"
+				}
+			}
+
+### Filtrar
+
+Filtramos todas las personas cuyo nombre sera Neri. Solamente traemos los primeros 10 resultados paginados.
+
+	//	Peticion
+	POST http://trabajando:3003/api/data/personas
+	//	Body
+	body:	{
+				"action": "filter"
+			,	"query":
+				[
+					{
+						"key":"nombre"
+					,	"value":"Neri"
+					,	"criteria":"="
+					}
+				]
+			,	"collection_query":
+				{
+					"type":"pageable"
+				,	"ipp":"10"
+				,	"page":"1"
+				}
+			}
+
+Notemos que a la hora de realizar un filtro, enviamos una collecion de parametros dentro de nuestro atributo query. En cada elemento de esta coleccion se puede indicar el tipo de comparacion a la hora de filtrar, para ello, utilizamos el atributo "criteria"
+
+#### Criterios de comparacion
+
+1.	"=" 	Igualdad (Criterio por defecto, si no se indica el atributo criteria en el query, se tomara el criterio igualdad)
+2.	"<" 	Menor
+3.	"<=" 	Menor Igual
+4.	">"		Mayor
+5.	">="	Mayor Igual
+6.	"%"		Similar
+
+
+### Unir
+
+Se utiliza para unir dos o mas entidades sin relacion alguna. La entidad secundaria quedara embebida dentro de la entidad primaria. 
+
+Uniremos la entidad Busqueda con una collecion de Universidades
+
+	//	Peticion
+	POST http://trabajando:3003/api/data/busqueda/1
+	//	Body
+	body:	{
+				"action": "filter"
+			,	"query":
+				{
+					"associations":
+					[
+						{
+							"name":"universidades"
+						}
+					]
+				}
+			}
+
+Se le puede indicar un filtro a la collecion pasandole los parametros "query" y "collection_query"
+
+	//	Peticion
+	POST http://trabajando:3003/api/data/busqueda/1
+	//	Body
+	body:	{
+				"action": "filter"
+			,	"query":
+				{
+					"associations":
+					[
+						{
+							"name":"universidades"
+						,	"query":
+							[
+								{
+									"key":"id_ciudad"
+								,	"value":"5"
+								,	"criteria":"<="
+								}
+							]
+						,	"collection_query":
+							{
+								"type":"pageable"
+							,	"ipp":"10"
+							,	"page":"1"
+							}
+						}
+					]
+				}
+			}
+
+En el caso de querer traer una dos entidades individuales.
+
+	//	Peticion
+	POST http://trabajando:3003/api/data/busqueda/1
+	//	Body
+	body:	{
+				"action": "filter"
+			,	"query":
+				{
+					"associations":
+					[
+						{
+							"name":"campos_busqueda"
+						,	"id": 1
+						]
+				}
+			}
+
+Notemos que si traemos una entidad individual, no se deben pasar los parametros "query" y "collection_query". 
 
 ## PUT
 
@@ -658,8 +710,10 @@ Se accede a una url simple y se elimina el recurso. La url debe ser simple.
 
 - Se elimina un recurso de persona
 
+	````
 	DELETE http://trabajando:3003/api/data/personas/1
-
+	````
+	
 # Store
 
 El Store es el intermediario entre el servicio y el backend. Analiza la peticion y en conjunto con el transform.json y la descripcion de las relaciones del mismo devuelve una query que el backend debe entender y devuelve los datos obtenidos segun dicha query.
@@ -757,49 +811,54 @@ Supongamos las siguientes relaciones establecidas en los mappings y transforms
 
 - Buscamos la ciudad cuya id sea 12
 
-	find(
-		"ciudads"
-	,	{
-			"key":"id"
-		,	"value": "12"
-		}
-	)
-
+	````
+		find(
+			"ciudads"
+		,	{
+				"key":"id"
+			,	"value": "12"
+			}
+		)
+	````
+	
 - Buscamos la Ciudad a la que pertenece la persona cuya id es 2
 
-	find(
-		"ciudads"
-	,	{
-			source: 'personas',
-		,	source_key: 'id',
-		,	source_value: '2',
-		,	key: 'id_ciudad',
-		,	target_key: 'id'
-		}
-	)
-
+	````
+		find(
+			"ciudads"
+		,	{
+				source: 'personas',
+			,	source_key: 'id',
+			,	source_value: '2',
+			,	key: 'id_ciudad',
+			,	target_key: 'id'
+			}
+		)
+	````
 
 - Buscamos la Provincia a la que pertenece la persona cuya id es 2 a travez de su ciudad.
 
-	find(
-		"provincias"
-	,	{
-			source: 'personas',
-		,	source_key: 'id',
-		,	source_value: '2',
-		,	through:
-			[
-				{
-					target: 'ciudads'
-				,	key: 'id_provincia'
-				,	target_key: 'id'
-				}
-			]
-		,	key: 'id',
-		,	target_key: 'id'
-		}
-	)
-		
+	````
+		find(
+			"provincias"
+		,	{
+				source: 'personas',
+			,	source_key: 'id',
+			,	source_value: '2',
+			,	through:
+				[
+					{
+						target: 'ciudads'
+					,	key: 'id_provincia'
+					,	target_key: 'id'
+					}
+				]
+			,	key: 'id',
+			,	target_key: 'id'
+			}
+		)
+	````
+	
 ##	Filter
 
 Es la funcion encargada de devolver la data asociada a una peticion simple o compuesta pero filtrada por algunos parametros.
@@ -883,36 +942,94 @@ Supongamos las siguientes relaciones establecidas en los mappings y transforms
 		}
 	}
 
-- Buscamos las ciudades cuyo id_provincia sea 2
+- Buscamos las ciudades cuyo id_provincia sea 2. Tenemos dos formas para obtenerlo.
 
-	filter(
-		"ciudads"
-	,	{
-			query:
-			{
-				id_provincia: '2'
+	````
+		filter(
+			"ciudads"
+		,	{	
+				query:
+				[
+					{ 
+						key: 'id_provincia'
+					,	value: '2'
+					}
+				]
 			}
-		}
-	)
-
+		)
+	````
+	
+	````	
+		filter(
+			"ciudads"
+		,	{	
+				query:
+				[
+					{ 
+						key: 'id_provincia'
+					,	value: 2
+					,	criteria: '=' 
+					}
+				]
+			}
+		)
+	````
+	
 - Buscamos las ciudades cuyo id_provincia sea 2 pero dentro de un rango
 
-	filter(
-		"ciudads"
-	,	{
-			query:
-			{
-				id_provincia: '35'
+	````
+		filter(
+			"ciudads"
+		,	{	
+				query:
+				[
+					{ 
+						key: 'id_provincia'
+					,	value: '2'
+					}
+				]
+			,	collection_query:
+				{
+					page: 2
+				,	ipp: 2
+				}
 			}
-		,	collection_query:
-			{
-				page: 2
-			,	ipp: 2
-			}
-		}
-	)
+		)
+	````
 
-RESTA DEFINIR THROUGH
+-	Buscamos la ciudad de una persona cuyo id es 1.
+
+	````
+		filter(
+			"ciudads"
+		,	{
+				source : 'personas'
+			,	source_key: 'id'
+			,	source_value: 1
+			}
+		)
+	````
+
+-	Buscamos la provincia de una persona cuyo id es 1 a traves de su ciudad.
+
+	````
+		filter(
+			"provincias"
+		,	{
+				source: 'personas'
+			,	source_key: 'id'
+			,	source_value: 1
+			,	through:
+				[
+					{
+						target: "ciudads"
+					,	key: 'id_ciudad'
+					,	target_key: 'id_provincia'
+					}
+				]
+			}	
+		) 
+	````
 
 ##	Update
 
@@ -954,24 +1071,30 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Actualizamos el nombre de la persona cuya id es <i>2</i>.
 	
-	PUT http://trabajando:3003/api/data/personas/2
-	//Body
-	{
-		"nombre":"Juan Ernesto Gomez"
-	}
-	
-	update(
-		"personas"
-	,	{
-			"id":"2"
-		}
-	,	{
+	````
+		PUT http://trabajando:3003/api/data/personas/2
+		//Body
+		{
 			"nombre":"Juan Ernesto Gomez"
 		}
-	)
+	````
 
-	{"id":"2","nombre":"Juan Ernesto Gomez","id_ciudad":"2"}
-
+	````
+		update(
+			"personas"
+		,	{
+				"id":"2"
+			}
+		,	{
+				"nombre":"Juan Ernesto Gomez"
+			}
+		)
+	````
+	
+	````
+		{"id":"2","nombre":"Juan Ernesto Gomez","id_ciudad":"2"}
+	````
+	
 ##	Create
 
 Es la funcion encargada de crear un nuevo elemento segun una entidad. Devuelve la entidad creada.
@@ -1012,23 +1135,29 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Creamos una persona cuyo nombre es <i>Juan Gomez</i> y tiene una relacion con la ciudad cuya id es <i>2</i>.
 	
-	POST http://trabajando:3003/api/data/personas
-	//Body
-	{
-		"nombre":"Juan Gomez"
-	,	"id_ciudad":"2"
-	}
-	
-	create(
-		"personas"
-	,	{
+	````
+		POST http://trabajando:3003/api/data/personas
+		//Body
+		{
 			"nombre":"Juan Gomez"
 		,	"id_ciudad":"2"
 		}
-	)
+	````
 
-	{"id":"2","nombre":"Juan Gomez","id_ciudad":"2"}
+	````
+		create(
+			"personas"
+		,	{
+				"nombre":"Juan Gomez"
+			,	"id_ciudad":"2"
+			}
+		)
+	````
 
+	````
+		{"id":"2","nombre":"Juan Gomez","id_ciudad":"2"}
+	````
+	
 ##	Delete
 
 Es la funcion encargada eliminar un elemento de una entidad. Devuelve <i>error</i> en caso de no poder eliminarlo y <i>success</i> si logra eliminarlo.
@@ -1069,13 +1198,19 @@ Supongamos que tenemos la siguiente entidad y su mapping.
 
 - Queremos eliminar a la persona cuya id es <i>2</i>.
 	
-	DELETE http://trabajando:3003/api/data/personas/2
+	````
+		DELETE http://trabajando:3003/api/data/personas/2
+	````
 
+	````
 	delete(
 		"personas"
 	,	{
 			"id":"2"
 		}
 	)
+	````
 
+	````
 	{ "msg": "success"}
+	````
