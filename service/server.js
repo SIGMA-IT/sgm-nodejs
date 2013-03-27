@@ -282,6 +282,20 @@ connect()
 	connect.bodyParser()
 )
 .use(
+	connect.cookieParser()
+)
+.use(
+	connect.session(
+		{
+			secret: 'develepors loves cats'
+		,	cookie:
+			{
+				maxAge: 1440000
+			}
+		}
+	)
+)
+.use(
 	connect
 		.favicon(
 			__dirname+base_pub+'favicon.ico'
@@ -290,38 +304,120 @@ connect()
 .use(
 	function(req,res)
 	{
-		logger.notice("Incomming request from <<"+req.connection.remoteAddress+">>. <<"+req.method+">> "+config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url)
-		res.writeHead(
-			200
-		,	config.header
-		)
-		router(
-			req.method
-		,	config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url
-		,	req.body
-		)
-		.then(
-			function(result)
-			{
-				if(_.isObject(result))
-				{
-					res.end(
-						JSON.stringify(
-							_.isUndefined(result.error)
-							?	result.get_document()
-							:	result
-						)
+		if	(req.url == config.server.base+config.application.user_login)
+		{
+			if (_.isEmpty(req.body))
+				res.end(
+					JSON.stringify(
+						{
+							code: '400'
+						,	msg: 'Emtpy Body'
+						}
 					)
-					app_router
-						.clear_register()
-				}
-				else
-				{
-					res.writeHead(result, {"Content-Type": "text/plain"});
-					res.end();
-				}
+				)
+			else
+			{
+				req.session.login_data
+				=	req.body
+				req.session
+				console.log(req.session)
+				store
+					.find(
+						'user'
+					,	{
+							"key":"username"
+						,	"value":req.body.username
+						}
+					)
+					.then(
+						function(result)
+						{
+							result.items
+							.then(
+								function(user)
+								{
+									res.end(
+										JSON.stringify(
+											_.isUndefined(user)
+											?	{
+													code: '400'
+												,	msg: 'Unknown Username'
+												}
+											:	(user.password == req.body.password)
+												?	user
+												:	{
+														code: '400'
+													,	msg: 'Wrong Password'
+													}
+										)
+									)
+								}
+							)
+						}
+					)
 			}
-		)
+		}
+		else
+		{
+			if (req.url == config.server.base+config.application.user_logout)
+			{
+				console.log(req.session)
+				req
+					.session
+						.destroy(
+							function(error)
+							{
+								if	(_.isUndefined(error))
+									res
+										.end(
+											JSON.stringify(
+												{
+													code: '200'
+												,	msg: 'session destroyed'
+												}
+											)
+										)
+								else
+									logger.warning(error)
+							}
+						)
+			}
+			else
+			{
+				logger.notice("Incomming request from <<"+req.connection.remoteAddress+">>. <<"+req.method+">> "+config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url)
+				res.writeHead(
+					200
+				,	config.header
+				)
+				router(
+					req.method
+				,	config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url
+				,	req.body
+				)
+				.then(
+					function(result)
+					{
+						if(_.isObject(result))
+						{
+							res.end(
+								JSON.stringify(
+									_.isUndefined(result.error)
+									?	result.get_document()
+									:	result
+								)
+							)
+							app_router
+								.clear_register()
+						}
+						else
+						{
+							res.writeHead(result, {"Content-Type": "text/plain"});
+							res.end();
+						}
+					}
+				)
+			}
+		}
 	}
 )
 .listen(

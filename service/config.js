@@ -28,6 +28,12 @@ var	Factory
 				{
 					path: '../lib/store.js'
 				}
+			,	application:
+				{
+					user: 'user'
+				,	user_login: '/user_login'
+				,	user_logout: '/user_logout'
+				}
 			}
 			
 	}

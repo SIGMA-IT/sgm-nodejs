@@ -692,15 +692,16 @@ Se accede a una url compuesta y se agrega un nuevo recurso. La url debe ser comp
 
 - Se crea un nuevo recurso persona
 
-	//	Peticion
+	````
 	PUT http://trabajando:3003/api/data/personas
 	//	Body
 	body:
 	{
-		nombre: 'unnombre'
-	,	apellido: 'unapellido'
-	,	telefono: 'untelefono'
+		nombre: 'Un Nombre'
+	,	apellido: 'Un Apellido'
+	,	telefono: 'Un Telefono'
 	}
+	````
 
 ## DELETE
 
