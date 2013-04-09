@@ -56,6 +56,48 @@ Ejemplo de navegacion
 
 ```http://trabajando:3003/api/data/personas (donde personas es el nombre de la entidad)```
 
+# config.js
+
+Configura el servicio y la aplicación.
+			
+-	paths: Directorios de entrada
+
+>	-	input: Array de Strings. Directorio raiz de mappings, transforms y data.
+
+>	-	lib: String. Directorio raiz de librerias.
+
+>	-	public: String. Directorio raiz de public.
+
+>	-	server_log: String. Directorio y ubicacion del archivo de Logs.
+
+-	server: Configuracion del servidor.
+
+>	-	base: String. Raiz base del servidor.
+
+>	-	host: String. Nombre o IP del HOST.
+
+>	-	port: String. Puerto.
+
+>	-	protocol: String. Protocolo de Comuniciacion.
+
+-	header: Headers de la peticion.
+
+-	store: Configuracion del store
+
+>	-	path:	String. Ubicacion del store.
+
+-	application: Configuracion de la aplicacion.
+
+> 	-	user:	String. Entidad del usuario.
+
+>	-	user_login: String. Entidad (NO real) que se usara a la hora del Log In
+
+>	-	user_logout: String. Entidad (NO real) que se usara a la hora del Log Out
+
+>	-	user_auth: Array de Strings. Atributos de la Entidad user necesarios a la hora del Log In.
+
+>	-	no_auth_required: Array de Strings. Entidades la cuales no necesitas un logueo previo para poder ser accedidas.
+
 
 # Mappings
 
@@ -513,11 +555,13 @@ Supongamos que tenemos una entidad Mascotas la cual tiene entidades "hijas". Lla
 
 - target\_attr: define que atributos de la entidad se usaran en el link. Solamente se permitiran ['name', 'hreflang', 'title', 'templated','icon','align']
 
+- template: define un template a la hora de generar el rel del link.
+
 ### Tipos de Links
 
 - none: define que dado una coleccion el link solo apuntara a la coleccion completa.
 
-- single: define que dado una coleccion el link solo apuntara a la coleccion completa.
+- single: define que dado una coleccion se creara un link por cada uno de sus elementos pero cada link con su rel.
 
 - nested: define que dada una coleccion se creara un link por cada uno de sus elementos pero todas bajo un mismo rel.
 
@@ -816,8 +860,13 @@ Supongamos las siguientes relaciones establecidas en los mappings y transforms
 		find(
 			"ciudads"
 		,	{
-				"key":"id"
-			,	"value": "12"
+				query:
+				[
+					{
+						"key":"id"
+					,	"value": "12"
+					}
+				]
 			}
 		)
 	````
