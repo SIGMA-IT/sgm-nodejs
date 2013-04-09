@@ -4,7 +4,7 @@ var	Factory
 		return	{
 				paths: 
 				{
-						"input": ["../../../api/test_service/","../../../api/service/"]
+						"input": ["../tools/router_test/"]
 					,	"lib": "../lib/"
 					,	"public": "/../public/"
 					,	"server_log": "server.log"
@@ -30,9 +30,11 @@ var	Factory
 				}
 			,	application:
 				{
-					user: 'user'
-				,	user_login: '/user_login'
-				,	user_logout: '/user_logout'
+					user: 'users'
+				,	user_login: 'user_login'
+				,	user_logout: 'user_logout'
+				,	user_auth: ['username','password']
+				,	no_auth_required: ['user']
 				}
 			}
 			

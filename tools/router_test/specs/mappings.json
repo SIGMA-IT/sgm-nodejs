@@ -129,4 +129,13 @@
 		,	"id_ent4":"ID_ENT4"
 		}
 	}
+,	"users":
+	{
+		"fields":
+		{
+			"id":"ID"
+		,	"username":"USERNAME"
+		,	"password":"PASSWORD"
+		}
+	}
 }

@@ -175,14 +175,24 @@ var	SpecTransforms
 	,	defaults
 	,	logger
 	)
-,	AppRouter
-=	require(base_lib+'router.js')(
-	_
-	,	hal
+,	SpecMethods
+=	require(base_lib+'spec-methods.js')(
+		_
+	,	Q
+	)
+,	AppREST
+=	require(base_lib+'rest.js')(
+		_
+	,	Q
+	,	logger
+	)
+,	SpecBuilders
+=	require(base_lib+'spec-builders.js')(
+		_
+	,	Q
 	,	hal_builder
 	,	collection_builder
 	,	parseUri
-	,	Q
 	,	logger
 	)
 ,	transforms_input
@@ -267,10 +277,10 @@ while (transforms_to_check.length != 0)
 
 var	spec_transforms
 =	new SpecTransforms(config.server,transforms)
-,	app_router
-=	new AppRouter(assoc_transforms,store,transforms,config.server)
-,	router
-=	app_router.get_router()
+,	spec_methods
+=	new SpecMethods(store,assoc_transforms)
+,	REST
+=	new AppREST(transforms,spec_methods)
 
 logger.info('Listening to port: '+config.server.port)
 
@@ -304,119 +314,191 @@ connect()
 .use(
 	function(req,res)
 	{
-		if	(req.url == config.server.base+config.application.user_login)
+		var	builders
+		=	new SpecBuilders(transforms,assoc_transforms,REST,config.server)
+		,	requested
+		=	req.url.match(RegExp('^'+config.server.base+'(.*)$'))[1].split('/')[1]
+
+		res.writeHead(
+			200
+		,	config.header
+		)
+
+		switch(requested)
 		{
-			if (_.isEmpty(req.body))
-				res.end(
-					JSON.stringify(
-						{
-							code: '400'
-						,	msg: 'Emtpy Body'
-						}
-					)
-				)
-			else
-			{
-				req.session.login_data
-				=	req.body
-				req.session
-				console.log(req.session)
-				store
-					.find(
-						'user'
-					,	{
-							"key":"username"
-						,	"value":req.body.username
-						}
-					)
-					.then(
-						function(result)
-						{
-							result.items
-							.then(
-								function(user)
+			case	config.application.user_login:
+				if	(_.isEmpty(req.body))
+					builders
+						.build_msg(
+							config.application.user
+						,	{
+								type:	'ERROR'
+							,	msg:	'Invalid Request: Empty Body'
+							,	code:	400
+							}
+						).then(
+							function(msg)
+							{
+								res.end(
+									JSON.stringify(
+										msg.get_document()
+									)
+								)
+							}
+						)
+				else
+					if	(_.isUndefined(req.session.login))
+						store
+							.find(
+								config.application.user
+							,	_.pick(
+									req.body
+								,	['query']
+								)
+							).then(
+								function(result)
+								{
+									builders
+										.build(
+											config.application.user
+										,	Q(result)
+										).then(
+											function(hal)
+											{
+												if	(_.isUndefined(hal.get_document().type))
+													req.session.login
+													=	{
+															user: hal.get_document()
+														,	status: "success"
+														}
+												res.end(
+													JSON.stringify(
+														hal.get_document()
+													)
+												)
+												builders
+													.clear_register()
+											}
+										)
+								}
+							)
+					else
+						builders
+							.build_msg(
+								config.application.user
+							,	{
+									type:	"ERROR"
+								,	msg:	"Invalid Request: I'm a teapot (User Allready Logged In MOTHERFUCKER)"
+								,	code:	418
+								}
+							).then(
+								function(msg)
 								{
 									res.end(
 										JSON.stringify(
-											_.isUndefined(user)
-											?	{
-													code: '400'
-												,	msg: 'Unknown Username'
-												}
-											:	(user.password == req.body.password)
-												?	user
-												:	{
-														code: '400'
-													,	msg: 'Wrong Password'
-													}
+											msg.get_document()
 										)
 									)
 								}
 							)
-						}
-					)
-			}
-		}
-		else
-		{
-			if (req.url == config.server.base+config.application.user_logout)
-			{
-				console.log(req.session)
-				req
+				break;			
+			case	config.application.user_logout:
+				if	(_.isUndefined(req.session.login))
+					builders
+							.build_msg(
+								config.application.user
+							,	{
+									type:	"ERROR"
+								,	msg:	"Invalid Request: Session Not Found"
+								,	code:	454
+								}
+							).then(
+								function(msg)
+								{
+									res.end(
+										JSON.stringify(
+											msg.get_document()
+										)
+									)
+								}
+							)
+				else
+					req
 					.session
 						.destroy(
 							function(error)
 							{
 								if	(_.isUndefined(error))
-									res
-										.end(
-											JSON.stringify(
-												{
-													code: '200'
-												,	msg: 'session destroyed'
-												}
-											)
+									builders
+										.build_msg(
+											config.application.user
+										,	{
+												type:	'OK'
+											,	msg:	'Session Destroyed'
+											,	code:	200
+											}
+										).then(
+											function(msg)
+											{
+												res.end(
+													JSON.stringify(
+														msg.get_document()
+													)
+												)
+											}
 										)
 								else
 									logger.warning(error)
 							}
 						)
-			}
-			else
-			{
+				break;			
+			default:
 				logger.notice("Incomming request from <<"+req.connection.remoteAddress+">>. <<"+req.method+">> "+config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url)
-				res.writeHead(
-					200
-				,	config.header
-				)
-				router(
-					req.method
-				,	config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url
-				,	req.body
-				)
-				.then(
-					function(result)
-					{
-						if(_.isObject(result))
-						{
-							res.end(
-								JSON.stringify(
-									_.isUndefined(result.error)
-									?	result.get_document()
-									:	result
+				if	(	
+						_.contains(config.application.no_auth_required,requested)
+					||	(
+							!_.contains(config.application.no_auth_required,requested)
+						&&	!_.isUndefined(req.session.login)
+						)
+					)
+					builders
+						.router(
+							req.method
+						,	config.server.protocol+"://"+config.server.host+":"+config.server.port+req.url
+						,	req.body
+						)
+						.then(
+							function(result)
+							{
+								res.end(
+									JSON.stringify(
+										result.get_document()
+									)
 								)
-							)
-							app_router
-								.clear_register()
-						}
-						else
-						{
-							res.writeHead(result, {"Content-Type": "text/plain"});
-							res.end();
-						}
-					}
-				)
-			}
+								builders
+									.clear_register()
+							}
+						)
+				else
+					builders
+						.build_msg(
+							config.application.user
+						,	{
+								type:	'ERROR'
+							,	msg:	'Forbidden: Auth Required'
+							,	code:	403
+							}
+						).then(
+							function(msg)
+							{
+								res.end(
+									JSON.stringify(
+										msg.get_document()
+									)
+								)
+							}
+						)
+				break;
 		}
 	}
 )

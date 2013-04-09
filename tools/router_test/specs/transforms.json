@@ -103,7 +103,6 @@
 				"type":"belongs-to"
 			,	"target":"doctors"
 			,	"key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -120,14 +119,12 @@
 				"type":"belongs-to"
 			,	"target":"doctors"
 			,	"key":"id_doctor"
-			,	"embedded":"partial"
 			}
 		,	"institucion":
 			{
 				"type":"has-one"
 			,	"target":"institucions"
 			,	"target_key":"id_calificacion"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -144,7 +141,6 @@
 				"type":"belongs-to"
 			,	"target":"calificacions"
 			,	"key":"id_calificacion"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -176,14 +172,13 @@
 				"type":"has-many"
 			,	"target":"items"
 			,	"target_key":"id_menu"
+			,	"linked":"single"
 			}
 		,	"submenus":
 			{
 				"type":"has-many:through"
 			,	"target":"menus"
 			,	"through":"submenus"
-			,	"through_key":"id_menu"
-			,	"through_target_key":"id_submenu"
 			}
 		}
 	}
@@ -232,21 +227,18 @@
 				"type":"has-one"
 			,	"target":"ent2"
 			,	"target_key":"id_ent1"
-			,	"embedded":"partial"
 			}
 		,	"ent3s":
 			{
 				"type":"has-many"
 			,	"target":"ent3"
 			,	"target_key":"id_ent1"
-			,	"embedded":"partial"
 			}
 		,	"ent4":
 			{
 				"type":"belongs-to"
 			,	"target":"ent4"
 			,	"key":"id_ent4"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -263,7 +255,6 @@
 				"type":"belongs-to"
 			,	"target":"ent1"
 			,	"key":"id_ent1"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -280,7 +271,6 @@
 				"type":"belongs-to"
 			,	"target":"ent1"
 			,	"key":"id_ent1"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -297,7 +287,6 @@
 				"type":"has-one"
 			,	"target":"ent1"
 			,	"target_key":"id_ent4"
-			,	"embedded":"partial"
 			}
 		}
 	}
@@ -313,9 +302,14 @@
 			{
 				"type":"is-a"
 			,	"target":"ent1"
-			,	"asd":"2"
-			,	"asddd":"Asd"
 			}
+		}
+	}
+,	"users":
+	{
+		"storage":
+		{
+			"name":"users"
 		}
 	}
 }
