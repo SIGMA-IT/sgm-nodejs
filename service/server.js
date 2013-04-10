@@ -448,7 +448,24 @@ connect()
 											}
 										)
 								else
-									logger.warning(error)
+									builders
+										.build_msg(
+											config.application.user
+										,	{
+												type:	'ERROR'
+											,	msg:	'Conflict: Unable to destroy current session'
+											,	code:	409
+											}
+										).then(
+											function(msg)
+											{
+												res.end(
+													JSON.stringify(
+														msg.get_document()
+													)
+												)
+											}
+										)
 							}
 						)
 				break;			
@@ -459,6 +476,10 @@ connect()
 					||	(
 							!_.contains(config.application.no_auth_required,requested)
 						&&	!_.isUndefined(req.session.login)
+						)
+					||	(
+							_.isUndefined(config.application)
+						||	config.application.enabled == false
 						)
 					)
 					builders

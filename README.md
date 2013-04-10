@@ -730,14 +730,14 @@ Notemos que si traemos una entidad individual, no se deben pasar los parametros 
 
 ## PUT
 
-Se accede a una url compuesta y se agrega un nuevo recurso. La url debe ser compuesta, body debe llegar con un prototipo del nuevo recurso a guardar y los datos correspondientes al nuevo recurso.
+Actualiza los valores de un recurso. La peticion debe de contener en el body los datos a actualizar del recurso.
 
 #### Ejemplo
 
-- Se crea un nuevo recurso persona
+- Se actualiza el recurso persona cuyo id es 1.
 
 	````
-	PUT http://trabajando:3003/api/data/personas
+	PUT http://trabajando:3003/api/data/personas/1
 	//	Body
 	body:
 	{
