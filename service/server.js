@@ -318,11 +318,36 @@ connect()
 		=	new SpecBuilders(transforms,assoc_transforms,REST,config.server)
 		,	requested
 		=	req.url.match(RegExp('^'+config.server.base+'(.*)$'))[1].split('/')[1]
+		,	req_timeout
+		=	setTimeout(
+				function()
+				{
+					builders
+						.build_msg(
+							config.application.user
+						,	{
+								type:	'ERROR'
+							,	msg:	'Request Timeout: Something went wrong'
+							,	code:	408
+							}
+						).then(
+							function(msg)
+							{
+								res.end(
+									JSON.stringify(
+										msg.get_document()
+									)
+								)
+							}
+						)
+				}
+			,	1000*20
+			)
 
 		res.writeHead(
 			200
 		,	config.header
-		)
+		)		
 
 		switch(requested)
 		{
@@ -339,6 +364,7 @@ connect()
 						).then(
 							function(msg)
 							{
+								clearTimeout(req_timeout)
 								res.end(
 									JSON.stringify(
 										msg.get_document()
@@ -365,6 +391,7 @@ connect()
 										).then(
 											function(hal)
 											{
+												clearTimeout(req_timeout)
 												if	(_.isUndefined(hal.get_document().type))
 													req.session.login
 													=	{
@@ -394,6 +421,7 @@ connect()
 							).then(
 								function(msg)
 								{
+									clearTimeout(req_timeout)
 									res.end(
 										JSON.stringify(
 											msg.get_document()
@@ -405,23 +433,24 @@ connect()
 			case	config.application.user_logout:
 				if	(_.isUndefined(req.session.login))
 					builders
-							.build_msg(
-								config.application.user
-							,	{
-									type:	"ERROR"
-								,	msg:	"Invalid Request: Session Not Found"
-								,	code:	454
-								}
-							).then(
-								function(msg)
-								{
-									res.end(
-										JSON.stringify(
-											msg.get_document()
-										)
+						.build_msg(
+							config.application.user
+						,	{
+								type:	"ERROR"
+							,	msg:	"Invalid Request: Session Not Found"
+							,	code:	454
+							}
+						).then(
+							function(msg)
+							{
+								clearTimeout(req_timeout)
+								res.end(
+									JSON.stringify(
+										msg.get_document()
 									)
-								}
-							)
+								)
+							}
+						)
 				else
 					req
 					.session
@@ -440,6 +469,7 @@ connect()
 										).then(
 											function(msg)
 											{
+												clearTimeout(req_timeout)
 												res.end(
 													JSON.stringify(
 														msg.get_document()
@@ -459,6 +489,7 @@ connect()
 										).then(
 											function(msg)
 											{
+												clearTimeout(req_timeout)
 												res.end(
 													JSON.stringify(
 														msg.get_document()
@@ -491,6 +522,7 @@ connect()
 						.then(
 							function(result)
 							{
+								clearTimeout(req_timeout)
 								res.end(
 									JSON.stringify(
 										result.get_document()
@@ -512,6 +544,7 @@ connect()
 						).then(
 							function(msg)
 							{
+								clearTimeout(req_timeout)
 								res.end(
 									JSON.stringify(
 										msg.get_document()
