@@ -80,6 +80,7 @@ var	Colour
 =	new Object()
 ,	transforms
 =	new Object()
+
 logger.info("Running NodeJS "+process.version)
 
 var	commander_input
@@ -195,72 +196,18 @@ var	SpecTransforms
 	,	parseUri
 	,	logger
 	)
-,	transforms_input
-=	new Object()
+,	Store
+=	require(config.store.path)(
+		_
+	,	Q
+	,	logger
+	)
 
-_.each(
-	transforms
-,	function(transform,name)
-	{
-		if (_.isUndefined(transform.source))
-		{
-			var	found
-			=	_.find(
-				_.union(config.paths.input,[program.input])
-			,	function(path)
-				{
-					var full_path
-					=	_.contains(config.paths.input,path)
-						?	path+'data/json'
-						:	path
-					return fsExists(
-								full_path
-							+	'/'
-							+	transform.storage.name
-							+	'.json'
-							)
-				}
-			)
-			var found_path
-			=	_.contains(config.paths.input,found)
-				?	found+'data/json'
-				:	found
-			if (_.isString(found))	
-				_.extend(
-					transforms_input
-				,	_.object(
-						[name]
-					,	[
-							found_path
-						+	'/'
-						+	transform.storage.name
-						+	'.json'
-						]
-					)
-				)
-			else
-				logger.warning('Data Input: no such file '+found_path+'/'+transform.storage.name+'.json')
-		}	
-	}
-)
 
-var	Store
-=	require(config.store.path)(_,Q)
-,	store
-=	new	Store(
-		transforms_input
-	,	function(what)
-		{
-		return	JSON
-			.parse(
-				fs.readFileSync(what,'utf8')
-			)
-		}
-	)	
-,	assoc_transforms
-=	new AssociationsTransforms(store,transforms)
-,	transforms_to_check
+var	transforms_to_check
 =	_.keys(transforms)
+,	assoc_transforms
+=	new AssociationsTransforms(transforms)
 
 while (transforms_to_check.length != 0)
 {
@@ -277,6 +224,8 @@ while (transforms_to_check.length != 0)
 
 var	spec_transforms
 =	new SpecTransforms(config.server,transforms)
+,	store
+=	new	Store(config,program,transforms,mappings)
 ,	spec_methods
 =	new SpecMethods(store,assoc_transforms)
 ,	REST
