@@ -57,61 +57,72 @@ var	Factory
 				,	assoc_type:
 					{
 						'has-many':
-							{
-								required: ['target', 'target_key']
-							,	optional: ['key']
-							}
-						,	'has-one':
-							{
-								required: ['target', 'target_key']
-							,	optional: ['key']
-							}
-						,	'belongs-to':
-							{
-								required: ['target', 'key']
-							,	optional: ['target_key']
-							}
-						,	'has-many:through':
-							{
-								required: [ 'through', 'target']
-							,	optional: ['key','target_key']
-							}
-						,	'has-one:through':
-							{
-								required: ['through', 'target']
-							,	optional: ['key','target_key']
-							}
-						,	'is-a':
-							{
-								required:['target']
-							,	optional:['key','target_key']
-							}
+						{
+							required: ['target', 'target_key']
+						,	optional: ['key']
+						}
+					,	'has-one':
+						{
+							required: ['target', 'target_key']
+						,	optional: ['key']
+						}
+					,	'belongs-to':
+						{
+							required: ['target', 'key']
+						,	optional: ['target_key']
+						}
+					,	'has-many:through':
+						{
+							required: [ 'through', 'target']
+						,	optional: ['key','target_key']
+						}
+					,	'has-one:through':
+						{
+							required: ['through', 'target']
+						,	optional: ['key','target_key']
+						}
+					,	'is-a':
+						{
+							required:['target']
+						,	optional:['key','target_key']
+						}
+					,	'join':
+						{
+							required:[]
+						,	optional:[]
+						}
 					}
 				,	assoc_values:
 					{
-						'has-many':{
+						'has-many':
+						{
 							key: 'id'
 						}
-					,	'has-one':{
+					,	'has-one':
+					{
 							key:'id'
 						}
-					,	'belongs-to':{
+					,	'belongs-to':
+					{
 							target_key:'id'
 						}
-					,	'has-many:through':{
+					,	'has-many:through':
+						{
 							key:'id'
 						,	target_key:'id'
 						}
-					,	'has-one:through':{
+					,	'has-one:through':
+						{
 							key:'id'
 						,	target_key: 'id' 
 						}
-					,	'is-a':{
+					,	'is-a':
+						{
 							target_key:'id'
 						}
 					}
 				,	specs: ["storage","associations","profiles","collection","source"]
-				,	assocs: ["type","target","through","key","target_key","linked","embedded","source","parent","name"]
+				,	assocs: ["type","target","through","key","target_key","linked","embedded","source","parent","name","parent_key","template"]
 				,	types: ["none","single","partial","nested","list","pageable","scrollable"]
 				}
 	}
